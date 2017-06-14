@@ -143,7 +143,7 @@ class TeacherAdminController extends AdminbaseController {
         }
 
         if (!empty($counseling_ids)) {
-            $data['counseling_ids']     =   trim($counseling_ids, ',');
+            $data['counseling_ids']     =   ','.trim($counseling_ids, ',').',';
         } else {
             $array = array('info'=>'请输入辅导课程','status'=>0);
             echo json_encode($array);die;
@@ -187,7 +187,7 @@ class TeacherAdminController extends AdminbaseController {
     public function edit(){
         $id= I("get.id",0,'intval');
         $teacher     =   $this->teacher_model->where(array('id'=>$id))->find();
-        $teacher['counseling_ids'] = explode(',', $teacher['counseling_ids']);
+        $teacher['counseling_ids'] = explode(',', trim($teacher['counseling_ids'], ','));
         while(true) {
             if (count($teacher['counseling_ids']) < 3) {
                 $teacher['counseling_ids'][] = null;

@@ -64,7 +64,7 @@
                     <td>{$vo['sex'] == 1 ? '女' : '男'}</td>
                     <td>
                         <php>
-                            $counseling_data = explode(',', $vo['counseling_ids']);
+                            $counseling_data = explode(',', trim($vo['counseling_ids'],','));
                             $swap = array();
                             foreach($counseling_data as $counseling_one) {
                             $swap[] = $counseling[$counseling_one];

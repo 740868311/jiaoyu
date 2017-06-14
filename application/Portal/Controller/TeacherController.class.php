@@ -130,7 +130,7 @@ class TeacherController extends HomebaseController {
         }
 
         if (!empty($counseling_ids)) {
-            $data['counseling_ids']     =   trim($counseling_ids, ',');
+            $data['counseling_ids']     =   ','.trim($counseling_ids, ',').',';
         } else {
             $array = array('info'=>'请输入辅导课程','status'=>0);
 //            echo json_encode($array);die;
@@ -193,6 +193,12 @@ class TeacherController extends HomebaseController {
                 echo json_encode($array);die;
             }
         }
+
+        // 条件
+        $where  =   array();
+        // is_black:1正常用户  2拉黑
+        $where['is_black']  =   1;
+
     }
 
     // 老师简历
@@ -207,6 +213,122 @@ class TeacherController extends HomebaseController {
         $data = $this->teacher_model->where(array('id'=>$id))->find();
 
         $this->assign('data', $data);
+        $this->display();
+    }
+
+    // 教师库
+    public function teacher_list()
+    {
+        $data  =   I('post.');
+        $where  =   array();
+
+        // ----条件开始----
+        if (isset($data['counseling_id'])) {
+            $counseling_id  =   (int)$data['counseling_id'];
+            if ($counseling_id) {
+                cookie('counseling_id', $counseling_id);
+                $where['counseling_ids'] =   array('like','%,'.$counseling_id.',%');
+            } else {
+                cookie('counseling_id', null);
+            }
+        } else {
+            $where['counseling_ids']    =   array('like','%,'.cookie('counseling_id').',%');
+        }
+
+
+        if (isset($data['sex'])) {
+            $sex           =    (int)$data['sex'];
+            if ($sex) {
+                cookie('sex', $sex);
+                $where['sex'] =   $sex;
+            } else {
+                cookie('sex', null);
+            }
+        } else {
+            $where['sex'] =   (int)cookie('sex');
+        }
+
+        if (isset($data['status'])) {
+            $status         =   (int)$data['status'];
+            if ($status) {
+                cookie('status', $status);
+                $where['status']       =    $status;
+            } else {
+                cookie('status', null);
+            }
+        } else {
+            $where['status']    =   (int)cookie('status');
+        }
+
+        $where['is_black']  =   1;
+
+        // ----条件结束----
+
+        $count=$this->teacher_model->count();
+
+        $page = $this->page($count, 10);
+        $teacher_data = $this->teacher_model
+            ->where($where)
+            ->limit($page->firstRow , $page->listRows)
+            ->order("last_time DESC")
+            ->select();
+
+        $this->assign('counseling_id', cookie('counseling_id'));
+        $this->assign('status', cookie('counseling_id'));
+        $this->assign("page", $page->show('Admin'));
+        $this->assign("teacher_list", $teacher_data);
+        $this->display();
+    }
+
+    // 明星教员
+    public function star_teacher()
+    {
+        $data  =   I('post.');
+        $where  =   array();
+
+        // ----条件开始----
+        if (isset($data['counseling_id'])) {
+            $counseling_id  =   (int)$data['counseling_id'];
+            if ($counseling_id) {
+                cookie('counseling_id', $counseling_id);
+                $where['counseling_ids'] =   array('like','%,'.$counseling_id.',%');
+            } else {
+                cookie('counseling_id', null);
+            }
+        } else {
+            $where['counseling_ids']    =   array('like','%,'.cookie('counseling_id').',%');
+        }
+
+
+        if (isset($data['sex'])) {
+            $sex           =    (int)$data['sex'];
+            if ($sex) {
+                cookie('sex', $sex);
+                $where['sex'] =   $sex;
+            } else {
+                cookie('sex', null);
+            }
+        } else {
+            $where['sex'] =   (int)cookie('sex');
+        }
+
+        $where['is_black']  =   1;
+
+        // ----条件结束----
+
+        $count=$this->teacher_model->count();
+
+        $page = $this->page($count, 10);
+        $teacher_data = $this->teacher_model
+            ->where($where)
+            ->limit($page->firstRow , $page->listRows)
+            ->order("last_time DESC")
+            ->select();
+
+        $this->assign('counseling_id', cookie('counseling_id'));
+        $this->assign('status', cookie('counseling_id'));
+        $this->assign("page", $page->show('Admin'));
+        $this->assign("teacher_list", $teacher_data);
         $this->display();
     }
 }

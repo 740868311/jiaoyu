@@ -1,6 +1,6 @@
 <?php
 /**
- *  前台老师相关页面
+ *  前台家长需求相关页面
  *
  *
  */
@@ -161,5 +161,39 @@ class DemandController extends HomebaseController {
 			echo json_encode($array);die;
 		}
 		return $data;
+	}
+
+	// 学员库
+	public function demand_list()
+	{
+		$status = (int)I('get.status');
+
+		if (!$status) {
+			$status = 2;
+		}
+
+		$where['status']	=	$status;
+
+		$count=$this->demand_model->count();
+
+		$page = $this->page($count, 5);
+		$demand_data = $this->demand_model
+			->where($where)
+			->limit($page->firstRow , $page->listRows)
+			->order("add_time DESC")
+			->select();
+
+	}
+
+	// 学员详情
+	public function demand_show()
+	{
+		$id = (int)I('get.id');
+
+		if ($id) {
+			$this->error('缺少ID');
+		}
+		$where['id']	=	$id;
+		$this->demand_model->where($where)->select();
 	}
 }
