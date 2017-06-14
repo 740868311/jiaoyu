@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <form action="{:U('Demand/add_post')}" method="post" class="form-horizontal js-ajax-forms" enctype="multipart/form-data">
+        <div class="row-fluid">
+            <div class="span9">
+                <table class="table table-bordered">
+                    <tr>
+                        <th width="80">姓名</th>
+                        <td>
+                            <input type="text" style="width: 400px;" name="name" id="name" value="" placeholder="请输入姓名"/>
+                            <span class="form-required">*</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>年级</th>
+                        <td>
+                            <php>
+                                $grade = sp_get_grade_name();
+                            </php>
+                            <select style="min-width: 50px;width:130px" name="grade_id">
+                                <option value="0">--请选择年级--</option>
+                                <foreach name="grade" key="k" item="vo">
+                                    <option value="{$k}">{$vo}</option>
+                                </foreach>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>性别</th>
+                        <td>
+                            <select style="min-width: 50px;width:130px" name="sex">
+                                <option value="0">--请选择性别--</option>
+                                <option value="1">女</option>
+                                <option value="2">男</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>辅导课程</th>
+                        <td>
+                            <php>
+                                $counseling = sp_get_counseling();
+                            </php>
+                            <select style="min-width: 50px;" name="counseling_id[]">
+                                <option value="0">--请选择辅导课程--</option>
+                                <foreach name="counseling" key="k" item="vo">
+                                    <option value="{$k}">{$vo}</option>
+                                </foreach>
+                            </select>
+                            <select style="min-width: 50px;" name="counseling_id[]">
+                                <option value="0">--请选择辅导课程--</option>
+                                <foreach name="counseling" key="k" item="vo">
+                                    <option value="{$k}">{$vo}</option>
+                                </foreach>
+                            </select>
+                            <select style="min-width: 50px;" name="counseling_id[]">
+                                <option value="0">--请选择辅导课程--</option>
+                                <foreach name="counseling" key="k" item="vo">
+                                    <option value="{$k}">{$vo}</option>
+                                </foreach>
+                            </select>
+                            <div style="height:5px"></div>
+                            <input type="text" name="counseling_other" value=""/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>拟付课酬</th>
+                        <td><input type="text" name="prepayments" id="prepayments" value="" style="width: 280px" placeholder="请输入拟付课酬"> 单位：元/小时</td>
+                    </tr>
+                    <tr>
+                        <th>家教时间</th>
+                        <td>
+                            <table width="480" border="1" cellspacing="0" cellpadding="0" bordercolor="#7497bf" style="text-align:center">
+                                <tbody><tr>
+                                    <td width="26" bgcolor="#b2d0df">&nbsp;</td>
+                                    <td width="26" bgcolor="#b2d0df">周一</td>
+                                    <td width="26" bgcolor="#b2d0df">周二</td>
+                                    <td width="26" bgcolor="#b2d0df">周三</td>
+                                    <td width="26" bgcolor="#b2d0df">周四</td>
+                                    <td width="26" bgcolor="#b2d0df">周五</td>
+                                    <td width="26" bgcolor="#b2d0df">周六</td>
+                                    <td width="26" bgcolor="#b2d0df">周日</td>
+                                    <td width="26" bgcolor="#b2d0df">寒假</td>
+                                    <td width="24" bgcolor="#d9d6d5"><input type="checkbox" name="Z[]" value="1"></td>
+                                </tr>
+                                <tr>
+                                    <td width="26" bgcolor="#b2d0df">上午</td>
+                                    <td width="26" bgcolor="#d9d6d5"><input type="checkbox" name="S[]" value="1"></td>
+                                    <td width="26" bgcolor="#d9d6d5"><input type="checkbox" name="S[]" value="2"></td>
+                                    <td width="26" bgcolor="#d9d6d5"><input type="checkbox" name="S[]" value="3"></td>
+                                    <td width="26" bgcolor="#d9d6d5"><input type="checkbox" name="S[]" value="4"></td>
+                                    <td width="26" bgcolor="#d9d6d5"><input type="checkbox" name="S[]" value="5"></td>
+                                    <td width="26" bgcolor="#d9d6d5"><input type="checkbox" name="S[]" value="6"></td>
+                                    <td width="26" bgcolor="#d9d6d5"><input type="checkbox" name="S[]" value="7"></td>
+                                    <td width="26" bgcolor="#b2d0df">暑假</td>
+                                    <td width="24" bgcolor="#d9d6d5"><input type="checkbox" name="Z[]" value="2"></td>
+                                </tr>
+                                <tr>
+                                    <td width="26" bgcolor="#b2d0df">下午</td>
+                                    <td width="26" bgcolor="#d9d6d5"><input type="checkbox" name="X[]" value="1"></td>
+                                    <td width="26" bgcolor="#d9d6d5"><input type="checkbox" name="X[]" value="2"></td>
+                                    <td width="26" bgcolor="#d9d6d5"><input type="checkbox" name="X[]" value="3"></td>
+                                    <td width="26" bgcolor="#d9d6d5"><input type="checkbox" name="X[]" value="4"></td>
+                                    <td width="26" bgcolor="#d9d6d5"><input type="checkbox" name="X[]" value="5"></td>
+                                    <td width="26" bgcolor="#d9d6d5"><input type="checkbox" name="X[]" value="6"></td>
+                                    <td width="26" bgcolor="#d9d6d5"><input type="checkbox" name="X[]" value="7"></td>
+                                    <td width="26" bgcolor="#b2d0df">长期</td>
+                                    <td width="24" bgcolor="#d9d6d5"><input type="checkbox" name="Z[]" value="3"></td>
+                                </tr>
+                                <tr>
+                                    <td width="26" bgcolor="#b2d0df">晚上</td>
+                                    <td width="26" bgcolor="#d9d6d5"><input type="checkbox" name="W[]" value="1"></td>
+                                    <td width="26" bgcolor="#d9d6d5"><input type="checkbox" name="W[]" value="2"></td>
+                                    <td width="26" bgcolor="#d9d6d5"><input type="checkbox" name="W[]" value="3"></td>
+                                    <td width="26" bgcolor="#d9d6d5"><input type="checkbox" name="W[]" value="4"></td>
+                                    <td width="26" bgcolor="#d9d6d5"><input type="checkbox" name="W[]" value="5"></td>
+                                    <td width="26" bgcolor="#d9d6d5"><input type="checkbox" name="W[]" value="6"></td>
+                                    <td width="26" bgcolor="#d9d6d5"><input type="checkbox" name="W[]" value="7"></td>
+                                    <td width="26" bgcolor="#b2d0df">面议</td>
+                                    <td width="24" bgcolor="#d9d6d5"><input type="checkbox" name="Z[]" value="4"></td>
+                                </tr>
+                                </tbody></table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>老师要求</th>
+                        <td>
+                            <select style="min-width: 50px;width:70px" name="teacher_sex">
+                                <option value="1">--请选择性别--</option>
+                                <option value="1">女</option>
+                                <option value="2">男</option>
+                            </select>
+                            <select style="min-width: 50px;width:200px" name="teacher_identity">
+                                <option value="0">--请选择老师身份--</option>
+                                <option value="1">大学生</option>
+                                <option value="2">研究生</option>
+                                <option value="3">在职老师</option>
+                                <option value="4">专职老师</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>其他要求</th>
+                        <td>
+                            <textarea name="remarks" style="width: 400px;height: 70px;"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>电话号码</th>
+                        <td>
+                            <input type="text" name="phone"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>家庭住址</th>
+                        <td>
+                            <input type="text" name="address"/>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+        <div class="form-actions">
+            <button class="btn btn-primary js-ajax-submit" type="submit">{:L('ADD')}</button>
+            <a class="btn" href="javascript:history.back(-1);">{:L('BACK')}</a>
+        </div>
+    </form>
+</body>
+</html>

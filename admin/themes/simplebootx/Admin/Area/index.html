@@ -1,0 +1,49 @@
+<admintpl file="header" />
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">浏览地区</a></li>
+        <li><a href="{:U('area/add')}" target="_self">添加地区</a></li>
+    </ul>
+    <table class="table table-hover table-bordered table-list">
+        <thead>
+        <tr>
+            <th width="100">ID</th>
+            <th>地区</th>
+            <th width="120">操作</th>
+        </tr>
+        </thead>
+        <foreach name="area" item="vo">
+            <tr>
+                <td><a>{$vo.id}</a></td>
+                <td><a>{$vo.area_name}</a></td>
+                <td>
+                    <a href="{:U('area/edit',array('id'=>$vo['id']))}">{:L('EDIT')}</a>|
+                    <a href="{:U('area/del',array('id'=>$vo['id']))}" class="js-ajax-delete">{:L('DELETE')}</a>
+                </td>
+            </tr>
+        </foreach>
+        <tfoot>
+        </tfoot>
+    </table>
+    <div class="table-actions">
+        <button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:U('AdminPage/delete')}" data-subcheck="true" data-msg="你确定删除吗？">{:L('DELETE')}</button>
+    </div>
+    <div class="pagination">{$page}</div>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+<script>
+    setCookie('refersh_time', 0);
+    function refersh_window() {
+        var refersh_time = getCookie('refersh_time');
+        if (refersh_time == 1) {
+            window.location.reload();
+        }
+    }
+    setInterval(function() {
+        refersh_window()
+    }, 2000);
+</script>
+</body>
+</html>

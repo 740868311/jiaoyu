@@ -1,0 +1,378 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:U('DemandAdmin/index')}">需求管理</a></li>
+			<li class="active"><a href="{:U('DemandAdmin/add')}">添加需求</a></li>
+		</ul>
+		<form action="{:U('DemandAdmin/add_post')}" method="post" class="form-horizontal js-ajax-forms" enctype="multipart/form-data">
+			<div class="row-fluid">
+				<div class="span9">
+					<table class="table table-bordered">
+						<tr>
+							<th width="80">姓名</th>
+							<td>
+								<input type="text" style="width: 400px;" name="name" id="name" value="" placeholder="请输入姓名"/>
+								<span class="form-required">*</span>
+							</td>
+						</tr>
+						<tr>
+							<th>年级</th>
+							<td>
+								<php>
+								$grade = sp_get_grade_name();
+								</php> 
+								<select style="min-width: 50px;width:130px" name="grade_id">
+									<option value="0">--请选择年级--</option>
+									<foreach name="grade" key="k" item="vo">
+										<option value="{$k}">{$vo}</option>
+									</foreach>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<th>性别</th>
+							<td>
+								<select style="min-width: 50px;width:130px" name="sex">
+									<option value="0">--请选择性别--</option>
+									<option value="1">女</option>
+									<option value="2">男</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<th>辅导课程</th>
+							<td>
+								<php>
+									$counseling = sp_get_counseling();
+								</php>
+								<select style="min-width: 50px;" name="counseling_id[]">
+                                    <option value="0">--请选择辅导课程--</option>
+									<foreach name="counseling" key="k" item="vo">
+										<option value="{$k}">{$vo}</option>
+									</foreach>
+								</select>
+                                <select style="min-width: 50px;" name="counseling_id[]">
+                                    <option value="0">--请选择辅导课程--</option>
+									<foreach name="counseling" key="k" item="vo">
+										<option value="{$k}">{$vo}</option>
+									</foreach>
+                                </select>
+                                <select style="min-width: 50px;" name="counseling_id[]">
+                                    <option value="0">--请选择辅导课程--</option>
+									<foreach name="counseling" key="k" item="vo">
+										<option value="{$k}">{$vo}</option>
+									</foreach>
+                                </select>
+                                <div style="height:5px"></div>
+                                <input type="text" name="counseling_other" value=""/>
+							</td>
+						</tr>
+						<tr>
+							<th>拟付课酬</th>
+							<td><input type="text" name="prepayments" id="prepayments" value="" style="width: 280px" placeholder="请输入拟付课酬"> 单位：元/小时</td>
+						</tr>
+						<tr>
+							<th>家教时间</th>
+							<td>
+								<table width="480" border="1" cellspacing="0" cellpadding="0" bordercolor="#7497bf" style="text-align:center">
+									<tbody><tr>
+										<td width="26" bgcolor="#b2d0df">&nbsp;</td>
+										<td width="26" bgcolor="#b2d0df">周一</td>
+										<td width="26" bgcolor="#b2d0df">周二</td>
+										<td width="26" bgcolor="#b2d0df">周三</td>
+										<td width="26" bgcolor="#b2d0df">周四</td>
+										<td width="26" bgcolor="#b2d0df">周五</td>
+										<td width="26" bgcolor="#b2d0df">周六</td>
+										<td width="26" bgcolor="#b2d0df">周日</td>
+										<td width="26" bgcolor="#b2d0df">寒假</td>
+										<td width="24" bgcolor="#d9d6d5"><input type="checkbox" name="Z[]" value="1"></td>
+									</tr>
+									<tr>
+										<td width="26" bgcolor="#b2d0df">上午</td>
+										<td width="26" bgcolor="#d9d6d5"><input type="checkbox" name="S[]" value="1"></td>
+										<td width="26" bgcolor="#d9d6d5"><input type="checkbox" name="S[]" value="2"></td>
+										<td width="26" bgcolor="#d9d6d5"><input type="checkbox" name="S[]" value="3"></td>
+										<td width="26" bgcolor="#d9d6d5"><input type="checkbox" name="S[]" value="4"></td>
+										<td width="26" bgcolor="#d9d6d5"><input type="checkbox" name="S[]" value="5"></td>
+										<td width="26" bgcolor="#d9d6d5"><input type="checkbox" name="S[]" value="6"></td>
+										<td width="26" bgcolor="#d9d6d5"><input type="checkbox" name="S[]" value="7"></td>
+										<td width="26" bgcolor="#b2d0df">暑假</td>
+										<td width="24" bgcolor="#d9d6d5"><input type="checkbox" name="Z[]" value="2"></td>
+									</tr>
+									<tr>
+										<td width="26" bgcolor="#b2d0df">下午</td>
+										<td width="26" bgcolor="#d9d6d5"><input type="checkbox" name="X[]" value="1"></td>
+										<td width="26" bgcolor="#d9d6d5"><input type="checkbox" name="X[]" value="2"></td>
+										<td width="26" bgcolor="#d9d6d5"><input type="checkbox" name="X[]" value="3"></td>
+										<td width="26" bgcolor="#d9d6d5"><input type="checkbox" name="X[]" value="4"></td>
+										<td width="26" bgcolor="#d9d6d5"><input type="checkbox" name="X[]" value="5"></td>
+										<td width="26" bgcolor="#d9d6d5"><input type="checkbox" name="X[]" value="6"></td>
+										<td width="26" bgcolor="#d9d6d5"><input type="checkbox" name="X[]" value="7"></td>
+										<td width="26" bgcolor="#b2d0df">长期</td>
+										<td width="24" bgcolor="#d9d6d5"><input type="checkbox" name="Z[]" value="3"></td>
+									</tr>
+									<tr>
+										<td width="26" bgcolor="#b2d0df">晚上</td>
+										<td width="26" bgcolor="#d9d6d5"><input type="checkbox" name="W[]" value="1"></td>
+										<td width="26" bgcolor="#d9d6d5"><input type="checkbox" name="W[]" value="2"></td>
+										<td width="26" bgcolor="#d9d6d5"><input type="checkbox" name="W[]" value="3"></td>
+										<td width="26" bgcolor="#d9d6d5"><input type="checkbox" name="W[]" value="4"></td>
+										<td width="26" bgcolor="#d9d6d5"><input type="checkbox" name="W[]" value="5"></td>
+										<td width="26" bgcolor="#d9d6d5"><input type="checkbox" name="W[]" value="6"></td>
+										<td width="26" bgcolor="#d9d6d5"><input type="checkbox" name="W[]" value="7"></td>
+										<td width="26" bgcolor="#b2d0df">面议</td>
+										<td width="24" bgcolor="#d9d6d5"><input type="checkbox" name="Z[]" value="4"></td>
+									</tr>
+									</tbody></table>
+							</td>
+						</tr>
+						<tr>
+							<th>老师要求</th>
+							<td>
+                                <select style="min-width: 50px;width:70px" name="teacher_sex">
+                                    <option value="1">--请选择性别--</option>
+                                    <option value="1">女</option>
+                                    <option value="2">男</option>
+                                </select>
+                                <select style="min-width: 50px;width:200px" name="teacher_identity">
+                                    <option value="0">--请选择老师身份--</option>
+                                    <option value="1">大学生</option>
+                                    <option value="2">研究生</option>
+                                    <option value="3">在职老师</option>
+                                    <option value="4">专职老师</option>
+                                </select>
+                            </td>
+						</tr>
+                        <tr>
+                            <th>其他要求</th>
+                            <td>
+                                <textarea name="remarks" style="width: 400px;height: 70px;"></textarea>
+                            </td>
+                        </tr>
+						<tr>
+							<th>电话号码</th>
+							<td>
+								<input type="text" name="phone"/>
+							</td>
+						</tr>
+                        <tr>
+                            <th>家庭住址</th>
+                            <td>
+                                <input type="text" name="address"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>需求状态</th>
+                            <td>
+                                <select style="min-width: 50px;width:170px" name="status">
+                                    <option value="0">--修改状态--</option>
+                                    <option value="1">未审核</option>
+                                    <option value="2">预约中</option>
+                                    <option value="3">试讲中</option>
+                                    <option value="4">成功</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>备注信息</th>
+                            <td>
+                                <textarea name="note" style="width: 400px;height: 70px;"></textarea>
+                            </td>
+                        </tr>
+					</table>
+				</div>
+				<!--<div class="span3">-->
+					<!--<table class="table table-bordered">-->
+						<!--<tr>-->
+							<!--<th>缩略图</th>-->
+						<!--</tr>-->
+						<!--<tr>-->
+							<!--<td>-->
+								<!--<div style="text-align: center;">-->
+									<!--<input type="hidden" name="smeta[thumb]" id="thumb" value="">-->
+									<!--<a href="javascript:upload_one_image('图片上传','#thumb');">-->
+										<!--<img src="__TMPL__Public/assets/images/default-thumbnail.png" id="thumb-preview" width="135" style="cursor: hand"/>-->
+									<!--</a>-->
+									<!--<input type="button" class="btn btn-small" onclick="$('#thumb-preview').attr('src','__TMPL__Public/assets/images/default-thumbnail.png');$('#thumb').val('');return false;" value="取消图片">-->
+								<!--</div>-->
+							<!--</td>-->
+						<!--</tr>-->
+						<!--<tr>-->
+							<!--<th>发布时间</th>-->
+						<!--</tr>-->
+						<!--<tr>-->
+							<!--<td><input type="text" name="post[post_modified]" value="{:date('Y-m-d H:i:s',time())}" class="js-datetime"></td>-->
+						<!--</tr>-->
+						<!--<tr>-->
+							<!--<th>状态</th>-->
+						<!--</tr>-->
+						<!--<tr>-->
+							<!--<td>-->
+								<!--<label class="radio"><input type="radio" name="post[post_status]" value="1" checked>审核通过</label>-->
+								<!--<label class="radio"><input type="radio" name="post[post_status]" value="0">待审核</label>-->
+							<!--</td>-->
+						<!--</tr>-->
+					<!--</table>-->
+				<!--</div>-->
+			</div>
+			<div class="form-actions">
+				<button class="btn btn-primary js-ajax-submit" type="submit">{:L('ADD')}</button>
+				<a class="btn" href="javascript:history.back(-1);">{:L('BACK')}</a>
+			</div>
+		</form>
+	</div>
+	<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+	<script type="text/javascript">
+		//编辑器路径定义
+		var editorURL = GV.WEB_ROOT;
+	</script>
+	<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.config.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.all.min.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			$(".js-ajax-close-btn").on('click', function(e) {
+				e.preventDefault();
+				Wind.use("artDialog", function() {
+					art.dialog({
+						id : "question",
+						icon : "question",
+						fixed : true,
+						lock : true,
+						background : "#CCCCCC",
+						opacity : 0,
+						content : "您确定需要关闭当前页面嘛？",
+						ok : function() {
+							setCookie("refersh_time", 1);
+							window.close();
+							return true;
+						}
+					});
+				});
+			});
+			/////---------------------
+			Wind.use('validate','ajaxForm','artDialog',function() {
+				//编辑器
+				editorcontent = new baidu.editor.ui.Editor();
+				editorcontent.render('content');
+				try {
+					editorcontent.sync();
+				} catch (err) {}
+				//增加编辑器验证规则
+				jQuery.validator.addMethod('editorcontent',function() {
+					try {
+						editorcontent.sync();
+					} catch (err) {}
+					return editorcontent.hasContents();
+				});
+				
+				var form = $('form.js-ajax-forms');
+				//ie处理placeholder提交问题
+				if ($.browser && $.browser.msie) {
+					form.find('[placeholder]').each(function() {
+						var input = $(this);
+						if (input.val() == input
+								.attr('placeholder')) {
+							input.val('');
+						}
+					});
+				}
+				//表单验证开始
+				form.validate({
+					//是否在获取焦点时验证
+					onfocusout : false,
+					//是否在敲击键盘时验证
+					onkeyup : false,
+					//当鼠标掉级时验证
+					onclick : false,
+					//验证错误
+					showErrors : function(errorMap,errorArr) {
+						//errorMap {'name':'错误信息'}
+						//errorArr [{'message':'错误信息',element:({})}]
+						try {
+							$(errorArr[0].element).focus();
+							art.dialog({
+								id : 'error',
+								icon : 'error',
+								lock : true,
+								fixed : true,
+								background : "#CCCCCC",
+								opacity : 0,
+								content : errorArr[0].message,
+								cancelVal : '确定',
+								cancel : function() {
+									$(errorArr[0].element).focus();
+								}
+							});
+						} catch (err) {}
+					},
+					//验证规则
+					rules : {
+						'name' : {required : 1},
+						'phone': {digits:true},
+						'phone': {required:1}
+					},
+					//验证未通过提示消息
+					messages : {
+						'name' : {required : '请输入姓名'},
+						'phone':{digits:'请输入整数'},
+						'phone':{required:'请输入手机号'}
+					},
+					//给未通过验证的元素加效果,闪烁等
+					highlight : false,
+					//是否在获取焦点时验证
+					onfocusout : false,
+					//验证通过，提交表单
+					submitHandler : function(forms) {
+						$(forms).ajaxSubmit({
+							url : form.attr('action'), //按钮上是否自定义提交地址(多按钮情况)
+							dataType : 'json',
+							beforeSubmit : function(arr,$form,options) {
+	
+							},
+							success : function(data,statusText,xhr,$form) {
+								if (data.status) {
+									setCookie("refersh_time",1);
+									//添加成功
+									Wind.use("artDialog",function() {
+										art.dialog({
+											id : "succeed",
+											icon : "succeed",
+											fixed : true,
+											lock : true,
+											background : "#CCCCCC",
+											opacity : 0,
+											content : data.info,
+											button : [
+											{
+												name : '继续添加？',
+												callback : function() {
+													reloadPage(window);
+													return true;
+												},
+												focus : true
+											},
+											{
+												name : '返回列表',
+												callback : function() {
+													location.href = "{:U('DemandAdmin/index')}";
+													return true;
+												}
+											}
+											]
+										});
+									});
+								} else {
+									alert(data.info);
+								}
+							}
+						});
+					}
+				});
+			});
+		////-------------------------
+		});
+	</script>
+</body>
+</html>

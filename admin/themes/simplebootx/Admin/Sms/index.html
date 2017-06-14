@@ -1,0 +1,34 @@
+<admintpl file="header" />
+</head>
+<body>
+<div class="wrap">
+    <form class="form-horizontal" method="post" action="{:U('Sms/index_post')}">
+        <fieldset>
+
+            <p>是否开启群发短信</p>
+            <div class="control-group">
+                <tr>
+                    <td>
+                        <foreach name="options" item="vo" key="key">
+                            <php>$checked=$key==$value?"checked":"";</php>
+                            <label class="radio"><input type="radio" name="option" {$checked} value="{$key}" }>{$vo}</label>
+                        </foreach>
+                    </td>
+                    <br>
+                    <p>群发短信内容</p>
+
+                    <td>
+                        <textarea name="message" style="width:400px;height:80px;">{$message}</textarea>
+                    </td>
+                </tr>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary js-ajax-submit">{:L('SAVE')}</button>
+            </div>
+        </fieldset>
+    </form>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<admintpl file="header" />
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">需求管理</a></li>
+        <li><a href="{:U('DemandAdmin/add')}" target="_self">添加需求</a></li>
+    </ul>
+    <form class="well form-search" method="post" action="{:U('DemandAdmin/index')}">
+        分类：
+        <select name="term" style="width: 120px;">
+            <option value='0'>全部</option>{$taxonomys}
+        </select> &nbsp;&nbsp;
+        时间：
+        <input type="text" name="start_time" class="js-datetime" value="{$formget.start_time|default=''}" style="width: 120px;" autocomplete="off">-
+        <input type="text" class="js-datetime" name="end_time" value="{$formget.end_time|default=''}" style="width: 120px;" autocomplete="off"> &nbsp; &nbsp;
+        关键字：
+        <input type="text" name="keyword" style="width: 200px;" value="{$formget.keyword|default=''}" placeholder="请输入关键字...">
+        <input type="submit" class="btn btn-primary" value="搜索" />
+        <a class="btn btn-danger" href="{:U('DemandAdmin/index')}">清空</a>
+    </form>
+    <form class="js-ajax-form" action="" method="post">
+        <div class="table-actions">
+            <button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:U('DemandAdmin/delete')}" data-subcheck="true" data-msg="您确定删除吗？">{:L('DELETE')}</button>
+        </div>
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th width="15"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
+                <th>ID</th>
+                <th>老师姓名</th>
+                <th>老师留言</th>
+                <th>状态</th>
+                <th>预约时间</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <foreach name="ttoporder" item="vo">
+                <tr>
+                    <td><input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]" value="{$vo.id}" title="ID:{$vo.id}"></td>
+                    <td><b>{$vo.id}</b></td>
+                    <td>{$teacher[$vo['teacher_id']]}</td>
+                    <td>{$vo.teacher_message}</td>
+                    <td id="ttoporder_{$vo.id}" data="{$vo['status']}">{$status[$vo['status']]}</td>
+                    <td>
+                        {$vo.add_time}
+                    </td>
+                    <td>
+                        <a href="javascript:void(0)" onclick="modifyTag(this, {$vo.id})"><span class="label label-lg label-primary arrowed-in-right">修改</span></a>
+                    </td>
+                </tr>
+            </foreach>
+        </table>
+        <div class="pagination">{$page}</div>
+    </form>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+<script>
+    //修改状态
+    function modifyTag(obj, tid)
+    {
+        var $thatObj = $(obj);
+
+        if(!tid){
+            bootbox.alert({
+                title: "系统提示",
+                message: "错误：类别ID不能为空",
+            });
+            return false;
+        }
+
+        var status = $("#ttoporder_"+tid).attr('data');
+
+        $("#ttoporder_"+tid).html('<select style="min-width: 50px;width:120px" name="teacher_sex"><option value="1">报名中</option><option value="2">试讲中</option><option value="3">成功</option></select>');
+        $("#ttoporder_"+tid).find('select').find('option[value='+status+']').attr('selected', true);
+        $thatObj.html('<span class="label label-lg label-primary arrowed-in-right">保存</span>');
+        $thatObj.attr('onclick', 'saveExpiration(this, '+tid+')');
+    }
+
+    //保存状态
+    function saveExpiration(obj, tid)
+    {
+        var $thatObj = $(obj);
+
+        if(!tid){
+            bootbox.alert({
+                title: "系统提示",
+                message: "错误：ID不能为空",
+            });
+            return false;
+        }
+
+        var status = 1;
+        status  =    $("#ttoporder_"+tid).find('select').val();
+
+        $(obj).find('span').append('<i class="icon-spinner icon-spin orange bigger-125"></i>');
+        $(obj).removeAttr('onclick');
+
+        $.post('{:U("DemandAdmin/edit_ttoporder")}', {"id": tid,'status':status}, function(ret){
+            if(ret == 1){
+                window.location.reload();
+            }else if(ret == 2){
+                alert('修改失败，请刷新后重新尝试');
+                window.location.reload();
+            }
+        },"json");
+    }
+</script>
+</body>
+</html>

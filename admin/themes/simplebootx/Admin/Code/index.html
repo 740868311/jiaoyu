@@ -1,0 +1,28 @@
+<admintpl file="header" />
+</head>
+<body>
+<div class="wrap">
+    <form class="form-horizontal" method="post" action="{:U('Code/index_post')}">
+        <fieldset>
+            <foreach name="options" item="options_one" key="option_key">
+                <div class="control-group">
+                    <label class="control-label" for="input-gender_{$option_key}">{$status[$option_key]}登录方式</label>
+                    <div class="controls">
+                        <select name="{$option_key}" id="input-gender_{$option_key}">
+                            <foreach name="options_one['option']" item="vo" key="key">
+                                <php>$sexselected=$key==$options_one['value']?"selected":"";</php>
+                                <option value="{$key}"{$sexselected}>{$vo}</option>
+                            </foreach>
+                        </select>
+                    </div>
+                </div>
+            </foreach>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary js-ajax-submit">{:L('SAVE')}</button>
+            </div>
+        </fieldset>
+    </form>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

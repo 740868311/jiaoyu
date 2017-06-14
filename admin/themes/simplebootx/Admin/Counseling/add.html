@@ -1,0 +1,32 @@
+<admintpl file="header" />
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a  href="{:U('counseling/index')}" target="_self">浏览辅导课程</a></li>
+        <li class="active"><a href="javascript:;">添加辅导课程</a></li>
+    </ul>
+    <form class="form-horizontal js-ajax-form" action="{:U('counseling/add_post')}" method="post">
+        <div class="tabbable">
+            <div class="tab-content">
+                <div class="tab-pane active" id="A">
+                    <fieldset>
+                        <div class="control-group">
+                            <label class="control-label">辅导课程名称</label>
+                            <div class="controls">
+                                <input type="text" name="counseling" value=""><span class="form-required">*</span>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+        <div class="form-actions">
+            <button class="btn btn-primary js-ajax-submit"type="submit">{:L('ADD')}</button>
+            <a class="btn" href="javascript:history.back(-1);">{:L('BACK')}</a>
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="{:U('Teacher/index_post')}" method="post" class="form-horizontal js-ajax-forms" enctype="multipart/form-data">
+    <div class="row-fluid">
+        <div class="span9">
+            <input type="hidden" name="id" value="{$teacher.id}"/>
+            <table class="table table-bordered">
+                <tr>
+                    <th width="120">教员姓名</th>
+                    <td>
+                        <input type="text" style="width: 400px;" name="name" id="name" value="{$teacher.name}" placeholder="请输入姓名"/>
+                        <span class="form-required">*</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>性别</th>
+                    <td>
+                        <select style="min-width: 50px;width:130px" name="sex">
+                            <option value="0">--请选择性别--</option>
+                            <option value="1" {$teacher['sex'] == 1 ? 'selected' : ''}>女</option>
+                            <option value="2" {$teacher['sex'] == 2 ? 'selected' : ''}>男</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th>手机号</th>
+                    <td>
+                        <input type="text" name="phone" value="{$teacher.phone}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <th width="80">邮箱</th>
+                    <td>
+                        <input type="text" style="width: 400px;" name="email" id="email" value="{$teacher.email}" placeholder="请输入邮箱"/>
+                        <span class="form-required">*</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>身份</th>
+                    <td>
+                        <select style="min-width: 50px;width:130px" name="identity">
+                            <option value="0">--请选择身份--</option>
+                            <option value="1" {$teacher['identity'] == 1 ? 'selected' : ''}>大学生</option>
+                            <option value="2" {$teacher['identity'] == 2 ? 'selected' : ''}>研究生</option>
+                            <option value="3" {$teacher['identity'] == 3 ? 'selected' : ''}>在职教师</option>
+                            <option value="4" {$teacher['identity'] == 4 ? 'selected' : ''}>专职老师</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th>大学(大学生选填)</th>
+                    <td>
+                        <input type="text" name="university" value="{$teacher.university}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <th>专业(大学生选填)</th>
+                    <td>
+                        <input type="text" name="profession" value="{$teacher.profession}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <th>年级(大学生必填)</th>
+                    <td>
+                        <input type="text" name="grade" value="{$teacher.grade}">
+                    </td>
+                </tr>
+                <tr>
+                    <th>教学阶段(在职老师选填)</th>
+                    <td>
+                        <select style="min-width: 50px;width:130px" name="stage">
+                            <option value="0">--请选择教学阶段--</option>
+                            <option value="1" {$teacher['stage'] == 1 ? 'selected' : ''}>高中老师</option>
+                            <option value="2" {$teacher['stage'] == 2 ? 'selected' : ''}>初中老师</option>
+                            <option value="3" {$teacher['stage'] == 3 ? 'selected' : ''}>小学老师</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th>辅导课程</th>
+                    <td>
+                        <php>
+                            $counseling = sp_get_counseling();
+                        </php>
+
+                            <select style="min-width: 50px;" name="counseling_id[]">
+                                <option value="0">--请选择辅导课程--</option>
+                                <foreach name="counseling" key="k" item="vo">
+                                    <option value="{$k}" >{$vo}</option>
+                                </foreach>
+                            </select>
+                            <select style="min-width: 50px;" name="counseling_id[]">
+                                <option value="0">--请选择辅导课程--</option>
+                                <foreach name="counseling" key="k" item="vo">
+                                    <option value="{$k}" >{$vo}</option>
+                                </foreach>
+                            </select>
+                            <select style="min-width: 50px;" name="counseling_id[]">
+                                <option value="0">--请选择辅导课程--</option>
+                                <foreach name="counseling" key="k" item="vo">
+                                    <option value="{$k}" >{$vo}</option>
+                                </foreach>
+                            </select>
+
+                        <div style="height:5px"></div>
+                        <input type="text" name="counseling_other" value="{$teacher.counseling_other}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <th>自我介绍</th>
+                    <td>
+                        <textarea name="introduction">{$teacher.introduction}</textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <th>获奖经历</th>
+                    <td>
+                        <ul id="photos" class="pic-list unstyled">
+                            <notempty name="smeta['photo']">
+                                <foreach name="smeta['photo']" item="vo">
+                                    <php>$img_url=sp_get_image_preview_url($vo['url']);</php>
+                                    <li id="savedimage{$key}">
+                                        <input id="photo-{$key}" type="hidden" name="photos_url[]" value="{$img_url}">
+                                        <input id="photo-{$key}-name" type="text" name="photos_alt[]" value="{$vo.alt}" style="width: 200px;" title="图片名称">
+                                        <img id="photo-{$key}-preview" src="{:sp_get_image_preview_url($vo['url'])}" style="height:36px;width: 36px;" onclick="parent.image_preview_dialog(this.src);">
+                                        <a href="javascript:upload_one_image('图片上传','#photo-{$key}');">替换</a>
+                                        <a href="javascript:(function(){ $('#savedimage{$key}').remove();})();">移除</a>
+                                    </li>
+                                </foreach>
+                            </notempty>
+                        </ul>
+                        <a href="javascript:upload_multi_image('图片上传','#photos','photos-item-wrapper');" class="btn btn-small">选择图片</a>
+                    </td>
+                </tr>
+                <tr>
+                    <th>教学经历</th>
+                    <td>
+                        <textarea name="teaching_experience">{$teacher.teaching_experience}</textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <th>备注信息</th>
+                    <td>
+                        <textarea name="remarks">{$teacher.remarks}</textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <th>密码</th>
+                    <td>
+                        <input name="password" type="password"/>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+    <div class="form-actions">
+        <button class="btn btn-primary js-ajax-submit" type="submit">提交</button>
+        <a class="btn" href="javascript:history.back(-1);">{:L('BACK')}</a>
+    </div>
+</form>
+</body>
+</html>

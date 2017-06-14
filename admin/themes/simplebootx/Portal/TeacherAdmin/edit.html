@@ -1,0 +1,355 @@
+<admintpl file="header" />
+<script type="text/html" id="photos-item-wrapper">
+    <li id="savedimage{id}">
+        <input id="photo-{id}" type="hidden" name="photos_url[]" value="{filepath}">
+        <input id="photo-{id}-name" type="text" name="photos_alt[]" value="{name}" style="width: 160px;" title="图片名称">
+        <img id="photo-{id}-preview" src="{url}" style="height:36px;width: 36px;" onclick="parent.image_preview_dialog(this.src);">
+        <a href="javascript:upload_one_image('图片上传','#photo-{id}');">替换</a>
+        <a href="javascript:(function(){$('#savedimage{id}').remove();})();">移除</a>
+    </li>
+</script>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:U('TeacherAdmin/index')}">老师管理</a></li>
+        <li class="active"><a href="javascript:;">修改老师简历</a></li>
+    </ul>
+    <form action="{:U('TeacherAdmin/edit_post')}" method="post" class="form-horizontal js-ajax-forms" enctype="multipart/form-data">
+        <div class="row-fluid">
+            <div class="span9">
+                <input type="hidden" name="id" value="{$teacher.id}"/>
+                <table class="table table-bordered">
+                    <tr>
+                        <th width="120">教员姓名</th>
+                        <td>
+                            <input type="text" style="width: 400px;" name="name" id="name" value="{$teacher.name}" placeholder="请输入姓名"/>
+                            <span class="form-required">*</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>性别</th>
+                        <td>
+                            <select style="min-width: 50px;width:130px" name="sex">
+                                <option value="0">--请选择性别--</option>
+                                <option value="1" {$teacher['sex'] == 1 ? 'selected' : ''}>女</option>
+                                <option value="2" {$teacher['sex'] == 2 ? 'selected' : ''}>男</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>手机号</th>
+                        <td>
+                            <input type="text" name="phone" value="{$teacher.phone}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th width="80">邮箱</th>
+                        <td>
+                            <input type="text" style="width: 400px;" name="email" id="email" value="{$teacher.email}" placeholder="请输入邮箱"/>
+                            <span class="form-required">*</span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>身份</th>
+                        <td>
+                            <select style="min-width: 50px;width:130px" name="identity">
+                                <option value="0">--请选择身份--</option>
+                                <option value="1" {$teacher['identity'] == 1 ? 'selected' : ''}>大学生</option>
+                                <option value="2" {$teacher['identity'] == 2 ? 'selected' : ''}>研究生</option>
+                                <option value="3" {$teacher['identity'] == 3 ? 'selected' : ''}>在职教师</option>
+                                <option value="4" {$teacher['identity'] == 4 ? 'selected' : ''}>专职老师</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>大学(大学生选填)</th>
+                        <td>
+                            <input type="text" name="university" value="{$teacher.university}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>专业(大学生选填)</th>
+                        <td>
+                            <input type="text" name="profession" value="{$teacher.profession}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>年级(大学生必填)</th>
+                        <td>
+                            <input type="text" name="grade" value="{$teacher.grade}">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>教学阶段(在职老师选填)</th>
+                        <td>
+                            <select style="min-width: 50px;width:130px" name="stage">
+                                <option value="0">--请选择教学阶段--</option>
+                                <option value="1" {$teacher['stage'] == 1 ? 'selected' : ''}>高中老师</option>
+                                <option value="2" {$teacher['stage'] == 2 ? 'selected' : ''}>初中老师</option>
+                                <option value="3" {$teacher['stage'] == 3 ? 'selected' : ''}>小学老师</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>辅导课程</th>
+                        <td>
+                            <php>
+                                $counseling = sp_get_counseling();
+                            </php>
+                            <foreach name="teacher['counseling_ids']" item="counseling_one">
+                                <select style="min-width: 50px;" name="counseling_id[]">
+                                    <option value="0">--请选择辅导课程--</option>
+                                    <foreach name="counseling" key="k" item="vo">
+                                        <option value="{$k}" {$counseling_one == $k ? 'selected' : ''}>{$vo}</option>
+                                    </foreach>
+                                </select>
+                            </foreach>
+                            <div style="height:5px"></div>
+                            <input type="text" name="counseling_other" value="{$teacher.counseling_other}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>自我介绍</th>
+                        <td>
+                            <textarea name="introduction">{$teacher.introduction}</textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>获奖经历</th>
+                        <td>
+                            <ul id="photos" class="pic-list unstyled">
+                                <notempty name="smeta['photo']">
+                                    <foreach name="smeta['photo']" item="vo">
+                                        <php>$img_url=sp_get_image_preview_url($vo['url']);</php>
+                                        <li id="savedimage{$key}">
+                                            <input id="photo-{$key}" type="hidden" name="photos_url[]" value="{$img_url}">
+                                            <input id="photo-{$key}-name" type="text" name="photos_alt[]" value="{$vo.alt}" style="width: 200px;" title="图片名称">
+                                            <img id="photo-{$key}-preview" src="{:sp_get_image_preview_url($vo['url'])}" style="height:36px;width: 36px;" onclick="parent.image_preview_dialog(this.src);">
+                                            <a href="javascript:upload_one_image('图片上传','#photo-{$key}');">替换</a>
+                                            <a href="javascript:(function(){ $('#savedimage{$key}').remove();})();">移除</a>
+                                        </li>
+                                    </foreach>
+                                </notempty>
+                            </ul>
+                            <a href="javascript:upload_multi_image('图片上传','#photos','photos-item-wrapper');" class="btn btn-small">选择图片</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>教学经历</th>
+                        <td>
+                            <textarea name="teaching_experience">{$teacher.teaching_experience}</textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>状态(是否明星教员)</th>
+                        <td>
+                            <select style="min-width: 50px;width:130px" name="status">
+                                <option value="0">--请选择阶段--</option>
+                                <option value="1" {$teacher['status'] == 1 ? 'selected' : ''}>普通老师</option>
+                                <option value="2" {$teacher['status'] == 2 ? 'selected' : ''}>明星教员</option>
+                            </select>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>备注信息</th>
+                        <td>
+                            <textarea name="remarks">{$teacher.remarks}</textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>是否拉黑</th>
+                        <td>
+                            <select style="min-width: 50px;width:130px" name="is_black">
+                                <option value="0">--请选择操作--</option>
+                                <option value="1" {$teacher['is_black'] == 1 ? 'selected' : ''}>正常</option>
+                                <option value="2" {$teacher['is_black'] == 2 ? 'selected' : ''}>拉黑</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="span3">
+                <table class="table table-bordered">
+                    <tr>
+                        <td><b>缩略图</b></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="text-align: center;">
+                                <input type="hidden" name="smeta[thumb]" id="thumb" value="{$smeta.thumb|default=''}">
+                                <a href="javascript:upload_one_image('图片上传','#thumb');">
+                                    <if condition="empty($smeta['thumb'])">
+                                        <img src="__TMPL__Public/assets/images/default-thumbnail.png" id="thumb-preview" width="135" style="cursor: hand"/>
+                                        <else />
+                                        <img src="{:sp_get_image_preview_url($smeta['thumb'])}" id="thumb-preview" width="135" style="cursor: hand"/>
+                                    </if>
+                                </a>
+                                <input type="button" class="btn btn-small" onclick="$('#thumb-preview').attr('src','__TMPL__Public/assets/images/default-thumbnail.png');$('#thumb').val('');return false;" value="取消图片">
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="form-actions">
+            <button class="btn btn-primary js-ajax-submit" type="submit">修改</button>
+            <a class="btn" href="javascript:history.back(-1);">{:L('BACK')}</a>
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+<script type="text/javascript">
+    //编辑器路径定义
+    var editorURL = GV.WEB_ROOT;
+</script>
+<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.all.min.js"></script>
+<script type="text/javascript">
+    $(function() {
+        $(".js-ajax-close-btn").on('click', function(e) {
+            e.preventDefault();
+            Wind.use("artDialog", function() {
+                art.dialog({
+                    id : "question",
+                    icon : "question",
+                    fixed : true,
+                    lock : true,
+                    background : "#CCCCCC",
+                    opacity : 0,
+                    content : "您确定需要关闭当前页面嘛？",
+                    ok : function() {
+                        setCookie("refersh_time", 1);
+                        window.close();
+                        return true;
+                    }
+                });
+            });
+        });
+        /////---------------------
+        Wind.use('validate','ajaxForm','artDialog',function() {
+            //编辑器
+            editorcontent = new baidu.editor.ui.Editor();
+            editorcontent.render('content');
+            try {
+                editorcontent.sync();
+            } catch (err) {}
+            //增加编辑器验证规则
+            jQuery.validator.addMethod('editorcontent',function() {
+                try {
+                    editorcontent.sync();
+                } catch (err) {}
+                return editorcontent.hasContents();
+            });
+
+            var form = $('form.js-ajax-forms');
+            //ie处理placeholder提交问题
+            if ($.browser && $.browser.msie) {
+                form.find('[placeholder]').each(function() {
+                    var input = $(this);
+                    if (input.val() == input
+                                    .attr('placeholder')) {
+                        input.val('');
+                    }
+                });
+            }
+            //表单验证开始
+            form.validate({
+                //是否在获取焦点时验证
+                onfocusout : false,
+                //是否在敲击键盘时验证
+                onkeyup : false,
+                //当鼠标掉级时验证
+                onclick : false,
+                //验证错误
+                showErrors : function(errorMap,errorArr) {
+                    //errorMap {'name':'错误信息'}
+                    //errorArr [{'message':'错误信息',element:({})}]
+                    try {
+                        $(errorArr[0].element).focus();
+                        art.dialog({
+                            id : 'error',
+                            icon : 'error',
+                            lock : true,
+                            fixed : true,
+                            background : "#CCCCCC",
+                            opacity : 0,
+                            content : errorArr[0].message,
+                            cancelVal : '确定',
+                            cancel : function() {
+                                $(errorArr[0].element).focus();
+                            }
+                        });
+                    } catch (err) {}
+                },
+                //验证规则
+                rules : {
+                    'name' : {required : 1},
+                    'phone': {digits:true},
+                    'phone': {required:1}
+                },
+                //验证未通过提示消息
+                messages : {
+                    'name' : {required : '请输入姓名'},
+                    'phone':{digits:'请输入整数'},
+                    'phone':{required:'请输入手机号'}
+                },
+                //给未通过验证的元素加效果,闪烁等
+                highlight : false,
+                //是否在获取焦点时验证
+                onfocusout : false,
+                //验证通过，提交表单
+                submitHandler : function(forms) {
+                    $(forms).ajaxSubmit({
+                        url : form.attr('action'), //按钮上是否自定义提交地址(多按钮情况)
+                        dataType : 'json',
+                        beforeSubmit : function(arr,$form,options) {
+
+                        },
+                        success : function(data,statusText,xhr,$form) {
+                            if (data.status) {
+                                setCookie("refersh_time",1);
+                                //添加成功
+                                Wind.use("artDialog",function() {
+                                    art.dialog({
+                                        id : "succeed",
+                                        icon : "succeed",
+                                        fixed : true,
+                                        lock : true,
+                                        background : "#CCCCCC",
+                                        opacity : 0,
+                                        content : data.info,
+                                        button : [
+                                            {
+                                                name : '继续修改？',
+                                                callback : function() {
+                                                    reloadPage(window);
+                                                    return true;
+                                                },
+                                                focus : true
+                                            },
+                                            {
+                                                name : '返回列表',
+                                                callback : function() {
+                                                    location.href = "{:U('TeacherAdmin/index')}";
+                                                    return true;
+                                                }
+                                            }
+                                        ]
+                                    });
+                                });
+                            } else {
+                                alert(data.info);
+                            }
+                        }
+                    });
+                }
+            });
+        });
+        ////-------------------------
+    });
+</script>
+</body>
+</html>
