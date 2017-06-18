@@ -1,0 +1,215 @@
+body,html{
+    background-color: #F6F6F6;
+}
+.student-container{
+    margin-top: 40px;
+    padding: 0px 20px;
+}
+.student-right{
+    width: 280px;
+    box-sizing: border-box;
+    background-color: #fff;
+    float: right;
+}
+.student-left{
+    width: 880px;
+    padding: 0 20px 40px;
+    background-color: #fff;
+    float: left;
+    box-sizing: border-box;
+}
+.student-left .stu-title,
+.student-right .stu-right-title{
+    border-bottom: 1px solid #F0F0F0;
+    height: 60px;
+    line-height: 60px;
+}
+.student-left .stu-title li{
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+    padding: 0 30px;
+    float: left;
+    font-weight: 500;
+    cursor: pointer;
+}
+.stu-title li.active{
+    color: #4AADF2;
+    border-bottom: 2px solid #4AADF2;
+}
+.part-box{
+    padding: 20px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+.part-box .part-info-title{
+    height: 40px;
+    line-height: 40px;
+    padding: 0 30px;
+    margin-bottom: 10px;
+    background-color: #f6f6f6;
+}
+.part-box .part-info-title span{
+    padding: 0 8px;
+    border-right: 1px solid #e5e5e5;
+}
+.part-box .part-info-title span:first-child{
+    padding-left: 0;
+}
+.part-box .part-info-title span:last-child{
+    border-right: none;
+}
+.part-box .part-info-title .sex{
+    width: 22px;
+    height:22px;
+    border-radius: 50%;
+    display: inline-block;
+    line-height: 22px;
+    text-align: center;
+    color: #fff;
+    font-size: 12px;
+}
+.part-box .part-info-title .sex.woman{
+    background-color: #FF8E8E;
+}
+.part-box .part-info-title .sex.man{
+    background-color: #4AADF2;
+}
+.part-info-left{
+    width: 77%;
+    padding-left: 30px;
+}
+.part-info-left p{
+    font-size: 12px;
+    line-height: 26px;
+}
+.part-info-right{
+    width: 13%;
+}
+.look{
+    width: 108px;
+    height: 32px;
+    border-radius: 2px;
+    line-height: 32px;
+    text-align: center;
+    color: #fff;
+    margin-top: 24px;
+    background-color: #4AADF2;
+    cursor: pointer;
+}
+.faculty-box-right .look{
+    margin-top: 40px;
+}
+.part-info-right.teacher-box div{
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin: 0 auto;
+    background-color: pink;
+}
+.part-info-right.teacher-box p{
+    text-align: center;
+    margin-top: 10px;
+}
+.stu-right-title{
+    padding-left: 30px;
+}
+.stu-right-content{
+    padding: 20px 30px;
+}
+.stu-right-content p{
+    line-height: 26px;
+    color: #666;
+}
+.weixin{
+    border-top: 20px solid #F6F6F6;
+}
+.weixin-box{
+    width: 140px;
+    height: 140px;
+    margin: 20px auto;
+    background-color: pink;
+}
+/*faculty*/
+.faculty-content{
+    padding-bottom: 20px;
+}
+.faculty-left{
+    background-color: #f6f6f6;
+}
+.faculty-left-top{
+    padding: 20px;
+    background-color: #fff;
+}
+.faculty-left-bottom{
+    padding:0 20px;
+    background-color: #fff;
+    border-top: 20px solid #F6F6F6;
+}
+.faculty-type{
+    height: 60px;
+    line-height: 60px;
+    border-bottom: 1px solid #f0f0f0;
+}
+.faculty-type li{
+    float: left;
+    padding: 0 8px;
+    cursor: pointer;
+}
+.faculty-type li.active{
+    color: #4AADF2;
+    border-bottom: 2px solid #4AADF2;
+}
+.faculty-box{
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    width: 100%;
+}
+.faculty-box-left,.faculty-box-right{
+    flex: 1;
+}
+.faculty-box-middle{
+    flex: 3;
+}
+.faculty-box-middle{
+    padding-left: 10px;
+}
+.part-info-text{
+    line-height: 34px;
+}
+.faculty-photo{
+    width: 80%;
+    height: 100%;
+    background-color: pink;
+    margin: 0 auto;
+}
+.faculty-box .part-info-title{
+    padding: 0;
+    background: none;
+    margin-bottom: 0;
+}
+.teach-type{
+    border-radius: 10px;
+    background: #FD9929;
+    font-size: 12px;
+    color: #fff;
+    height: 20px;
+    line-height: 20px;
+    display: inline-block;
+}
+.teach-type i{
+    font-size: 12px;
+    margin-right: 4px;
+}
+.app-box-tab{
+    display: none;
+}
+.app-success-container{
+    display: block;
+}
+.faculty-content{
+    display: none;
+}
+.all-faculty{
+    display: block;
+}

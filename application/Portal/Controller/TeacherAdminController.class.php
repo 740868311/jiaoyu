@@ -211,6 +211,7 @@ class TeacherAdminController extends AdminbaseController {
 
             $result=$this->teacher_model->save($data);
             if ($result !== false) {
+                $this->add_json();
                 $this->success("保存成功！");
             } else {
                 $this->error("保存失败！");
@@ -232,6 +233,7 @@ class TeacherAdminController extends AdminbaseController {
             if(isset($_GET['id'])){
                 $id = I("get.id",0,'intval');
                 if ($this->teacher_model->delete($id)) {
+                    $this->add_json();
                     $this->success("删除成功！");
                 } else {
                     $this->error("删除失败！");
@@ -322,5 +324,23 @@ class TeacherAdminController extends AdminbaseController {
         } else {
             return $this->error("请稍后重试！");;
         }
+    }
+
+    // 更新首页家长需求的json      首页家长需求显示
+    public function add_json()
+    {
+        $where['status']    =   2;
+        $teacher_data = $this->teacher_model->where($where)->order('last_time desc')->limit('0,12')->select();
+
+        $json_array	=	file_get_contents(SITE_PATH.'/index_json/index.json');
+
+        if ($json_array) {
+            $json_array	=	json_decode($json_array, true);
+        }
+
+        $json_array['teacher']	=	$teacher_data;
+        $json_array 	=	json_encode($json_array);
+
+        file_put_contents(SITE_PATH.'/index_json/index.json', $json_array);
     }
 }

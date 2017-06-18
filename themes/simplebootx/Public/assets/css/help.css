@@ -1,0 +1,81 @@
+body,html{
+    background-color: #F6F6F6;
+}
+.help-container{
+    margin-top: 40px;
+}
+.help-left-container{
+    width: 280px;
+    background-color: #fff;
+}
+.help-title{
+    height: 60px;
+    border-bottom: 1px solid #F0F0F0;
+    padding-left: 30px;
+    font-weight: 500;
+    font-size: 16px;
+    box-sizing: border-box;
+    line-height: 60px;
+}
+.help-content{
+    padding: 20px 30px;
+}
+.help-content li{
+    font-size: 14px;
+    color: #666;
+    line-height: 26px;
+    list-style: disc;
+    cursor: pointer;
+}
+.help-left-container{
+    background-color: #fff;
+}
+.help-right-container{
+    width: 840px;
+    padding: 0 22px 20px;
+    background-color: #fff;
+}
+.help-right-container ul{
+    height: 60px;
+    line-height: 60px;
+    border-bottom: 1px solid #f0f0f0;
+}
+.help-right-container ul li{
+    padding: 0 8px;
+    font-weight: 500;
+    text-align: center;
+    float: left;
+    cursor: pointer;
+}
+.help-right-container ul li.active{
+    color: #4AADF2;
+    border-bottom: 2px solid #4AADF2;
+}
+.parent-help h1{
+    text-align: center;
+    margin-top: 60px;
+    font-size: 18px;
+    font-weight: 700;
+}
+.parent-help p{
+    margin: 20px 0 40px;
+    text-align: center;
+}
+.help-box-c{
+    width:540px;
+    height: 304px;
+    background-color: pink;
+    margin: 30px auto 40px;
+}
+.help-box .photo-box{
+    height: 400px;
+    background: url('../img/flow.png') no-repeat center center;
+    background-size: contain;
+}
+.help-box-tab{
+    display: none;
+}
+.parent-help{
+    display: block;
+}
+

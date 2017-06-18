@@ -1,0 +1,254 @@
+body{
+    background-color: #f6f6f6;
+}
+.banner,.swiper-container{
+    width: 100%;
+    height: 500px;
+    background: pink;
+}
+.part-box{
+    height: 220px;
+    margin: 40px auto;
+}
+/*5个方块*/
+.part-box div{
+    width: 220px;
+    height: 220px;
+    float: left;
+    margin-right: 16px;
+    border-radius: 20px;
+    box-sizing: border-box;
+}
+.part-box .square-top{
+    height: 82px;
+    width: 100%;
+    text-align: center;
+    position: relative;
+}
+.part-box .square-top span{
+    line-height: 82px;
+    color: #fff;
+    font-size: 40px;
+    font-weight: 700;
+}
+.part-box .square-top i{
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -39px;
+    font-size: 40px;
+    color: #00c6da;
+}
+.part-box .part-square p{
+    margin-top: 150px;
+    text-align: center;
+    font-size: 20px;
+}
+.part-box .appoint p{
+    color: #00c6da;
+}
+.part-box .communicate p,
+.part-box .communicate i{
+    color: #ffa800;
+}
+.part-box .try p,
+.part-box .try i{
+    color: #8a4fb1;
+}
+.part-box .sure p,
+.part-box .sure i{
+    color: #ff005a;
+}
+.part-box .teaching p,
+.part-box .teaching i{
+    color: #8ec627;
+}
+.part-square .square-top{
+    background-color: #00c6da;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.communicate .square-top{
+    background-color: #ffa800;
+}
+.try .square-top{
+    background-color: #8a4fb1;
+}
+.sure .square-top{
+    background-color: #ff005a;
+}
+.teaching .square-top{
+    background-color: #8ec627;
+}
+.appoint{
+    border: 1px solid #00c6da;
+}
+.communicate{
+    border: 1px solid #ffa800;
+}
+.try{
+    border: 1px solid #8a4fb1;
+}
+.sure{
+    border: 1px solid #ff005a;
+}
+.teaching{
+    border: 1px solid #8ec627;
+}
+.order-container{
+    margin-bottom: 20px;
+}
+.order-container .order-content-box{
+    width: 100%;
+    background-color: #fff;
+}
+.table-header{
+    border-bottom: 1px solid #4AADF2;
+    display: flex;
+}
+.table-col{
+    flex: 1;
+    text-align: center;
+}
+.table-header .table-col{
+    font-size: 16px;
+    height: 50px;
+    line-height: 50px;
+}
+.table-body .table-tr{
+    display: flex;
+}
+.table-body .table-col{
+    font-size: 14px;
+    padding: 15px 0;
+}
+.table-body .status{
+    color: #f37676;
+}
+.table-body .look{
+    color: #4AADF2;
+}
+/*优点*/
+.advantages{
+    width: 100%;
+    background-color: #fff;
+}
+.advantages-container{
+    height: auto;
+}
+.advantages-container .dis-flex-item{
+    text-align: center;
+    padding: 20px 0;
+}
+.advantages-container .dis-flex-item .font-box span{
+    position: relative;
+    font-size: 100px;
+    color: #00c6da;
+}
+.advantages-container .dis-flex-item i{
+    font-size: 68px;
+    position: absolute;
+    top: 16px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    color: #00c6da;
+}
+.advantages-container .dis-flex-item h2{
+    margin: 8px 0 13px;
+    font-size: 18px;
+}
+.advantages-container .dis-flex-item p{
+    font-size: 14px;
+    line-height: 16px;
+    padding: 0 20px;
+}
+/*teachers*/
+.person-container{
+    width: 100%;
+    padding-top: 40px;
+    background: #f6f6f6;
+}
+.person-content{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+.person-box{
+    width: 280px;
+    height: 360px;
+    background: #fff;
+    margin-bottom: 16px;
+    box-sizing: border-box;
+    padding: 30px;
+}
+.person-box .person-photo{
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    background: url('../img/testimg.png') no-repeat center center;
+    background-size: contain;
+}
+.person-box .title{
+    font-size: 16px;
+    float: none;
+    text-align: center;
+    margin: 24px 0;
+}
+.person-box .school{
+    font-size: 12px;
+    text-align: center;
+}
+.person-box .title .vertical{
+    width: 2px;
+    height: 12px;
+    background: #4AADF2;
+    display: inline-block;
+    margin-right: 10px;
+}
+.person-box:nth-child(even) .title .vertical{
+    background: #B05ED8;
+}
+/*notice*/
+.notice-container{
+    background: #f6f6f6;
+}
+.notice-container .notice-content{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+.notice-container .notice-box{
+    width:380px;
+    height: 430px;
+    margin-bottom: 20px;
+    background: #fff;
+}
+.notice-container .notice-box .notice-box-title{
+    padding: 0 15px;
+    height: 50px;
+    background: #4AADF2;
+    line-height: 50px;
+    font-size: 18px;
+    color: #fff;
+}
+.notice-container .notice-box-title .float-right{
+    font-size: 14px;
+}
+.notice-container ul{
+    padding: 20px 20px 24px;
+}
+.notice-container ul li{
+    line-height: 20px;
+    margin: 14px 0;
+}
+.notice-container ul li span{
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: #d8d8d8;
+    margin-right: 8px;
+    display: inline-block;
+    vertical-align: middle;
+}

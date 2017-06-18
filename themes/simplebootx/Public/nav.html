@@ -1,63 +1,53 @@
 {:hook('body_start')}
-<div class="navbar navbar-fixed-top">
-   <div class="navbar-inner">
-     <div class="container">
-       <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-         <span class="icon-bar"></span>
-         <span class="icon-bar"></span>
-         <span class="icon-bar"></span>
-       </a>
-       <a class="brand" href="__ROOT__/"><img src="__TMPL__Public/assets/images/logo.png"/></a>
-       <div class="nav-collapse collapse" id="main-menu">
-       	<?php
-			$effected_id="main-menu";
-		  	$filetpl="<a href='\$href' target='\$target'>\$label</a>";
-		  	$foldertpl="<a href='\$href' target='\$target' class='dropdown-toggle' data-toggle='dropdown'>\$label <b class='caret'></b></a>";
-		  	$ul_class="dropdown-menu" ;
-		  	$li_class="li-class" ;
-		  	$style="nav";
-		  	$showlevel=6;
-		  	$dropdown='dropdown';
-		  	echo sp_get_menu("main",$effected_id,$filetpl,$foldertpl,$ul_class,$li_class,$style,$showlevel,$dropdown);
-		?>
-		
-		<ul class="nav pull-right" id="main-menu-user">
-			<!-- <li class="user login" style="margin-left: 5px;">
-	            <a class="dropdown-toggle user notifactions" href="{:U('user/notification/index')}">
-	            <i class="fa fa-envelope"></i>
-	            <span class="count">0</span>
-	            </a>
-          	</li> -->
-			<li class="dropdown user login">
-	            <a class="dropdown-toggle user" data-toggle="dropdown" href="#">
-	            <img src="__TMPL__Public/assets/images/headicon.png" class="headicon"/>
-	            <span class="user-nicename"></span><b class="caret"></b></a>
-	            <ul class="dropdown-menu pull-right">
-	               <li><a href="{:U('user/center/index')}"><i class="fa fa-user"></i> &nbsp;个人中心</a></li>
-	               <li class="divider"></li>
-	               <li><a href="{:U('user/index/logout')}"><i class="fa fa-sign-out"></i> &nbsp;退出</a></li>
-	            </ul>
-          	</li>
-          	<li class="dropdown user offline">
-	            <a class="dropdown-toggle user" data-toggle="dropdown" href="#">
-	           		<img src="__TMPL__Public/assets/images/headicon.png" class="headicon"/>登录<b class="caret"></b>
-	            </a>
-	            <ul class="dropdown-menu pull-right">
-	               <li><a href="{:U('api/oauth/login',array('type'=>'sina'))}"><i class="fa fa-weibo"></i> &nbsp;微博登录</a></li>
-	               <li><a href="{:U('api/oauth/login',array('type'=>'qq'))}"><i class="fa fa-qq"></i> &nbsp;QQ登录</a></li>
-	               <li><a href="{:leuu('user/login/index')}"><i class="fa fa-sign-in"></i> &nbsp;登录</a></li>
-	               <li class="divider"></li>
-	               <li><a href="{:leuu('user/register/index')}"><i class="fa fa-user"></i> &nbsp;注册</a></li>
-	            </ul>
-          	</li>
-		</ul>
-		<div class="pull-right">
-        	<form method="post" class="form-inline" action="{:U('portal/search/index')}" style="margin:18px 0;">
-				 <input type="text" class="" placeholder="Search" name="keyword" value="{:I('get.keyword')}"/>
-				 <input type="submit" class="btn btn-info" value="Go" style="margin:0"/>
-			</form>
+<header>
+	<div class="header-info">
+		<div class="container clearfix">
+			<div class="logo"></div>
+			<div class="info">
+				<div class="te">
+					<a href="" class="te-login">老师登录</a>
+					<a href="">老师注册</a>
+				</div>
+				<i class="icon iconfont icon-phone"></i>
+				<div>
+					<p>咨询热线</p>
+					<p>+86-18234567890</p>
+				</div>
+			</div>
 		</div>
-       </div>
-     </div>
-   </div>
- </div>
+	</div>
+	<nav>
+		<ul class="container clearfix">
+			<?php
+				$menu = sp_get_menu();
+				$current_id = $_GET['id'] ? $_GET['id'] : 1;
+				$current[$current_id] = 'active';
+				foreach($menu as $menu_one) {
+					echo '<li class="'.$current[$menu_one['id']].'" ><a href="'.$menu_one['href'].'">'.$menu_one['label'].'</a></li>';
+			}
+			?>
+			<!--<li class="active"><a href="index.html">首页</a></li>-->
+			<!--<li><a href="tutor.html">请家教</a></li>-->
+			<!--<li><a href="teacher.html">当老师</a></li>-->
+			<!--<li><a href="faculty.html">教员库</a></li>-->
+			<!--<li><a href="star.html">明星教员</a></li>-->
+			<!--<li><a href="student.html">学员库</a></li>-->
+			<!--<li><a href="help.html">帮助</a></li>-->
+		</ul>
+	</nav>
+</header>
+<section class="banner">
+	<div class="swiper-container">
+		<div class="swiper-wrapper">
+			<div class="swiper-slide"><img src="__TMPL__Public/assets/images/banner1.jpg" alt=""></div>
+			<div class="swiper-slide"><img src="__TMPL__Public/assets/images/banner2.jpg" alt=""></div>
+			<div class="swiper-slide"><img src="__TMPL__Public/assets/images/banner3.jpg" alt=""></div>
+		</div>
+		<!-- 如果需要分页器 -->
+		<div class="swiper-pagination"></div>
+
+		<!-- 如果需要导航按钮 -->
+		<div class="swiper-button-prev"></div>
+		<div class="swiper-button-next"></div>
+	</div>
+</section>

@@ -1,0 +1,236 @@
+body,html{
+    background-color: #F6F6F6;
+}
+.te-detail-container{
+    margin-top: 40px;
+    background-color: #fff;
+}
+.top-content{
+    height: 200px;
+    border-bottom: 30px solid #f6f6f6;
+}
+.bottom-content{
+    background-color: #f6f6f6;
+}
+.left-bo-content{
+    width: 880px;
+    background-color: #fff;
+}
+.right-bo-content{
+    width: 280px;
+    background-color: #fff;
+    border-top: 4px solid #4AADF2;
+    box-sizing: border-box;
+}
+.right-bo-content .title{
+    height: 60px;
+    width: 100%;
+    line-height: 60px;
+    text-align: center;
+    border-bottom: 1px solid #ccc;
+    float: none;
+    font-size: 14px;
+}
+.right-bo-form form{
+    padding: 0 10px;
+}
+.form-items{
+    margin-top: 20px;
+}
+.form-items p span{
+    color: #FF1616;
+    margin-right: 4px;
+}
+.form-items p{
+    font-size: 14px;
+    font-weight: 600;
+}
+.form-items input,.form-items select{
+    width: 100%;
+    height: 40px;
+    border: 1px solid #ccc;
+    padding-left: 15px;
+    box-sizing: border-box;
+    margin-top: 10px;
+}
+.form-items .code-input{
+    width: 130px;
+}
+.form-items .code-img{
+    width: 120px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    display: inline-block;
+    border: 1px solid #ccc;
+}
+.form-items .message-code{
+    background-color: #47A5E7;
+    color: #fff;
+    border-color:#47A5E7;
+}
+.form-btn{
+    width: 100%;
+    height:40px;
+    line-height: 40px;
+    text-align: center;
+    color: #fff;
+    background-color: #4AADF2;
+    margin: 20px 0;
+    font-size: 16px;
+}
+.weixin{
+    border-top: 20px solid #F6F6F6;
+}
+.weixin-box{
+    width: 140px;
+    height: 140px;
+    margin: 20px auto;
+    background-color: pink;
+}
+.left-bo-content{
+    padding: 0 20px;
+    background-color: #fff;
+    box-sizing: border-box;
+}
+.menu{
+    height: 60px;
+    border-bottom: 1px solid #f0f0f0;
+}
+.left-bo-content .tab{
+    height: 60px;
+    float: left;
+}
+.left-bo-content .yue-teacher{
+    float: right;
+    width: 118px;
+    height: 28px;
+    border-radius: 3px;
+    background-color: #FF4242;
+    margin-top: 16px;
+    color: #fff;
+    font-weight: 400;
+    text-align: center;
+    line-height: 28px;
+}
+.left-bo-content .tab li{
+    float: left;
+    padding: 0 8px;
+    line-height: 60px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 400;
+}
+.left-bo-content .tab li.active{
+    border-bottom: 2px solid #4AADF2;
+}
+.menu-content{
+    padding: 20px 0;
+}
+.menu-content .info{
+    line-height: 20px;
+    color: #666;
+    text-indent: 2em;
+    margin-bottom: 40px;
+}
+.menu-content .img{
+    width: 390px;
+    height: 290px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    background-color: #fff;
+    float: left;
+    background-color: pink;
+}
+.menu-content .table{
+    border-top: 1px solid #4AADF2;
+    border-left: 1px solid #4AADF2;
+    width: 100%;
+}
+.menu-content .header .col{
+    font-weight: 700;
+}
+.menu-content .col{
+    height: 50px;
+    line-height: 52px;
+    border-right: 1px solid #4AADF2;
+    border-bottom: 1px solid #4AADF2;
+}
+.menu-content .col-bg{
+    background-color: #F3FAFF;
+}
+.menu-content .col span{
+    width:118px;
+    height:28px;
+    text-align: center;
+    line-height: 28px;
+    color: #fff;
+    background-color: #4AADF2;
+    display: inline-block;
+}
+/*top info*/
+.top-content .person-photo{
+    width: 200px;
+    height: 200px;
+    float: left;
+    background-color: pink;
+}
+.top-content .right-info{
+    margin-left: 200px;
+    height:200px;
+    padding: 24px 0 12px 0;
+}
+.right-top-title{
+    padding-left: 30px;
+}
+.right-top-title span{
+    padding: 0 10px;
+    border-right: 1px solid #f0f0f0;
+}
+.sex{
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 20px;
+    color: #fff;
+}
+.sex.girl{
+    background-color: #FF8E8E;
+    padding:0;
+}
+.sex.boy{
+    background-color: #4AADF2;
+    padding:0;
+}
+.right-top-title .teacher-name{
+    font-size: 18px;
+    font-weight: 700;
+    padding-left:0;
+}
+.right-info .sub{
+    padding-left: 30px;
+    margin: 24px 0;
+    line-height: 20px;
+}
+.right-bottom-title{
+    border-top: 1px solid #f0f0f0;
+    padding: 14px 0 14px 30px;
+    width: 100%;
+    height: 80px;
+    box-sizing: border-box;
+}
+.right-bottom-title .flex-item{
+    border-right: 1px solid #f0f0f0;
+}
+.right-bottom-title .flex-item:last-child{
+    border-right: none;
+}
+.right-bottom-title .flex-item h2,
+.right-bottom-title .flex-item p{
+    text-align: center;
+}
+.right-bottom-title .flex-item p{
+    margin-top:20px;
+}

@@ -605,6 +605,13 @@ function sp_get_menu($id="main",$menu_root_ul_id="mainmenu",$filetpl="<span clas
 		$navs=_sp_get_menu_datas($id);
 	}
 
+	$swap = array();
+	foreach($navs as $nav) {
+		$swap[$nav['id']] = $nav;
+	}
+
+	return $swap;
+
 	import("Tree");
 	$tree = new \Tree();
 	$tree->init($navs);
@@ -636,7 +643,8 @@ function _sp_get_menu_datas($id){
 		$hrefold=$href;
 		if(strpos($hrefold,"{")){//序列 化的数据
 			$href=unserialize(stripslashes($nav['href']));
-            $href=strtolower(leuu($href['action'],$href['param']));
+            $href=strtolower(leuu($href['action'],array('id'=>$nav['id'])));
+//            $href=strtolower(leuu($href['action'],$href['param']));
 			$href=preg_replace("/\/$default_app\//", "/",$href);
 			$href=preg_replace("/$g=$default_app&/", "",$href);
 		}else{

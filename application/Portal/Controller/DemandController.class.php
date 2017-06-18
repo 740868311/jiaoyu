@@ -77,6 +77,7 @@ class DemandController extends HomebaseController {
 				$result = $this->demand_model->add($data);
 			}
 			if ($result) {
+                $this->add_json();
 				$this->success("添加成功！");
 			} else {
 				$this->error("添加失败！");
@@ -195,5 +196,22 @@ class DemandController extends HomebaseController {
 		}
 		$where['id']	=	$id;
 		$this->demand_model->where($where)->select();
+	}
+
+	// 更新首页家长需求的json      首页家长需求显示
+	public function add_json()
+	{
+		$demand_data = $this->demand_model->order('add_time desc')->limit('0,10')->select();
+
+		$json_array	=	file_get_contents(SITE_PATH.'/index_json/index.json');
+
+		if ($json_array) {
+			$json_array	=	json_decode($json_array, true);
+		}
+
+		$json_array['demand']	=	$demand_data;
+		$json_array 	=	json_encode($json_array);
+
+		file_put_contents(SITE_PATH.'/index_json/index.json', $json_array);
 	}
 }

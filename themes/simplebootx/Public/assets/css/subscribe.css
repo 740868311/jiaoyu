@@ -1,0 +1,196 @@
+body{
+    background-color: #F6F6F6;
+}
+.subs-container{
+    margin-top: 40px;
+}
+.subs-left{
+    width: 280px;
+    background-color: #fff;
+    text-align: center;
+}
+.subs-right{
+    width: 880px;
+    background-color: #fff;
+}
+.person-img{
+    width: 140px;
+    height:140px;
+    border-radius: 50%;
+    background-color: pink;
+    margin: 40px auto 20px;
+}
+.subs-left h2{
+    text-align: center;
+    font-weight: 700;
+}
+.subs-left span{
+    width:86px;
+    height:22px;
+    display: inline-block;
+    font-size: 12px;
+    border-radius: 20px;
+    background-color: #FD992A;
+    color: #fff;
+    text-align: center;
+    line-height: 22px;
+    margin-top: 10px;
+}
+.subs-left span i{
+    margin-right: 4px;
+    font-size: 12px;
+}
+.subs-left ul{
+    border-top: 1px solid #f0f0f0;
+    margin-top: 20px;
+}
+.subs-left ul li{
+    height: 46px;
+    line-height: 46px;
+    text-align: left;
+    padding-left: 30px;
+    cursor: pointer;
+}
+.subs-left ul li.active{
+    border-left: 2px solid #4AADF1;
+}
+.subs-right{
+    padding: 0 20px 20px;
+    box-sizing: border-box;
+}
+.subs-right .tab{
+    height: 60px;
+    border-bottom: 1px solid #f0f0f0;
+}
+.subs-right .tab li{
+    height: 60px;
+    line-height: 60px;
+    padding:0 8px;
+    float: left;
+    cursor: pointer;
+}
+.subs-right .tab li.active{
+    border-bottom: 2px solid #4AADF1;
+    box-sizing: border-box;
+}
+.subs-right .subs-item{
+    line-height: 66px;
+    height: 66px;
+    border-bottom: 1px solid #f0f0f0;
+}
+.subs-right .subs-item .subsed{
+    width: 120px;
+    height:32px;
+    display: inline-block;
+    text-align: center;
+    line-height: 32px;
+    color: #fff;
+    background-color: #FD9929;
+    border-radius: 3px;
+    margin-top: 17px;
+}
+.subs-right .subs-item .no-subsed{
+
+}
+.subs-right .none-subs{
+    text-align: center;
+    margin-top: 50px;
+}
+.subs-right .none-subs a{
+    color: #FE534B;
+}
+.subs-right .subs-item div span{
+    color: #999;
+    line-height: 66px;
+    cursor: pointer;
+}
+.subs-right .subs-item div span:first-child{
+    border-right: 1px solid #999;
+    padding-right: 4px;
+}
+/*.form-control{
+    width: 460px;
+}
+.form-control label{
+    float: left;
+    line-height: 40px;
+}
+.form-control input{
+    float: right;
+}*/
+.upload-box{
+    width:330px;
+    height: 330px;
+    border: 10px solid #F2F2F2;
+    margin: 20px 0;
+}
+.change-photo .btn{
+    margin-left: 100px;
+}
+.subs-container .title{
+    font-size: 14px;
+}
+.subs-container .vertical{
+    height: 14px;
+}
+/*Ô¤Ô¼¼Ò³¤*/
+.part-box{
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+.part-box .part-info-title{
+    height: 40px;
+    line-height: 40px;
+    padding: 0 30px;
+    margin-bottom: 10px;
+    background-color: #f6f6f6;
+}
+.part-box .part-info-title span{
+    padding: 0 8px;
+    border-right: 1px solid #e5e5e5;
+}
+.part-box .part-info-title span:first-child{
+    padding-left: 0;
+}
+.part-box .part-info-title span:last-child{
+    border-right: none;
+}
+.part-box .part-info-title .sex{
+    width: 22px;
+    height:22px;
+    border-radius: 50%;
+    display: inline-block;
+    line-height: 22px;
+    text-align: center;
+    color: #fff;
+    font-size: 12px;
+}
+.part-box .part-info-title .sex.woman{
+    background-color: #FF8E8E;
+}
+.part-box .part-info-title .sex.man{
+    background-color: #4AADF2;
+}
+.part-info-left{
+    width: 77%;
+    padding-left: 30px;
+}
+.part-info-left p{
+    font-size: 12px;
+    line-height: 26px;
+}
+.part-info-right{
+    width: 13%;
+}
+.success{
+    margin-top: 20px;
+}
+.right-container,.my-resume-content,.subs-info{
+    display: none;
+}
+.change-resume-box,.person-info,.my-subs{
+    display: block;
+}
+.title-box{
+    padding-top: 20px;
+}

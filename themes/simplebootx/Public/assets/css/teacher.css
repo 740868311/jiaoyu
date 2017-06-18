@@ -1,0 +1,20 @@
+body,html{
+    background-color: #F6F6F6;
+}
+.form-container{
+    background-color: #fff;
+    padding: 60px 40px;
+    margin-top: 20px;
+}
+.form-container .form-title{
+    font-size: 26px;
+    margin-bottom: 30px;
+    text-align: center;
+    letter-spacing: 3px;
+}
+.upload-box{
+    width: 280px;
+    height: 280px;
+    border: 1px solid #e6e6e6;
+    margin-left: 4px;
+}

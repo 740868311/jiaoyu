@@ -1,0 +1,73 @@
+body,html{
+    background-color: #F6F6F6;
+}
+.please-tutor-container .container p{
+    text-align: center;
+    font-size: 26px;
+    margin: 90px 0 80px;
+}
+.please-tutor-container .content-box{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+}
+.please-tutor-container .tutor-box{
+    width: 380px;
+    height: 280px;
+    background-color: #fff;
+}
+.please-tutor-container .tutor-box .tutor-num{
+    width: 82px;
+    height: 82px;
+    border-radius: 50%;
+    background-color: #A8D9FB;
+    text-align: center;
+    line-height: 82px;
+    color: #fff;
+    font-weight: 700;
+    margin: -40px auto 0;
+    font-size: 30px;
+}
+.content-box .tutor-box .tutor-title{
+    font-size: 20px;
+    text-align: center;
+    width: 130px;
+    margin: 0 auto;
+    padding: 24px 0px 11px;
+    border-bottom: 1px solid #e8e8e8;
+}
+.content-box .tutor-box .tutor-info{
+    color: #666;
+    font-size: 14px;
+    line-height: 26px;
+    margin: 40px auto 0;
+    width: 168px;
+    height: 100px;
+}
+.content-box .tutor-box .tutor-info span,
+.content-box .tutor-box .tutor-info a{
+    color: #ff5347;
+}
+.demand-container{
+    margin: 40px 0;
+}
+.demand-container .container h1{
+    font-size: 22px;
+    text-align: center;
+}
+.demand-container .container h2{
+    font-size: 14px;
+    margin: 40px 0 30px;
+    text-align: center;
+}
+.demand-container .container .s-color{
+    color: #ff0000;
+}
+.demand-info-box{
+    background-color: #fff;
+    padding: 63px 40px 40px;
+}
+.demand-container .title-box{
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e8e8e8;
+}

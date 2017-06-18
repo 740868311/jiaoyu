@@ -1,0 +1,523 @@
+/**
+ * Eric Meyer's Reset CSS v2.0 (http://meyerweb.com/eric/tools/css/reset/)
+ * http://cssreset.com
+ */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video, input {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font-weight: normal;
+    font-style: normal;
+    vertical-align: baseline;
+    font-family: 'microsoft yahei';
+}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, menu, nav, section {
+    display: block;
+}
+
+body {
+    line-height: 1;
+    font-size: 14px;
+    color: #333;
+    font-family: "microsoft yahei","Helvetica Neue","Helvetica","Arial","sans-serif";
+}
+
+blockquote, q {
+    quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/* custom */
+a {
+    color: #7e8c8d;
+    text-decoration: none;
+    -webkit-backface-visibility: hidden;
+}
+
+li {
+    list-style: none;
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+
+::-webkit-scrollbar-track-piece {
+    background-color: rgba(0, 0, 0, 0.2);
+    -webkit-border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:vertical {
+    height: 5px;
+    background-color: rgba(125, 125, 125, 0.7);
+    -webkit-border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:horizontal {
+    width: 5px;
+    background-color: rgba(125, 125, 125, 0.7);
+    -webkit-border-radius: 6px;
+}
+.clearfix:before,
+.clearfix:after {
+    content: "";
+    display: table;
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+.clearfix {
+    *zoom: 1;
+    /*IE/7/6*/
+}
+html, body {
+    width: 100%;
+}
+
+body {
+    -webkit-text-size-adjust: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+select,input{
+    font-family: 'microsoft yahei';
+}
+/*顶部*/
+.header-info{
+    height: 45px;
+    background-color: #fff;
+    border-top: 10px solid #4aadf2;
+}
+.container{
+    width: 1180px;
+    margin: 0 auto;
+}
+nav{
+    width: 100%;
+    height: 40px;
+    background-color: #4aadf2;
+}
+nav ul{
+    display: flex;
+}
+nav li{
+    flex:1;
+    text-align: center;
+    line-height: 40px;
+    width: 58px;
+    cursor: pointer;
+}
+nav li a{
+    color: #fff;
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+}
+nav li:hover,nav li.active{
+    background-color: #369adf;
+}
+.header-info .logo{
+    width: 100px;
+    height: 35px;
+    margin:5px 0;
+    background-color: pink;
+    float: left;
+}
+.header-info .info{
+    float: right;
+    position: relative;
+    height: 45px;
+}
+.header-info .info .te{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 110px;
+    height: 14px;
+    right: 190px;
+    margin: auto;
+}
+.header-info .info .te-login{
+    display: inline-block;
+    width: 54px;
+    border-right: 1px solid #666;
+}
+.header-info .info a{
+    font-size: 12px;
+    color: #666;
+}
+.header-info .info i{
+    font-size: 32px;
+    color: #de3b3b;
+}
+.header-info .info div{
+    display: inline-block;
+}
+.header-info .info div p:first-child{
+    font-size: 12px;
+    margin: 4px 0;
+}
+.header-info .info div p:last-child{
+    font-size: 16px;
+    color: #de3b3b;
+}
+/*布局*/
+.dis-flex{
+    display: flex;
+}
+.flex-item{
+    flex: 1;
+}
+/*标题*/
+.title-box{
+    margin-bottom: 20px;
+}
+.title{
+    float: left;
+    font-size: 18px;
+}
+.more{
+    float: right;
+    font-size: 14px;
+    cursor: pointer;
+}
+.vertical{
+    width: 6px;
+    height: 18px;
+    background: #4AADF2;
+    display: inline-block;
+    margin-right: 10px;
+}
+.float-left{
+    float: left;
+}
+.float-right{
+    float: right;
+}
+/*footer*/
+footer{
+    margin-top: 40px;
+    background: #313131;
+}
+.footer-container{
+    display: flex;
+    padding-bottom: 50px;
+    padding-top: 40px;
+}
+footer .footer-part{
+    flex: 1;
+    color: #FAFAFA;
+}
+footer .footer-part h1{
+    margin-bottom: 24px;
+    font-size: 16px;
+}
+footer .footer-part li{
+    margin-bottom: 14px;
+    font-size: 14px;
+}
+footer .footer-part li a{
+    color: #FAFAFA;
+}
+footer .qrcode{
+    width: 120px;
+    height: 120px;
+    background: pink;
+}
+footer .copyright-box{
+    background: #373737;
+    padding: 30px 0;
+    text-align: center;
+    color: #FAFAFA;
+}
+footer .copyright-box div{
+    margin: 24px auto 30px;
+}
+footer .copyright-box div span{
+    width: 126px;
+    height: 26px;
+    display: inline-block;
+    background: pink;
+}
+footer .copyright-box div span:first-child{
+    margin-right: 20px;
+}
+footer .icon-phone{
+    font-size: 60px;
+    text-align: center;
+    color: #fff;
+}
+footer .footer-part:last-child{
+    text-align: center;
+}
+footer .footer-part .my-tel{
+    font-size: 20px;
+    margin-top: 6px;
+    margin-bottom: 20px;
+}
+/*form*/
+.form-control{
+    width: 90%;
+    margin-bottom: 10px;
+    padding-left: 100px;
+}
+.form-control input,
+.form-control select{
+    width: 480px;
+    height: 40px;
+    border: 1px solid #ccc;
+    padding-left: 4px;
+    box-sizing: border-box;
+    border-radius: 3px;
+    float: left;
+}
+.form-control label span{
+    color: #ff0000;
+    vertical-align: middle;
+}
+.sex-box{
+    line-height:40px;
+}
+.form-control label:first-child{
+    float: left;
+    width: 80px;
+    height:40px;
+    line-height: 40px;
+}
+.form-control .middel-input{
+    width: 360px;
+}
+.form-control .span-code{
+    margin-left: 18px;
+}
+.form-control .small-sel{
+    width: 109px;
+    height: 40px;
+    margin-left: 18px;
+}
+.form-control .small-sel-two{
+    margin-left: 0;
+    margin-right: 18px;
+}
+/*.form-control{
+    margin-bottom: 10px;
+    padding-left: 100px;
+}
+.form-control label{
+    margin-right: 20px;
+}
+.form-control label span{
+    color: #ff0000;
+    vertical-align: middle;
+}
+.form-control input{
+    width: 360px;
+    height: 40px;
+    border-radius: 2px;
+    border: 1px solid #ccc;
+    padding-left: 4px;
+    box-sizing: border-box;
+}
+.form-control select{
+    height:40px;
+    border-radius: 2px;
+    border: 1px solid #ccc;
+}
+.form-control .small-sel{
+    width: 110px;
+}
+.form-control .middel-sel{
+    width: 362px;
+}
+.form-control .large-sel{
+    width: 474px;
+}
+.nolabel-form-control input{
+    width: 474px;
+}*/
+.situation{
+    margin: 30px 0;
+}
+.icon-choose,.icon-ring,
+.icon-squre,.icon-check-squre{
+    color: #00c6da;
+    cursor: pointer;
+}
+.table{
+    width:474px;
+    margin-left: 4px;
+    border-top: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+}
+.table .header,
+.table .row{
+    display: flex;
+}
+.table .col{
+    flex: 1;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+}
+
+.form-control .tags{
+    margin-left: 10px;
+    width: 400px;
+}
+.form-control .tag{
+    padding: 4px 6px;
+    float: left;
+    border: 1px solid #00c6da;
+    border-radius: 20px;
+    margin: 2px;
+}
+.form-control .span-code,
+.form-control .span-btn{
+    width: 109px;
+    height: 40px;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 40px;
+    color: #fff;
+}
+.form-control .span-btn{
+    background-color: #4AADF2;
+    border-color: #4AADF2;
+    text-align: center;
+    cursor: pointer;
+}
+.btn{
+    width: 160px;
+    height: 48px;
+    border-radius: 4px;
+    font-size: 20px;
+    line-height: 48px;
+    background-color: #fd9929;
+    letter-spacing: 8px;
+    text-align: center;
+    color: #fff;
+    margin-left: 186px;
+    margin-top: 30px;
+    cursor: pointer;
+}
+.form-control textarea{
+    width: 477px;
+    height: 140px;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    margin-left: 3px;
+    resize: none;
+    padding: 4px;
+    box-sizing: border-box;
+    vertical-align: middle;
+}
+.my-radio{
+    cursor: pointer;
+}
+.my-radio i{
+    font-size: 15px;
+}
+/*validate*/
+input.error,select.error{
+    border: 1px solid #ff4800;
+}
+.error input, .error select{
+    border: 1px solid #ff4800;
+}
+label.error{
+    color: #ff4800;
+    line-height: 40px;
+    margin-left: 4px;
+}
+/*login*/
+
+.mask{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,.5);
+    z-index: 9;
+    overflow: hidden;
+}
+.login-box{
+    width: 40%;
+    background-color: #fff;
+    position: absolute;
+    box-sizing: border-box;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.login-box .title{
+    height: 58px;
+    line-height: 58px;
+    width: 100%;
+    background-color: #4AADF2;
+    color: #fff;
+    text-align: center;
+    font-size: 16px;
+    position: relative;
+}
+.login-box .close{
+    position: absolute;
+    top: -2px;
+    right: 20px;
+    cursor: pointer;
+}
+.container-content{
+    padding: 4px 20px;
+}
+.container-content .form-control{
+    padding-left: 0;
+}
+.container-content .form-control input,
+.container-content .form-control select{
+    width: 80%;
+}
+.container-content .login-btn{
+    width: 80%;
+    height: 42px;
+    line-height: 42px;
+    background-color: #4AADF2;
+    color: #fff;
+    text-align: center;
+    font-size: 16px;
+    border-radius: 3px;
+    margin: auto;
+    margin-bottom: 10px;
+    display: block;
+    cursor: pointer;
+}
