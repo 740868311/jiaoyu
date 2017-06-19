@@ -323,6 +323,30 @@ class DemandAdminController extends AdminbaseController {
         if ($json_array) {
             $json_array	=	json_decode($json_array, true);
         }
+        // 年级
+        $grade = sp_get_grade_name();
+
+        // 性别
+        $sex = array(
+            1   =>'女',
+            2   =>'男'
+        );
+
+        // 得到辅导课程
+        $counseling = sp_get_counseling();
+
+        foreach($demand_data as $k=>$demand_one) {
+            $counseling_data = explode(',', $demand_one['counseling_ids']);
+            $swap = array();
+            foreach($counseling_data as $counseling_one) {
+                $swap[] = $counseling[$counseling_one];
+            }
+            $counseling_data = implode(',', $swap);
+            $demand_data[$k]['counseling']  =   $counseling_data;
+            $demand_data[$k]['grade_name']  =   $grade[$demand_one['grade_id']];
+            $demand_data[$k]['sex']         =   $sex[$demand_one['sex']];
+            $demand_data[$k]['status']      =   $this->status[$demand_one['status']];
+        }
 
         $json_array['demand']	=	$demand_data;
         $json_array 	=	json_encode($json_array);

@@ -24,8 +24,6 @@ class TeacherAdminController extends AdminbaseController {
             3=>'预约中',
             4=>'成功',
         );
-
-
     }
 
     // 后台页面管理列表
@@ -331,6 +329,12 @@ class TeacherAdminController extends AdminbaseController {
     {
         $where['status']    =   2;
         $teacher_data = $this->teacher_model->where($where)->order('last_time desc')->limit('0,12')->select();
+        foreach($teacher_data as $k=>$teacher_one) {
+            $thumb  =   $teacher_one['smeta'];
+            $thumb  =   json_decode($thumb, true);
+            $thumb  =   $thumb['thumb'];
+            $teacher_data[$k]['url']   =   sp_get_image_preview_url($thumb);
+        }
 
         $json_array	=	file_get_contents(SITE_PATH.'/index_json/index.json');
 

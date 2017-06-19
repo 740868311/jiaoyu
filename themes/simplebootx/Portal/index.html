@@ -7,107 +7,254 @@
 </head>
 <body>
 <tc_include file="Public:nav" />
+<section class="banner">
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide"><img src="__TMPL__Public/assets/images/banner1.jpg" alt=""></div>
+            <div class="swiper-slide"><img src="__TMPL__Public/assets/images/banner2.jpg" alt=""></div>
+            <div class="swiper-slide"><img src="__TMPL__Public/assets/images/banner3.jpg" alt=""></div>
+        </div>
+        <!-- 如果需要分页器 -->
+        <div class="swiper-pagination"></div>
 
-<php>
-	$home_slides=sp_getslide("portal_index");
+        <!-- 如果需要导航按钮 -->
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+    </div>
+</section>
+<section class="part-box container">
+	<div class="part-square appoint">
+		<div class="square-top">
+			<span>1</span>
+			<i class="icon iconfont icon-water"></i>
+		</div>
+		<p>在线预约需求</p>
+	</div>
+	<div class="part-square communicate">
+		<div class="square-top">
+			<span>2</span>
+			<i class="icon iconfont icon-water"></i>
+		</div>
+		<p>沟通详细需求</p>
+	</div>
+	<div class="part-square try">
+		<div class="square-top">
+			<span>3</span>
+			<i class="icon iconfont icon-water"></i>
+		</div>
+		<p>老师上门试讲</p>
+	</div>
+	<div class="part-square sure">
+		<div class="square-top">
+			<span>4</span>
+			<i class="icon iconfont icon-water"></i>
+		</div>
+		<p>最终确定老师</p>
+	</div>
+	<div class="part-square teaching">
+		<div class="square-top">
+			<span>5</span>
+			<i class="icon iconfont icon-water"></i>
+		</div>
+		<p>全程跟踪教学</p>
+	</div>
+</section>
 
-	$home_slides=empty($home_slides)?$default_home_slides:$home_slides;
-</php>
-<ul id="homeslider" class="unstyled">
-	<foreach name="home_slides" item="vo">
-		<li>
-			<div class="caption-wraper">
-				<div class="caption">{$vo.slide_name}</div>
+<section class="order-container container">
+	<div class="title-box clearfix">
+		<p class="title"><span class="vertical"></span>最新请家教订单</p>
+		<p class="more">更多>></p>
+	</div>
+	<div class="order-content-box">
+		<div class="table-header">
+			<div class="table-col">编号</div>
+			<div class="table-col">年级</div>
+			<div class="table-col">性别</div>
+			<div class="table-col">辅导科目</div>
+			<div class="table-col">地址</div>
+			<div class="table-col">状态</div>
+			<div class="table-col">操作</div>
+		</div>
+		<div class="table-body">
+			<div class="table-tr">
+				<div class="table-col">暂时没有订单</div>
+				<div class="table-col">12212</div>
+				<div class="table-col">四年级</div>
+				<div class="table-col">男</div>
+				<div class="table-col">英语、数学</div>
+				<div class="table-col">万科金域华府万科金</div>
+				<div class="table-col status">报名中</div>
+				<div class="table-col look">点击查看</div>
 			</div>
-			<a href="{$vo.slide_url}"><img src="{:sp_get_asset_upload_path($vo['slide_pic'])}" alt=""></a>
-		</li>
-	</foreach>
-</ul>
-<div class="container">
+		</div>
+	</div>
+</section>
 
-	<div>
-		<h1 class="text-center">快速了解ThinkCMF</h1>
-		<h3 class="text-center">Quickly understand the ThinkCMF</h3>
-	</div>
-	<div class="row">
-		<div class="span4">
-			<h2 class="font-large nospace"><i class="fa fa-bars"></i> MVC分层模式</h2>
-			<p>使用MVC应用程序被分成三个核心部件：模型（M）、视图（V）、控制器（C），他不是一个新的概念，只是ThinkCMF将其发挥到了极致。</p>
-		</div>
-		<div class="span4">
-			<h2 class="font-large nospace"><i class="fa fa-group"></i> 用户管理</h2>
-			<p>ThinkCMF内置了灵活的用户管理方式，并可直接与第三方站点进行互联互通，如果你愿意甚至可以对单个用户或群体用户的行为进行记录及分享，为您的运营决策提供有效参考数据。</p>
-		</div>
-		<div class="span4">
-			<h2 class="font-large nospace"><i class="fa fa-cloud"></i> 云端部署</h2>
-			<p>通过驱动的方式可以轻松支持云平台的部署，让你的网站无缝迁移，内置已经支持SAE、BAE，正式版将对云端部署进行进一步优化。</p>
-		</div>
-	</div>
-
-	<div class="row">
-		<div class="span4">
-			<h2 class="font-large nospace"><i class="fa fa-heart"></i> 安全策略</h2>
-			<p>提供的稳健的安全策略，包括备份恢复，容错，防治恶意攻击登陆，网页防篡改等多项安全管理功能，保证系统安全，可靠，稳定的运行。</p>
-		</div>
-		<div class="span4">
-			<h2 class="font-large nospace"><i class="fa fa-cubes"></i> 应用模块化</h2>
-			<p>提出全新的应用模式进行扩展，不管是你开发一个小功能还是一个全新的站点，在ThinkCMF中你只是增加了一个APP，每个独立运行互不影响，便于灵活扩展和二次开发。</p>
-		</div>
-		<div class="span4">
-			<h2 class="font-large nospace"><i class="fa fa-certificate"></i> 免费开源</h2>
-			<p>代码遵循Apache2开源协议，免费使用，对商业用户也无任何限制。</p>
-		</div>
-	</div>
-
-	<div>
-		<h1 class="text-center">最新资讯</h1>
-		<h3 class="text-center">Last News</h3>
-	</div>
-	<php>
-		$lastnews=sp_sql_posts("cid:$portal_index_lastnews;field:post_title,post_excerpt,object_id,smeta,term_id;order:listorder asc;limit:4;");
-	</php>
-	<div class="row">
-		<foreach name="lastnews" item="vo">
-			<php>$smeta=json_decode($vo['smeta'],true);</php>
-			<div class="span3">
-				<div class="tc-gridbox">
-					<div class="header">
-						<div class="item-image">
-							<a href="{:leuu('article/index',array('id'=>$vo['object_id'],'cid'=>$vo['term_id']))}">
-								<if condition="empty($smeta['thumb'])">
-									<img src="__TMPL__Public/assets/images/default_tupian1.png" class="img-responsive" alt="{$vo.post_title}"/>
-									<else />
-									<img src="{:sp_get_asset_upload_path($smeta['thumb'])}" class="img-responsive img-thumbnail" alt="{$vo.post_title}" />
-								</if>
-							</a>
-						</div>
-						<h3><a href="{:leuu('article/index',array('id'=>$vo['object_id'],'cid'=>$vo['term_id']))}">{$vo.post_title}</a></h3>
-						<hr>
-					</div>
-					<div class="body">
-						<p><a href="{:leuu('article/index',array('id'=>$vo['object_id'],'cid'=>$vo['term_id']))}">{:msubstr($vo['post_excerpt'],0,32)}</a></p>
-					</div>
-				</div>
+<section class="advantages">
+	<div class="container advantages-container dis-flex">
+		<div class="flex-item dis-flex-item">
+			<div class="font-box">
+                <span class="icon iconfont icon-hexagon">
+                    <i class="icon iconfont icon-hat"></i>
+                </span>
 			</div>
-		</foreach>
+			<h2>学霸经验</h2>
+			<p>名校学生传授学习经验，学生更懂学生，掌握学习方法更重要。</p>
+		</div>
+		<div class="flex-item dis-flex-item">
+			<div class="font-box">
+                <span class="icon iconfont icon-hexagon">
+                    <i class="icon iconfont icon-certification"></i>
+                </span>
+			</div>
+			<h2>实名认证</h2>
+			<p>所有授课教员均需要提供身份证、学生证等证件，进行实名认证。</p>
+		</div>
+		<div class="flex-item dis-flex-item">
+			<div class="font-box">
+                <span class="icon iconfont icon-hexagon">
+                    <i class="icon iconfont icon-draw"></i>
+                </span>
+			</div>
+			<h2>个性化辅导</h2>
+			<p>根据学习情况制定辅导计划，因材施教，确保学员成绩提高。</p>
+		</div>
+		<div class="flex-item dis-flex-item">
+			<div class="font-box">
+                <span class="icon iconfont icon-hexagon">
+                    <i class="icon iconfont icon-door"></i>
+                </span>
+			</div>
+			<h2>上门试讲</h2>
+			<p>您支付的课时费，将由平台保管，如果您对授课家教服务不满意，可以时申请退款。</p>
+		</div>
 	</div>
-	<tc_include file="Public:footer"/>
-</div>
+</section>
+<section class="person-container">
+	<div class="container">
+		<div class="title-box clearfix">
+			<p class="title"><span class="vertical"></span>明星教员</p>
+			<p class="more">更多>></p>
+		</div>
+		<div class="person-content">
+			<!--<div class="person-box">
+                <div class="person-photo"></div>
+                <p class="title"><span class="vertical"></span>吴老师</p>
+                <p class="school"><i class="icon iconfont "></i>广西大学</p>
+            </div>-->
+		</div>
+	</div>
+</section>
+<section class="notice-container">
+	<div class="container">
+		<div class="notice-content">
+			<!--<div class="notice-box">
+                <div class="notice-box-title clearfix">
+                    <div class="float-left">最新公告</div>
+                    <div class="float-right">更多>></div>
+                </div>
+                <ul>
+                    <li><span></span>家长初次使用流程说明[必看]</li>
+                    <li><span></span>家教总动员2017年招商简介</li>
+                    <li><span></span>家教参考资费</li>
+                    <li><span></span>[北京]各高校普通老师基础价格表</li>
+                    <li><span></span>寒假期间正常安排家教</li>
+                    <li><span></span>[北京]金牌名师价格表</li>
+                    <li><span></span>女大学生家教老师，安全注意事项</li>
+                    <li><span></span>关于教员认证说明</li>
+                    <li><span></span>大学生家教如何写好简历？</li>
+                    <li><span></span>大学生家教和专职老师有什么区别？</li>
+                </ul>
+            </div>-->
+		</div>
+	</div>
+</section>
+
+
+<tc_include file="Public:footer"/>
 
 <tc_include file="Public:scripts"/>
-<script src="__TMPL__Public/assets/js/slippry.min.js"></script>
 <script>
-	$(function() {
-		var demo1 = $("#homeslider").slippry({
-			transition: 'fade',
-			useCSS: true,
-			captions: false,
-			speed: 1000,
-			pause: 3000,
-			auto: true,
-			preload: 'visible'
-		});
-	});
+    $(function(){
+        function renderOrder(orders){
+            var html = '';
+            for(var i=0;i<orders.length;i++){
+                html +='<div class="table-tr">'
+                        +'<div class="table-col">'+orders[i].id+'</div>'
+                        +'<div class="table-col">'+orders[i].grade_name+'</div>'
+                        +'<div class="table-col">'+orders[i].sex+'</div>'
+                        +'<div class="table-col">'+orders[i].counseling+'</div>'
+                        +'<div class="table-col">'+orders[i].address+'</div>'
+                        +'<div class="table-col status">'+orders[i].status+'</div>'
+                        +'<div class="table-col"><a class="look" href="">点击查看</a></div>' +
+                        '</div>';
+            }
+            $('.table-body').html(html);
+        }
+        function renderStar(stars){
+            var html = '';
+            for(var i=0;i<stars.length;i++){
+                html +='<div class="person-box">'+
+                        '<div class="person-photo"><img width="220" height="220" src="'+stars[i].url+'"></div>'+
+                        '<p class="title"><span class="vertical"></span>'+stars[i].name+'</p>'+
+                        '<p class="school"><i class="icon iconfont "></i>'+stars[i].university+'</p>'+
+                        '</div>'
+            }
+            $('.person-content').html(html);
+        }
+        function renderNotice(notices){
+            var html = '';
+            for(var i=0;i<notices.length;i++){
+                html ='<div class="notice-box">'+
+                        '<div class="notice-box-title clearfix">'+
+                        '<div class="float-left">'+notices[i].title+'</div>'+
+                        '<div class="float-right">更多>></div>'+
+                        '</div>'+
+                        '<ul>';
+                var inHtml = '';
+                for(var j=0;j<notices[i].content.length;j++){
+                    inHtml +='<li><span></span>'+notices[i].content[j]+'</li>'
+                }
+                html = html+inHtml+
+                        '</ul>'+
+                        '</div>';
+                $('.notice-content').append(html);
+            }
+        }
+        AjaxGet('/index_json/index.json',function(data){
+            renderOrder(data.demand);//最新请家教订单
+            renderStar(data.teacher);//明星教员
+            renderNotice(data.notices);//公告
+        },function(){
+
+        });
+
+        //
+        var mySwiper = new Swiper ('.swiper-container', {
+            autoplay: 3000,
+            direction: 'horizontal',
+            loop: true,
+
+            // 如果需要分页器
+            pagination: '.swiper-pagination',
+
+            // 如果需要前进后退按钮
+            nextButton: '.swiper-button-next',
+            prevButton: '.swiper-button-prev'
+        });
+        //关闭
+        $('.close').on('click', function(){
+            $('.login-container').hide();
+        });
+        //登录
+        $('.login-btn').on('click',function(){
+            $('.login-container').hide();
+        });
+        //登录
+        $('.te-login').on('click', function(){
+            $('.login-container').show();
+        });
+    });
 </script>
 {:hook('footer_end')}
 </body>

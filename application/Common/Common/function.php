@@ -600,7 +600,7 @@ hello;
  */
 
 function sp_get_menu($id="main",$menu_root_ul_id="mainmenu",$filetpl="<span class='file'>\$label</span>",$foldertpl="<span class='folder'>\$label</span>",$ul_class="" ,$li_class="" ,$menu_root_ul_class="filetree",$showlevel=6,$dropdown='hasChild'){
-	$navs=F("site_nav_".$id);
+//	$navs=F("site_nav_".$id);
 	if(empty($navs)){
 		$navs=_sp_get_menu_datas($id);
 	}
@@ -635,7 +635,7 @@ function _sp_get_menu_datas($id){
 	}
 
 	$navs= $nav_obj->where(array('cid'=>$id,'status'=>1))->order(array("listorder" => "ASC"))->select();
-	
+
 	$default_app=strtolower(C("DEFAULT_MODULE"));
 	$g=C("VAR_MODULE");
 	foreach ($navs as $key=>$nav){
@@ -661,6 +661,17 @@ function _sp_get_menu_datas($id){
 	return $navs;
 }
 
+/*
+ * 得到文章ID的类型id
+ * */
+function sp_get_menu_type_id($id)
+{
+    $nav_obj= M("Nav");
+    $nav= $nav_obj->where(array('id'=>$id,'status'=>1))->find();
+    $href=htmlspecialchars_decode($nav['href']);
+    $href=unserialize(stripslashes($nav['href']));
+    return $href['param']['id'];
+}
 
 function sp_get_menu_tree($id="main"){
 	$navs=F("site_nav_".$id);
@@ -1882,9 +1893,10 @@ function sp_send_sms($type, $phone, $message, $code='0000')
 			$_SESSION['yzm']['code']	=	$code;
 			$_SESSION['yzm']['time']	=	time();
 		} else if ((time() - $_SESSION['yzm']['time']) < 60) {
-			$data['status']	=	0;
-			$data['message']	=	'发送太频繁，请'.(60-(time()-$_SESSION['yzm']['time'])).'秒后，重新发送验证码！';
-			return $data;die;
+			$data['code']	=	0;
+			$data['msg']	=	'发送太频繁，请'.(60-(time()-$_SESSION['yzm']['time'])).'秒后，重新发送验证码！';
+			echo json_encode($data);
+			return true;
 		} else {
 			$_SESSION['yzm']['code']	=	$code;
 			$_SESSION['yzm']['time']	=	time();

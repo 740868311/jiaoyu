@@ -13,8 +13,11 @@ class ListController extends HomebaseController {
 
 	// 前台文章列表
 	public function index() {
-	    $term_id=I('get.id',0,'intval');
-		$term=sp_get_term($term_id);
+		$term_id	=	I('get.id',0,'intval');
+
+		$type_id	=	sp_get_menu_type_id($term_id);
+
+		$term=sp_get_term($type_id);
 		
 		if(empty($term)){
 		    header('HTTP/1.1 404 Not Found');

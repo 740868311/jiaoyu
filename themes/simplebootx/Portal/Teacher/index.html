@@ -1,0 +1,240 @@
+<tc_include file="Public:head" />
+<script>
+    //全局变量
+    var GV = {
+        ROOT: "__ROOT__/",
+        WEB_ROOT: "__WEB_ROOT__/",
+        JS_ROOT: "public/js/",
+        APP:'{$Think.MODULE_NAME}'/*当前应用名*/
+    };
+</script>
+<link href="__PUBLIC__/js/artDialog/skins/default.css" rel="stylesheet" />
+<link rel="stylesheet" href="__TMPL__Public/assets/css/base.css">
+<link rel="stylesheet" href="__TMPL__Public/assets/css/iconfont/iconfont.css">
+<link rel="stylesheet" href="__TMPL__Public/assets/css/teacher.css">
+</head>
+<body>
+<tc_include file="Public:nav" />
+<section class="form-container container">
+    <h1 class="form-title">教员在线提交个人简历</h1>
+
+    <form action="" class="teacher-validate">
+        <div class="base-info">
+            <div class="title-box clearfix">
+                <p class="title"><span class="vertical"></span>基本情况</p>
+            </div>
+            <div class="base-info-box">
+                <div class="form-control clearfix">
+                    <label><span>*</span>您的称呼</label>
+                    <input type="text" name="username">
+                </div>
+                <div class="form-control clearfix sex-box">
+                    <label>性别</label>
+                    <span class="my-radio"><i class="icon iconfont icon-choose"></i>男</span>
+                    <span class="my-radio" style="margin-left:20px;"><i class="icon iconfont icon-ring"></i>女</span>
+                </div>
+                <div class="form-control clearfix">
+                    <label class="float-left"><span>*</span>上传照片</label>
+                    <!--<div class="upload-box float-left" name="photo">-->
+                    <!--</div>-->
+                    <div style="text-align: left;">
+                        <input type="hidden" name="smeta[thumb]" id="thumb" value="{$smeta.thumb|default=''}">
+                        <a href="javascript:upload_one_image('图片上传','#thumb');">
+                            <if condition="empty($smeta['thumb'])">
+                                <img src="__TMPL__Public/assets/images/default-thumbnail.png" id="thumb-preview" width="135" style="cursor: hand"/>
+                                <else />
+                                <img src="{:sp_get_image_preview_url($smeta['thumb'])}" id="thumb-preview" width="135" style="cursor: hand"/>
+                            </if>
+                        </a>
+
+                    </div>
+                </div>
+                <div class="form-control clearfix">
+                    <label><span>*</span>教员身份</label>
+                    <select name="identity">
+                        <option value="1">教员身份1</option>
+                        <option value="2">教员身份2</option>
+                    </select>
+                </div>
+                <div class="form-control clearfix">
+                    <label><span>*</span>毕业院校</label>
+                    <input type="text" name="school">
+                </div>
+                <div class="form-control clearfix">
+                    <label><span>*</span>所学专业</label>
+                    <input type="text" name="specialty">
+                </div>
+                <div class="form-control clearfix">
+                    <label><span>*</span>在职院校</label>
+                    <input type="text" name="company">
+                </div>
+                <div class="form-control clearfix">
+                    <label><span>*</span>辅导科目</label>
+                    <select class="large-sel subject-one">
+                        <option value="1">语文</option>
+                        <option value="2">数学</option>
+                    </select>
+                </div>
+                <div class="form-control nolabel-form-control clearfix">
+                    <label></label>
+                    <select class="large-sel subject-two">
+                        <option value="1">语文</option>
+                        <option value="2">数学</option>
+                    </select>
+                </div>
+                <div class="form-control nolabel-form-control clearfix">
+                    <label></label>
+                    <select class="large-sel subject-three">
+                        <option value="1">语文</option>
+                        <option value="2">数学</option>
+                    </select>
+                </div>
+                <div class="form-control nolabel-form-control clearfix">
+                    <label></label>
+                    <input type="text" class="subject-four" placeholder="输入您所要辅导的其它科目">
+                </div>
+                <div class="form-control clearfix">
+                    <label><span>*</span>自我介绍</label>
+                    <textarea class="myself" name="myself"></textarea>
+                </div>
+                <div class="form-control clearfix">
+                    <label class="float-left"><span>*</span>获奖经历</label>
+                    <div class="upload-box float-left" name="winning">
+                    </div>
+                </div>
+                <div class="form-control clearfix">
+                    <label><span>*</span>教学经历</label>
+                    <textarea name="teaching" class="teaching"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="account-info">
+            <div class="title-box clearfix">
+                <p class="title"><span class="vertical"></span>账号信息</p>
+            </div>
+            <div class="account-info-box">
+                <div class="form-control clearfix">
+                    <label><span>*</span>手机号码</label>
+                    <input type="text" name="phone">
+                </div>
+                <div class="form-control clearfix">
+                    <label><span>*</span>邮箱地址</label>
+                    <input type="text" name="email">
+                </div>
+                <div class="form-control clearfix">
+                    <label><span>*</span>验证码</label>
+                    <input type="text" class="middel-input" name="code">
+                    <span class="span-code"></span>
+                </div>
+            </div>
+        </div>
+        <input type="submit" class="btn" value="提交">
+    </form>
+</section>
+<tc_include file="Public:footer"/>
+<tc_include file="Public:scripts"/>
+<script src="__PUBLIC__/js/wind.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+<script>
+    $(function(){
+        $.validator.setDefaults({
+            debug: true
+        });
+        $('.teacher-validate').validate({
+            rules: {
+                username: {
+                    required: true
+                },
+                photo: {
+                    required: true
+                },
+                identity: {
+                    required: true
+                },
+                school: {
+                    required: true
+                },
+                specialty: {
+                    required: true
+                },
+                company: {
+                    required: true
+                },
+                "subject-one": {
+                    required: true
+                },
+                myself: {
+                    required: true
+                },
+                winning: {
+                    required: true
+                },
+                teaching: {
+                    required: true
+                },
+                phone: {
+                    required: true
+                },
+                email: {
+                    required: true
+                },
+                code: {
+                    required: true
+                }
+            },
+            messages: {
+                username: {
+                    required: "请输入您的真实姓名"
+                },
+                photo: {
+                    required: "请上传照片"
+                },
+                identity: {
+                    required: "请选择一个身份"
+                },
+                school: {
+                    required: "请输入所在院校"
+                },
+                specialty: {
+                    required: "请输入所学专业"
+                },
+                company: {
+                    required: "请输入您的在职院校"
+                },
+                "subject-one": {
+                    required: "请选择一个辅导科目"
+                },
+                myself: {
+                    required: "请填写自我介绍"
+                },
+                winning: {
+                    required: "请上传获奖经历"
+                },
+                teaching: {
+                    required: "请填写教学经历"
+                },
+                phone: {
+                    required: "请填写手机号"
+                },
+                email: {
+                    required: "请填空邮箱"
+                },
+                code: {
+                    required: "请输入验证码"
+                }
+            },
+            submitHandler: function(form){
+                console.log($(form).serialize());
+            }
+        });
+        //提交
+        $('.btn').on('click', function(){
+            if($('#tutor-form').valid()){
+                //调用AJAX提交表单
+            }
+        })
+    })
+</script>
+{:hook('footer_end')}
+</body>
+</html>

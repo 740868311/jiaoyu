@@ -20,7 +20,8 @@
 		<ul class="container clearfix">
 			<?php
 				$menu = sp_get_menu();
-				$current_id = $_GET['id'] ? $_GET['id'] : 1;
+				//dump($menu);die;
+				$current_id = $_REQUEST['id'] ? $_REQUEST['id'] : 1;
 				$current[$current_id] = 'active';
 				foreach($menu as $menu_one) {
 					echo '<li class="'.$current[$menu_one['id']].'" ><a href="'.$menu_one['href'].'">'.$menu_one['label'].'</a></li>';
@@ -36,18 +37,3 @@
 		</ul>
 	</nav>
 </header>
-<section class="banner">
-	<div class="swiper-container">
-		<div class="swiper-wrapper">
-			<div class="swiper-slide"><img src="__TMPL__Public/assets/images/banner1.jpg" alt=""></div>
-			<div class="swiper-slide"><img src="__TMPL__Public/assets/images/banner2.jpg" alt=""></div>
-			<div class="swiper-slide"><img src="__TMPL__Public/assets/images/banner3.jpg" alt=""></div>
-		</div>
-		<!-- 如果需要分页器 -->
-		<div class="swiper-pagination"></div>
-
-		<!-- 如果需要导航按钮 -->
-		<div class="swiper-button-prev"></div>
-		<div class="swiper-button-next"></div>
-	</div>
-</section>

@@ -1,31 +1,55 @@
-<br>
-<br>
-<br>
-<!-- Footer ================================================== -->
-<hr>
+
 {:hook('footer')}
-<div id="footer">
-	<div class="links">
-		<php>$links=sp_getlinks();</php>
-		<foreach name="links" item="vo">
-			<notempty name="vo.link_image">
-				<!-- <img src="{:sp_get_image_url($vo['link_image'])}"> --><!-- 如果想加个友链图片可以取消注释 -->
-			</notempty>
-			<a href="{$vo.link_url}" target="{$vo.link_target}">{$vo.link_name}</a>
-		</foreach>
+<footer>
+	<div class="container footer-container">
+		<div class="footer-part">
+			<h1>关于家教网</h1>
+			<ul>
+				<li><a href="#">了解家教网</a></li>
+				<li><a href="#">加入我们</a></li>
+				<li><a href="#">联系我们</a></li>
+				<li><a href="#">免责声明</a></li>
+			</ul>
+		</div>
+		<div class="footer-part">
+			<h1>帮助中心</h1>
+			<ul>
+				<li><a href="#">家长初次使用</a></li>
+				<li><a href="#">家教基础价格</a></li>
+				<li><a href="#">教员申请</a></li>
+				<li><a href="#">高校合作</a></li>
+				<li><a href="#">网站地图</a></li>
+			</ul>
+		</div>
+		<div class="footer-part">
+			<h1>友情链接</h1>
+			<ul>
+				<li><a href="#">福建师大家教中心</a></li>
+				<li><a href="#">杭州师大家教中心</a></li>
+				<li><a href="#">辽宁大学家教网</a></li>
+				<li><a href="#">浙江大学家教中心</a></li>
+				<li><a href="#">武汉大学家教网</a></li>
+				<li><a href="#">福州大学家教中心</a></li>
+				<li><a href="#">安徽师大家教网</a></li>
+			</ul>
+		</div>
+		<div class="footer-part">
+			<h1>关注我们</h1>
+			<div class="qrcode"></div>
+		</div>
+		<div class="footer-part">
+			<i class="icon iconfont icon-phone"></i>
+			<h2>咨询热线</h2>
+			<p class="my-tel">13254789635</p>
+			<p>周一至周日 08:00-23:00</p>
+		</div>
 	</div>
-	<p>
-		Made by <a href="http://www.thinkcmf.com" target="_blank">ThinkCMF</a>
-		Code licensed under the 
-		<a href="http://www.apache.org/licenses/LICENSE-2.0" rel="nofollow" target="_blank">Apache License v2.0</a>.
-		<br />
-		Based on 
-		<a href="http://getbootstrap.com/2.3.2/" target="_blank">Bootstrap</a>.
-		Icons from 
-		<a href="http://fortawesome.github.com/Font-Awesome/" target="_blank">Font Awesome</a>
-	</p>
-</div>
-<div id="backtotop">
-	<i class="fa fa-arrow-circle-up"></i>
-</div>
+	<div class="copyright-box">
+		<span>Copyright @ 2017-2018 家教网版权所有-京ICP备10020030号-1</span>
+		<div>
+			<span></span>
+			<span></span>
+		</div>
+	</div>
+</footer>
 {$site_tongji}

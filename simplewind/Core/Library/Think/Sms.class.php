@@ -48,7 +48,8 @@ class Sms {
 			return false;
 		}
 
-		return json_decode($json_data, true);
+		echo $json_data;
+		return true;
 	}
 	//获得账户
 	public function get_user($ch,$apikey){

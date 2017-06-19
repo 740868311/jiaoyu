@@ -110,6 +110,13 @@ select,input{
     font-family: 'microsoft yahei';
 }
 /*顶部*/
+header{
+    position: fixed;
+    width: 100%;
+    top:0;
+    left:0;
+    z-index: 98;
+}
 .header-info{
     height: 45px;
     background-color: #fff;
@@ -164,9 +171,15 @@ nav li:hover,nav li.active{
     right: 190px;
     margin: auto;
 }
+.header-info .info .te a{
+    cursor: pointer;
+}
+.header-info .info .te a:last-child{
+    border-right: none;
+}
 .header-info .info .te-login{
     display: inline-block;
-    width: 54px;
+    width: 50px;
     border-right: 1px solid #666;
 }
 .header-info .info a{
@@ -221,6 +234,7 @@ nav li:hover,nav li.active{
 .float-right{
     float: right;
 }
+
 /*footer*/
 footer{
     margin-top: 40px;
@@ -261,13 +275,20 @@ footer .copyright-box div{
     margin: 24px auto 30px;
 }
 footer .copyright-box div span{
-    width: 126px;
-    height: 26px;
+    width: 130px;
+    height: 46px;
     display: inline-block;
-    background: pink;
 }
 footer .copyright-box div span:first-child{
     margin-right: 20px;
+}
+footer .copyright-box .security{
+    background: url('../img/360.png') no-repeat center;
+    background-size: contain;
+}
+footer .copyright-box .cert{
+    background: url('../img/cert.png') no-repeat center;
+    background-size: contain;
 }
 footer .icon-phone{
     font-size: 60px;
@@ -461,7 +482,9 @@ label.error{
     margin-left: 4px;
 }
 /*login*/
-
+.login-container{
+    display: none;
+}
 .mask{
     position: fixed;
     top: 0;
@@ -469,8 +492,8 @@ label.error{
     right: 0;
     bottom: 0;
     background: rgba(0,0,0,.5);
-    z-index: 9;
-    overflow: hidden;
+    z-index: 99;
+    overflow: auto;
 }
 .login-box{
     width: 40%;
@@ -521,3 +544,70 @@ label.error{
     display: block;
     cursor: pointer;
 }
+/*alert box*/
+.alert-mask{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, .7);
+    z-index: 100;
+    display: none;
+}
+.alert-box{
+    position: absolute;
+    width: 440px;
+    height: 170px;
+    background-color: #fff;
+    border-radius: 3px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+}
+.alert-title{
+    height: 60px;
+    width: 100%;
+    line-height: 60px;
+    background-color: #4AADF2;
+    color: #fff;
+    text-align: center;
+    font-size: 16px;
+}
+.alert-title .close{
+    position: absolute;
+    top: 0px;
+    right: 18px;
+    cursor: pointer;
+}
+.alert-content{
+    text-align: left;
+    font-size: 16px;
+    padding: 20px;
+}
+/*分类筛选*/
+
+.selectNumberScreen{ width:100%; margin:20px auto 0;}
+.screenBox dl {/*border-bottom: #e6e6e6 1px dashed;*/ width: 768px;}
+.screenBox dl.noborder {border-bottom: 0px; border-left: 0px; border-top: 0px; border-right: 0px}
+/*.screenBox dl.goodstype {border-bottom: #e6e6e6 1px dashed}*/
+.screenBox dl dt {float: left; height: 30px}
+.screenBox dl dt {text-align: right; width: 15%; height: 22px; font-weight: 600; line-height: 22px;}
+.screenBox dl dd {position: relative; padding-bottom: 5px; padding-left: 0px; width: 85%; float: left; padding-top: 0px}
+.screenBox dl dd a {line-height: 14px; margin: 0px 20px 0px 0px; padding: 4px;display: inline-block; overflow: hidden; text-decoration: none}
+.screenBox dl dd a:hover {background: #39c; color: #fff}
+.screenBox dl dd a.selected {background: #39c; color: #fff}
+.screenBox dl dd span.more {position: absolute; width: 39px; display: block; height: 14px; top: 6px; cursor: pointer; right: 1px}
+.screenBox dl dd span.more label {display: inline-block; cursor: pointer}
+.hasBeenSelected {border: #b2d1ff 1px solid;padding:2px;width: 784px; margin-top: 10px; overflow: hidden;}
+.hasBeenSelected dl {width: 784px; background: #f6f8fd; overflow: hidden}
+.hasBeenSelected dl dt {float: left}
+.hasBeenSelected dl dd {float: left}
+.hasBeenSelected dl dt {text-align: right; line-height: 30px; width: 96px; height: 30px; font-weight: 600}
+.hasBeenSelected dl dd {padding-bottom: 4px; padding-left: 0px; width: 676px; padding-right: 0px; padding-top: 0px}
+.selectedInfor {border-bottom: #f60 1px solid; position: relative; border-left: #f60 1px solid; padding-bottom: 1px; margin: 4px 10px 0px 0px; padding-left: 5px; padding-right: 17px; display: block; white-space: nowrap; background: #fff; float: left; height: 17px; border-top: #f60 1px solid; border-right: #f60 1px solid; padding-top: 1px}
+.selectedInfor label {color: #f60}
+.eliminateCriteria {line-height: 21px; margin-top: 4px; width: 90px; float: left; color: #f60; cursor: pointer; font-weight: 600}
+.selectedInfor em {background: url("../img/close.gif") no-repeat;cursor: pointer;display: block;height: 13px;overflow: hidden;position: absolute;right: 2px;top: 3px;width: 13px;}

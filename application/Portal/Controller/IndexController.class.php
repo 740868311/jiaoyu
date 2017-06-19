@@ -29,9 +29,11 @@ use Common\Controller\HomebaseController;
  * 首页
  */
 class IndexController extends HomebaseController {
-	
-    //首页 小夏是老猫除外最帅的男人了
+
 	public function index() {
+		$index_json = file_get_contents(SITE_PATH.'/index_json/index.json');
+		$index_array = json_decode($index_json, true);
+		$this->assign('index_array', $index_array);
     	$this->display(":index");
     }
 

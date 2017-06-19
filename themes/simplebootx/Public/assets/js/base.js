@@ -25,7 +25,7 @@ function AjaxPut(url, data, tag, onsuccess, onerror) {
         url: url,
         dataType: "text",
         contentType: 'application/json;charset=utf-8',
-        type: "put",
+        type: "post",
         data: JSON.stringify(data),
         beforeSend: function(request) {
             //request.setRequestHeader("ticket", myapp.ticket);
@@ -40,13 +40,14 @@ function AjaxPut(url, data, tag, onsuccess, onerror) {
     });
 };
 
-//×Ô¶¨Òåµ¥Ñ¡°´Å¥
+
+//ï¿½Ô¶ï¿½ï¿½åµ¥Ñ¡ï¿½ï¿½Å¥
 $('.my-radio').on('click', function(){
     $('.my-radio').find('.icon').removeClass('icon-choose active').addClass('icon-ring');
     $(this).find('.icon').removeClass('icon-ring').addClass('icon-choose active');
 });
 
-//×Ô¶¨Òå¶àÑ¡°´Å¥
+//ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½Å¥
 $('.my-checkbox').on('click', function(){
    if($(this).find('.icon').hasClass('icon-squre')) {
        $(this).find('.icon').removeClass('icon-squre').addClass('icon-check-squre');
