@@ -12,6 +12,16 @@
 <link rel="stylesheet" href="__TMPL__Public/assets/css/base.css">
 <link rel="stylesheet" href="__TMPL__Public/assets/css/iconfont/iconfont.css">
 <link rel="stylesheet" href="__TMPL__Public/assets/css/teacher.css">
+<script type="text/html" id="photos-item-wrapper">
+    <li id="savedimage{id}">
+        <input id="photo-{id}" class="photos_url" type="hidden" name="photos_url[]" value="{filepath}">
+        <input id="photo-{id}-name" class="photos_alt" type="text" name="photos_alt[]" value="{name}" style="width: 160px;height:36px" title="图片名称">
+        <img id="photo-{id}-preview" src="{url}" style="height:36px;width: 36px;" onclick="parent.image_preview_dialog(this.src);">
+        <a href="javascript:upload_one_image('图片上传','#photo-{id}');">替换</a>
+        <a href="javascript:(function(){$('#savedimage{id}').remove();})();">移除</a>
+    </li>
+</script>
+
 </head>
 <body>
 <tc_include file="Public:nav" />
@@ -26,12 +36,12 @@
             <div class="base-info-box">
                 <div class="form-control clearfix">
                     <label><span>*</span>您的称呼</label>
-                    <input type="text" name="username">
+                    <input type="text" class="username" name="username">
                 </div>
                 <div class="form-control clearfix sex-box">
                     <label>性别</label>
-                    <span class="my-radio"><i class="icon iconfont icon-choose"></i>男</span>
-                    <span class="my-radio" style="margin-left:20px;"><i class="icon iconfont icon-ring"></i>女</span>
+                    <span class="my-radio" oid="2"><i class="icon iconfont icon-choose"></i>男</span>
+                    <span class="my-radio" oid="1" style="margin-left:20px;"><i class="icon iconfont icon-ring"></i>女</span>
                 </div>
                 <div class="form-control clearfix">
                     <label class="float-left"><span>*</span>上传照片</label>
@@ -51,47 +61,68 @@
                 </div>
                 <div class="form-control clearfix">
                     <label><span>*</span>教员身份</label>
-                    <select name="identity">
-                        <option value="1">教员身份1</option>
-                        <option value="2">教员身份2</option>
+                    <select name="identity" class="identity">
+                        <option value="">请选择您的身份</option>
+                        <option value="1">大学生</option>
+                        <option value="2">研究生</option>
+                        <option value="3">在职老师</option>
+                        <option value="4">专职老师</option>
                     </select>
                 </div>
-                <div class="form-control clearfix">
+                <div class="form-control need-change clearfix">
                     <label><span>*</span>毕业院校</label>
-                    <input type="text" name="school">
+                    <input type="text" class="school" name="school">
                 </div>
-                <div class="form-control clearfix">
+                <div class="form-control need-change clearfix">
                     <label><span>*</span>所学专业</label>
-                    <input type="text" name="specialty">
+                    <input type="text" class="specialty" name="specialty">
                 </div>
-                <div class="form-control clearfix">
-                    <label><span>*</span>在职院校</label>
-                    <input type="text" name="company">
+                <div class="form-control need-change clearfix">
+                    <label><span>*</span>年级</label>
+                    <input type="text" class="grade" name="grade">
                 </div>
+                <div class="form-control work-form clearfix">
+                    <label><span>*</span>教学阶段</label>
+                    <select style="min-width: 50px;width:130px" class="stage" name="stage">
+                        <option value="">--请选择教学阶段--</option>
+                        <option value="1">高中老师</option>
+                        <option value="2">初中老师</option>
+                        <option value="3">小学老师</option>
+                    </select>
+                </div>
+                <php>
+                    $counseling = sp_get_counseling();
+                </php>
                 <div class="form-control clearfix">
                     <label><span>*</span>辅导科目</label>
-                    <select class="large-sel subject-one">
-                        <option value="1">语文</option>
-                        <option value="2">数学</option>
+                    <select class="large-sel subjects-one counseling_id" name="counseling_id[]">
+                        <option value="">--请选择辅导课程--</option>
+                        <foreach name="counseling" key="k" item="vo">
+                            <option value="{$k}">{$vo}</option>
+                        </foreach>
                     </select>
                 </div>
                 <div class="form-control nolabel-form-control clearfix">
                     <label></label>
-                    <select class="large-sel subject-two">
-                        <option value="1">语文</option>
-                        <option value="2">数学</option>
+                    <select class="large-sel subjects-two counseling_id" name="counseling_id[]">
+                        <option value="">--请选择辅导课程--</option>
+                        <foreach name="counseling" key="k" item="vo">
+                            <option value="{$k}">{$vo}</option>
+                        </foreach>
                     </select>
                 </div>
                 <div class="form-control nolabel-form-control clearfix">
                     <label></label>
-                    <select class="large-sel subject-three">
-                        <option value="1">语文</option>
-                        <option value="2">数学</option>
+                    <select class="large-sel subjects-three counseling_id" name="counseling_id[]">
+                        <option value="">--请选择辅导课程--</option>
+                        <foreach name="counseling" key="k" item="vo">
+                            <option value="{$k}">{$vo}</option>
+                        </foreach>
                     </select>
                 </div>
                 <div class="form-control nolabel-form-control clearfix">
                     <label></label>
-                    <input type="text" class="subject-four" placeholder="输入您所要辅导的其它科目">
+                    <input type="text" class="subject-four" name="counseling_other" placeholder="输入您所要辅导的其它科目">
                 </div>
                 <div class="form-control clearfix">
                     <label><span>*</span>自我介绍</label>
@@ -99,8 +130,13 @@
                 </div>
                 <div class="form-control clearfix">
                     <label class="float-left"><span>*</span>获奖经历</label>
-                    <div class="upload-box float-left" name="winning">
+                    <div style="padding: 0 84px;">
+                        <ul id="photos" class="pic-list unstyled"></ul>
+                        <div style="height: 10px;"></div>
+                        <a href="javascript:upload_multi_image('图片上传','#photos','photos-item-wrapper');" style="color: #ffffff;padding: 2px 12px; text-decoration: none;text-shadow: none;background-image: none;border: 0;-webkit-box-shadow: none;-moz-box-shadow: none;box-shadow: none;-webkit-transition: .25s;-moz-transition: .25s;transition: .25s;background-color: #bfbcbc;" class="">选择图片</a>
                     </div>
+                    <!--<div class="upload-box float-left" name="winning">-->
+                    <!--</div>-->
                 </div>
                 <div class="form-control clearfix">
                     <label><span>*</span>教学经历</label>
@@ -115,28 +151,87 @@
             <div class="account-info-box">
                 <div class="form-control clearfix">
                     <label><span>*</span>手机号码</label>
-                    <input type="text" name="phone">
+                    <input type="text" class="phone" name="phone">
                 </div>
                 <div class="form-control clearfix">
                     <label><span>*</span>邮箱地址</label>
-                    <input type="text" name="email">
+                    <input type="text" class='email' name="email">
                 </div>
                 <div class="form-control clearfix">
-                    <label><span>*</span>验证码</label>
-                    <input type="text" class="middel-input" name="code">
-                    <span class="span-code"></span>
+                    <label><span>*</span>登录密码</label>
+                    <input type="password" class="password" name="password">
                 </div>
+                <div class="form-control clearfix">
+                    <label><span>*</span>重复密码</label>
+                    <input type="password" class="repassword" name="repassword">
+                </div>
+                <?php
+                    if ($is_code == 1) {
+                ?>
+                <div class="form-control clearfix">
+                    <label><span>*</span>验证码</label>
+                    <input type="text" class="middel-input img-code" name="verify">
+                        <span class="span-code">
+                            <!--<img src="/index.php?g=api&m=checkcode&a=index&length=4&font_size=20&width=109&height=40&use_noise=1&use_curve=0" onclick="this.src='/index.php?g=api&m=checkcode&a=index&length=3&font_size=18&width=109&height=40&use_noise=1&use_curve=0&time='+Math.random();" />-->
+                            {:sp_verifycode_img('length=3&font_size=20&width=109&height=40&use_noise=1&use_curve=0','style="cursor: pointer;" title="点击获取"')}
+                        </span>
+                </div>
+                <?php
+                    } else if($is_code == 2) {
+                ?>
+                <div class="form-control clearfix">
+                    <label><span>*</span>短信验证码</label>
+                    <input type="text" class="middel-input messge-code" name="sms">
+                    <span class="span-code span-btn" id="sms">接收短信验证码</span>
+                </div>
+                <?php
+                    }
+                ?>
             </div>
         </div>
         <input type="submit" class="btn" value="提交">
     </form>
 </section>
+<div class="alert-mask">
+    <div class="alert-box">
+        <div class="alert-title">
+            提示
+            <span class="close">X</span>
+        </div>
+        <div class="alert-content">
+            提交成功！
+        </div>
+    </div>
+</div>
+
 <tc_include file="Public:footer"/>
 <tc_include file="Public:scripts"/>
 <script src="__PUBLIC__/js/wind.js"></script>
 <script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+<script src="__TMPL__Public/assets/js/jquery.validate-1.13.1.js"></script>
 <script>
     $(function(){
+        $('#sms').click(function(){
+            var phone = $('.phone').val();
+            if (!isPhoneNo(phone)) {
+                alert('请输入正确的手机号');
+            } else {
+                $.ajax({
+                    url: '{:U("Demand/get_sms")}',
+                    dataType: "json",
+                    type: "post",
+                    data:{phone:phone},
+                    success: function(msg) {
+                        if (msg.code == 1) {
+                            $('#sms').html('发送成功');
+                        } else {
+                            alert(msg.msg);
+                        }
+                    }
+                });
+            }
+        })
+
         $.validator.setDefaults({
             debug: true
         });
@@ -145,28 +240,13 @@
                 username: {
                     required: true
                 },
-                photo: {
-                    required: true
-                },
                 identity: {
                     required: true
                 },
-                school: {
-                    required: true
-                },
-                specialty: {
-                    required: true
-                },
-                company: {
-                    required: true
-                },
-                "subject-one": {
+                "counseling_id": {
                     required: true
                 },
                 myself: {
-                    required: true
-                },
-                winning: {
                     required: true
                 },
                 teaching: {
@@ -175,19 +255,25 @@
                 phone: {
                     required: true
                 },
+                password: {
+                    required: true
+                },
+                repassword: {
+                    required: true
+                },
                 email: {
                     required: true
                 },
                 code: {
+                    required: true
+                },
+                "messge-code": {
                     required: true
                 }
             },
             messages: {
                 username: {
                     required: "请输入您的真实姓名"
-                },
-                photo: {
-                    required: "请上传照片"
                 },
                 identity: {
                     required: "请选择一个身份"
@@ -201,14 +287,11 @@
                 company: {
                     required: "请输入您的在职院校"
                 },
-                "subject-one": {
+                "counseling_id": {
                     required: "请选择一个辅导科目"
                 },
                 myself: {
                     required: "请填写自我介绍"
-                },
-                winning: {
-                    required: "请上传获奖经历"
                 },
                 teaching: {
                     required: "请填写教学经历"
@@ -219,8 +302,17 @@
                 email: {
                     required: "请填空邮箱"
                 },
+                password: {
+                    required: "密码不能为空"
+                },
+                repassword: {
+                    required: "请重复输入密码"
+                },
                 code: {
                     required: "请输入验证码"
+                },
+                "messge-code": {
+                    required: "请输入短信验证码"
                 }
             },
             submitHandler: function(form){
@@ -229,11 +321,118 @@
         });
         //提交
         $('.btn').on('click', function(){
-            if($('#tutor-form').valid()){
+            var counseling = [];
+            $('.counseling_id').each(function(){
+                if ($(this).val()) {
+                    counseling.push($(this).val());
+                }
+            });
+
+
+            var photos_alt  =   [];
+            $('.photos_alt').each(function(){
+                if ($(this).val()) {
+                    photos_alt.push($(this).val());
+                }
+            });
+
+
+            var photos_url  =   [];
+            $('.photos_url').each(function(){
+                if ($(this).val()) {
+                    photos_url.push($(this).val());
+                }
+            });
+
+            var formData = {
+                "name": $('.username').val(),//名称
+                "sex": $('.icon-choose').parents('.my-radio').attr('oid'),//性别
+                "identity": $('.identity').val(),//身份
+                "university": $('.school').val(),//毕业院校
+                "email": $('.email').val(),//毕业院校
+                "profession": $('.specialty').val(),//所学专业
+                "grade": $('.grade').val(),//所在年级
+                "thumb": $('#thumb').val(),//照片
+                "counseling_id": counseling,//科目1
+                "counseling_other": $('.subject-four').val(),//4
+                "stage": $('.stage').val(),//*教学阶段
+                "introduction": $('.myself').val(),//自我介绍
+                "teaching_experience":$('.teaching').val(),//教学经历
+                "phone": $('.phone').val(),//手机号
+                "photos_alt":photos_alt,
+                "photos_url":photos_url,
+                "password": $('.password').val(),//手机号
+                "repassword": $('.repassword').val(),//手机号
+                <?php
+                if ($is_code == 1) {
+                    ?>
+                    "verify": $('.img-code').val(),//验证码－图文
+                    <?php
+                } else if($is_code == 2) {
+                    ?>
+                    "sms": $('.messge-code').val()//验证码－短信
+                    <?php
+                }
+                ?>
+            }
+
+            if($('.teacher-validate').valid()){
                 //调用AJAX提交表单
+                $.ajax({
+                    url: '{:U("Teacher/index_post")}',
+                    dataType: "json",
+                    type: "post",
+                    data:formData,
+                    success: function(data) {
+                        if (data.status == 0) {
+                            $('.verify_img').click();
+                            alert(data.info);
+                        } else if(data.status == 1) {
+                            $('.alert-content').html(data.info);
+                            $('.alert-mask').show();
+                        }
+                    }
+                });
+            }
+        });
+
+        //身份
+        $('.identity').change(function(){
+            if($(this).val() == 1 || $(this).val() == 2){
+                $('.need-change').show();
+                $('.school-form').hide();
+                $('.specialty-form').hide();
+                $('.grade-form').hide();
+            }else if($(this).val() == 3){
+                $('.need-change').hide();
+                $('.work-form').show();
+            }else{
+                $('.need-change').hide();
+                $('.work-form').hide();
             }
         })
+    });
+    //提示框关闭
+    $('.alert-title .close').on('click', function(){
+        $('.alert-mask').hide();
+        location.reload()
+    });
+
+    $('.s-btn').on('click', function(){
+        $('.login-container').show();
     })
+    //关闭
+    $('.close').on('click', function(){
+        $('.login-container').hide();
+    });
+    //登录
+    $('.login-btn').on('click',function(){
+        $('.login-container').hide();
+    });
+    //登录
+    $('.fast-login').on('click', function(){
+        $('.login-container').show();
+    });
 </script>
 {:hook('footer_end')}
 </body>

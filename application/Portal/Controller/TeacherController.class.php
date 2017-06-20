@@ -36,21 +36,20 @@ class TeacherController extends HomebaseController {
         if (IS_POST) {
             $post = I("post.");
 
-            // 暂时注销掉，等页面都有了，在测试
+            if ($this->is_code == 1) {
+                // 检测图形验证码
+                if(!sp_check_verify_code()){
+                    $array  =   array('info'=>'验证码出错，请重新输入', 'status'=>0);
+                    echo json_encode($array);die;
+                }
+            } else {
+                // 检测短信验证码
+                if (!sp_check_sms_code()) {
+                    $array  =   array('info'=>'短信验证码过期或者出错，请重新输入', 'status'=>0);
+                    echo json_encode($array);die;
+                }
+            }
 
-//            if ($this->is_code == 1) {
-//                // 检测图形验证码
-//                if(!sp_check_verify_code()){
-//                    $array  =   array('info'=>'验证码出错，请重新输入', 'status'=>0);
-//                    echo json_encode($array);die;
-//                }
-//            } else {
-//                // 检测短信验证码
-//                if (!sp_check_sms_code()) {
-//                    $array  =   array('info'=>'短信验证码过期或者出错，请重新输入', 'status'=>0);
-//                    echo json_encode($array);die;
-//                }
-//            }
 
             $data = $this->get_data($post);
 
@@ -59,26 +58,39 @@ class TeacherController extends HomebaseController {
             $data['status']         =   1;
             $data['is_black']       =   1;
 
-            if (empty($post['password'])) {
-                $array = array('info'=>'密码不能为空','status'=>0);
-//            echo json_encode($array);die;
-                dump($array);die;
+            if (empty($post['password']) || empty($post['repassword'])) {
+                $array = array('info'=>'密码或者重复密码不能为空','status'=>0);
+                echo json_encode($array);die;
+            } else if ($post['password']!= $post['repassword']){
+                $array = array('info'=>'两次输入密码不一致','status'=>0);
+                echo json_encode($array);die;
             } else if (!preg_match('/^[a-zA-Z\d_]{6,}$/', $post['password'])) {
                 $array = array('info'=>'密码包含英文数字下划线，并且长度6位以上','status'=>0);
-//            echo json_encode($array);die;
-                dump($array);die;
+                echo json_encode($array);die;
             }
             $data['password']       =   md5('ak47'.$post['password']);
 
             $res = $this->teacher_model->add($data);
+            if ($res) {
+                $this->add_json();
+                $array  =   array('info'=>'添加成功', 'status'=>1);
+                echo json_encode($array);die;
+            } else {
+                $array  =   array('info'=>'添加失败', 'status'=>0);
+                echo json_encode($array);die;
+            }
         }
     }
 
 	// 处理数据
     private function get_data($post)
     {
+        if (!$post['name']) {
+            $array = array('info'=>'请填写姓名','status'=>0);
+            echo json_encode($array);die;
+        }
         $data['name']   =   htmlspecialchars($post['name']);
-        $data['sex']    =   (int)$post['sex'];
+        $data['sex']    =   (int)$post['sex'] ? (int)$post['sex'] : 1;
 
         // 验证手机号
         $phone_auth       =   '/^(0|86|17951)?(13[0-9]|15[012356789]|18[0-9]|14[57])[0-9]{8}$/';
@@ -86,22 +98,19 @@ class TeacherController extends HomebaseController {
         if ($phone) {
             if (!preg_match($phone_auth, $phone)) {
                 $array = array('info'=>'手机格式有误','status'=>0);
-//                echo json_encode($array);die;
-                dump($array);die;
+                echo json_encode($array);die;
             } else {
                 $sign_where = array('phone' =>  $phone);
                 $res = $this->teacher_model->where($sign_where)->find();
                 if ($res) {
                     $array = array('info'=>'手机号已经注册','status'=>0);
-//                    echo json_encode($array);die;
-                    dump($array);die;
+                    echo json_encode($array);die;
                 }
                 $data['phone']  =   $phone;
             }
         } else {
             $array = array('info'=>'手机号不能为空','status'=>0);
-//            echo json_encode($array);die;
-            dump($array);die;
+            echo json_encode($array);die;
         }
 
 
@@ -110,8 +119,7 @@ class TeacherController extends HomebaseController {
         if ($email) {
             if (!preg_match($email_auth, $email)) {
                 $array = array('info'=>'邮箱格式有误','status'=>0);
-//                echo json_encode($array);die;
-                dump($array);die;
+                echo json_encode($array);die;
             } else {
                 $data['email']  =   $email;
             }
@@ -133,8 +141,7 @@ class TeacherController extends HomebaseController {
             $data['counseling_ids']     =   ','.trim($counseling_ids, ',').',';
         } else {
             $array = array('info'=>'请输入辅导课程','status'=>0);
-//            echo json_encode($array);die;
-            dump($array);die;
+            echo json_encode($array);die;
         }
 
         if (!empty($post['counseling_other'])) {
@@ -151,7 +158,7 @@ class TeacherController extends HomebaseController {
             }
         }
 
-        $post['smeta']['thumb'] = sp_asset_relative_url($post['smeta']['thumb']);
+        $post['smeta']['thumb'] = sp_asset_relative_url($post['thumb']);
 
         $data['smeta']          =   json_encode($post['smeta']);
         $identity       =   (int)$post['identity'];
@@ -159,14 +166,8 @@ class TeacherController extends HomebaseController {
             $data['identity']   =   $identity;
         } else {
             $array = array('info'=>'请输入老师身份','status'=>0);
-//            echo json_encode($array);die;
-            dump($array);die;
+            echo json_encode($array);die;
         }
-
-
-
-        $data['remarks']        =   htmlspecialchars($post['remarks']);
-
 
         return $data;
     }
@@ -330,5 +331,29 @@ class TeacherController extends HomebaseController {
         $this->assign("page", $page->show('Admin'));
         $this->assign("teacher_list", $teacher_data);
         $this->display();
+    }
+
+    // 更新首页家长需求的json      首页家长需求显示
+    public function add_json()
+    {
+        $where['status']    =   2;
+        $teacher_data = $this->teacher_model->where($where)->order('last_time desc')->limit('0,12')->select();
+        foreach($teacher_data as $k=>$teacher_one) {
+            $thumb  =   $teacher_one['smeta'];
+            $thumb  =   json_decode($thumb, true);
+            $thumb  =   $thumb['thumb'];
+            $teacher_data[$k]['url']   =   sp_get_image_preview_url($thumb);
+        }
+
+        $json_array	=	file_get_contents(SITE_PATH.'/index_json/index.json');
+
+        if ($json_array) {
+            $json_array	=	json_decode($json_array, true);
+        }
+
+        $json_array['teacher']	=	$teacher_data;
+        $json_array 	=	json_encode($json_array);
+
+        file_put_contents(SITE_PATH.'/index_json/index.json', $json_array);
     }
 }

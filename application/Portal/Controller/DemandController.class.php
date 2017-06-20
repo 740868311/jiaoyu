@@ -169,16 +169,7 @@ class DemandController extends HomebaseController {
         }
 		$data['phone']          =   $phone;
 
-        if (empty($post['password'])) {
-            $array = array('info'=>'密码不能为空','status'=>0);
-            echo json_encode($array);die;
-        }
-        if ($post['password'] != $post['repassword']) {
-            $array = array('info'=>'两次输入密码不一致','status'=>0);
-            echo json_encode($array);die;
-        }
 
-        $data['password']   =   md5('ak47_'.$post['password']);
 
         $time = $post['time'];
         foreach($time as $time_one) {

@@ -65,7 +65,8 @@ class AdminPostController extends AdminbaseController {
 				foreach ($_POST['term'] as $mterm_id){
 					$this->term_relationships_model->add(array("term_id"=>intval($mterm_id),"object_id"=>$result));
 				}
-				
+
+				$this->add_json();
 				$this->success("添加成功！");
 			} else {
 				$this->error("添加失败！");
@@ -121,6 +122,7 @@ class AdminPostController extends AdminbaseController {
 			$article['post_content']=htmlspecialchars_decode($article['post_content']);
 			$result=$this->posts_model->save($article);
 			if ($result!==false) {
+				$this->add_json();
 				$this->success("保存成功！");
 			} else {
 				$this->error("保存失败！");
@@ -481,6 +483,54 @@ class AdminPostController extends AdminbaseController {
 				$this->error("还原失败！");
 			}
 		}
+	}
+
+	// 更新首页新闻公告的json
+	public function add_json()
+	{
+		$term_id    =   array('8','9','10','11','12','13');
+		$term_name	=	array(
+			8	=>	'最新公告',
+			9	=>	'家长必读',
+			10	=>	'老师必读',
+			11	=>	'家教经验',
+			12	=>	'教育资讯',
+			13	=>	'学习经验'
+		);
+
+		$obj_data	=	array();
+		$k 	=	0;
+		foreach($term_id as $term_id_one) {
+			$data = $this->term_relationships_model->where(array('term_id'=>$term_id_one))->limit('0,10')->select();
+			foreach($data as $data_one) {
+				$obj_id[]	=	$data_one['object_id'];
+			}
+			$obj_id	=	implode(',', $obj_id);
+
+			if (!$obj_id) {
+				continue;
+			}
+
+			$obj_data_array			=	$this->posts_model->where(array('id'=>array('in', $obj_id)))->select();
+			foreach($obj_data_array as $obj_data_array_one) {
+				$obj_array[]	=	$obj_data_array_one['post_title'];
+			}
+			$obj_data[$k]['content']	=	$obj_array;
+			$obj_data[$k]['title']	=	$term_name[$term_id_one];
+			$k++;
+		}
+
+
+		$json_array	=	file_get_contents(SITE_PATH.'/index_json/index.json');
+
+		if ($json_array) {
+			$json_array	=	json_decode($json_array, true);
+		}
+
+		$json_array['notices']	=	$obj_data;
+		$json_array 	=	json_encode($json_array);
+
+		file_put_contents(SITE_PATH.'/index_json/index.json', $json_array);
 	}
 	
 }

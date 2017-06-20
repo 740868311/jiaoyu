@@ -208,14 +208,7 @@
                     <label><span>*</span>手机号码</label>
                     <input type="text" class="phone" name="phone">
                 </div>
-                <div class="form-control clearfix">
-                    <label><span>*</span>登录密码</label>
-                    <input type="password" class="password" name="password">
-                </div>
-                <div class="form-control clearfix">
-                    <label><span>*</span>重复密码</label>
-                    <input type="password" class="repassword" name="repassword">
-                </div>
+
                 <div class="form-control clearfix">
                     <label><span>*</span>家庭住址</label>
                     <!--<select class="small-sel small-sel-two"></select>-->
@@ -371,12 +364,6 @@
                 phone: {
                     required: true
                 },
-                password: {
-                    required: true
-                },
-                repassword: {
-                    required: true
-                },
                 address: {
                     required: true
                 },
@@ -390,12 +377,6 @@
             messages: {
                 name: {
                     required: "请输入您的真实姓名"
-                },
-                password: {
-                    required: "密码不能为空"
-                },
-                repassword: {
-                    required: "请重复输入密码"
                 },
                 'grade_id':{
                     required: '请选择年级'
@@ -447,8 +428,6 @@
                 "teacher_sex": $('.teacher-sex').val(),//老师性别
                 "remarks": $('.others').val(),//其它要求
                 "phone": $('.phone').val(),//手机号
-                "password": $('.password').val(),//手机号
-                "repassword": $('.repassword').val(),//手机号
                 "address": $('.address').val(),//住址
                 <?php
                     if ($is_code == 1) {
