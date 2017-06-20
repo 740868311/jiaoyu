@@ -211,6 +211,8 @@ class DemandController extends HomebaseController {
 			->order("add_time DESC")
 			->select();
 
+		dump($demand_data);die;
+		$this->display();
 	}
 
 	// 学员详情

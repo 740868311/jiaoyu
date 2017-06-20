@@ -1,0 +1,110 @@
+<tc_include file="Public:head" />
+<link rel="stylesheet" href="__TMPL__Public/assets/css/base.css">
+<link rel="stylesheet" href="__TMPL__Public/assets/css/iconfont/iconfont.css">
+<link rel="stylesheet" href="__TMPL__Public/assets/css/student.css">
+<style>
+    .on{background: #39c;color: #fff;}
+</style>
+</head>
+<body>
+<tc_include file="Public:nav" />
+<section class="student-container container clearfix">
+    <div class="student-left faculty-left">
+        <div class="faculty-left-top">
+            <div class="title-box clearfix">
+                <p class="title" style="font-size: 14px;"><span class="vertical" style="height: 14px;"></span>教员筛选</p>
+            </div>
+            <div class="selectNumberScreen">
+                <div id="selectList" class="screenBox screenBackground">
+                    <dl class="listIndex clearfix" attr="terminal_brand_s">
+                        <dt>辅导科目：</dt>
+                        <dd>
+                            <php>
+                                $counseling = sp_get_counseling();
+                            </php>
+                            <a href="{:U('Teacher/star_teacher',array('counseling_id'=>0,'id'=>5))}" class="{$counseling_id == 0 ? 'on' : ''}">不限</a>
+                            <foreach name="counseling" key="k" item="vo">
+                                <a href="{:U('Teacher/star_teacher',array('counseling_id'=>$k,'id'=>5))}" class="{$counseling_id == $k ? 'on' : ''}">{$vo}</a>
+                            </foreach>
+                        </dd>
+                    </dl>
+                    <dl class="listIndex clearfix" attr="教员性别">
+                        <dt>教员性别：</dt>
+                        <dd><a href="{:U('Teacher/star_teacher',array('sex'=>0,'id'=>5))}" class="{$sex == 0 ? 'on' : ''}">不限</a>
+                            <a href="{:U('Teacher/star_teacher',array('sex'=>2,'id'=>5))}" class="{$sex == 2 ? 'on' : ''}">男</a>
+                            <a href="{:U('Teacher/star_teacher',array('sex'=>1,'id'=>5))}" class="{$sex == 1 ? 'on' : ''}">女</a>
+                        </dd>
+                    </dl>
+                </div>
+                <!--<div class="hasBeenSelected">-->
+                <!--<dl>-->
+                <!--<dt>您已选择：</dt>-->
+                <!--<dd style="DISPLAY: none" class=clearDd>-->
+                <!--<div class=clearList></div>-->
+                <!--<div style="DISPLAY: none" class="eliminateCriteria">清除筛选条件</div>-->
+                <!--</dd>-->
+                <!--</dl>-->
+                <!--</div>-->
+            </div>
+        </div>
+        <div class="faculty-left-bottom">
+            <div class="faculty-content all-faculty">
+                <foreach name="teacher_list" key="k" item="vo">
+                    <div class="faculty-box part-box">
+                        <div class="faculty-box-left">
+                            <img src="{:sp_get_image_preview_url($vo['smeta']['thumb'])}" width="135" style="cursor: hand"/>
+                        </div>
+                        <div class="faculty-box-middle">
+                            <div class="part-info-title">
+                                <span>{:get_teacher_show_id($vo['id'])}</span>
+                                <span>{$vo.name}</span>
+                                <span><i class="sex {$vo['sex'] == 1 ? 'woman' : 'man'}">{$vo['sex'] == 1 ? '女' : '男'}</i></span>
+                                <if condition="($vo['status'] eq 1)">
+                                    <span><i class="icon iconfont"></i>普通教员</span>
+                                    <else />
+                                    <span class="teach-type"><i class="icon iconfont icon-star"></i>明星教员</span>
+                                </if>
+                            </div>
+                            <p class="part-info-text">辅导科目：
+                                <php>
+                                    $counseling_data = explode(',', trim($vo['counseling_ids'],','));
+                                    $swap = array();
+                                    foreach($counseling_data as $counseling_one) {
+                                    $swap[] = $counseling[$counseling_one];
+                                    }
+                                    $counseling_data = implode(',', $swap);
+                                </php>
+                                {$counseling_data}
+                            </p>
+                            <p class="part-info-text">所在学校：{$vo.university}</p>
+                        </div>
+                        <div class="faculty-box-right">
+                            <div class="look">查看简历</div>
+                        </div>
+                    </div>
+                </foreach>
+            </div>
+        </div>
+    </div>
+    <div class="student-right">
+        <h2 class="stu-right-title">
+            找家教需知
+        </h2>
+        <div class="stu-right-content">
+            <p>1、本站是南宁家教总动员。</p>
+            <p>2、重点学校的老师不等于好老师。</p>
+            <p>3、联系教员请咨询详细情况，勿听夸夸其谈。</p>
+        </div>
+        <div class="weixin">
+            <h2 class="stu-right-title">
+                关注微信
+            </h2>
+            <div class="weixin-box"></div>
+        </div>
+    </div>
+</section>
+<tc_include file="Public:footer"/>
+<tc_include file="Public:scripts"/>
+{:hook('footer_end')}
+</body>
+</html>

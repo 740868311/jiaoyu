@@ -220,12 +220,13 @@ class TeacherController extends HomebaseController {
     // 教师库
     public function teacher_list()
     {
-        $data  =   I('post.');
+        $data  =   I('get.');
         $where  =   array();
 
         // ----条件开始----
         if (isset($data['counseling_id'])) {
             $counseling_id  =   (int)$data['counseling_id'];
+
             if ($counseling_id) {
                 cookie('counseling_id', $counseling_id);
                 $where['counseling_ids'] =   array('like','%,'.$counseling_id.',%');
@@ -233,7 +234,9 @@ class TeacherController extends HomebaseController {
                 cookie('counseling_id', null);
             }
         } else {
-            $where['counseling_ids']    =   array('like','%,'.cookie('counseling_id').',%');
+            if ((int)cookie('counseling_id')) {
+                $where['counseling_ids']    =   array('like','%,'.(int)cookie('counseling_id').',%');
+            }
         }
 
 
@@ -246,7 +249,9 @@ class TeacherController extends HomebaseController {
                 cookie('sex', null);
             }
         } else {
-            $where['sex'] =   (int)cookie('sex');
+            if ((int)cookie('sex')) {
+                $where['sex'] =   (int)cookie('sex');
+            }
         }
 
         if (isset($data['status'])) {
@@ -258,7 +263,9 @@ class TeacherController extends HomebaseController {
                 cookie('status', null);
             }
         } else {
-            $where['status']    =   (int)cookie('status');
+            if ((int)cookie('status')) {
+                $where['status']    =   (int)cookie('status');
+            }
         }
 
         $where['is_black']  =   1;
@@ -274,8 +281,13 @@ class TeacherController extends HomebaseController {
             ->order("last_time DESC")
             ->select();
 
-        $this->assign('counseling_id', cookie('counseling_id'));
-        $this->assign('status', cookie('counseling_id'));
+        foreach($teacher_data as $k=>$teacher_data_one) {
+            $teacher_data[$k]['smeta']   =  json_decode($teacher_data_one['smeta'], true);
+        }
+
+        $this->assign('counseling_id', (int)cookie('counseling_id'));
+        $this->assign('status', (int)cookie('status'));
+        $this->assign('sex', (int)cookie('sex'));
         $this->assign("page", $page->show('Admin'));
         $this->assign("teacher_list", $teacher_data);
         $this->display();
@@ -284,12 +296,13 @@ class TeacherController extends HomebaseController {
     // 明星教员
     public function star_teacher()
     {
-        $data  =   I('post.');
+        $data  =   I('get.');
         $where  =   array();
 
         // ----条件开始----
         if (isset($data['counseling_id'])) {
             $counseling_id  =   (int)$data['counseling_id'];
+
             if ($counseling_id) {
                 cookie('counseling_id', $counseling_id);
                 $where['counseling_ids'] =   array('like','%,'.$counseling_id.',%');
@@ -297,7 +310,9 @@ class TeacherController extends HomebaseController {
                 cookie('counseling_id', null);
             }
         } else {
-            $where['counseling_ids']    =   array('like','%,'.cookie('counseling_id').',%');
+            if ((int)cookie('counseling_id')) {
+                $where['counseling_ids']    =   array('like','%,'.(int)cookie('counseling_id').',%');
+            }
         }
 
 
@@ -310,10 +325,14 @@ class TeacherController extends HomebaseController {
                 cookie('sex', null);
             }
         } else {
-            $where['sex'] =   (int)cookie('sex');
+            if ((int)cookie('sex')) {
+                $where['sex'] =   (int)cookie('sex');
+            }
         }
 
         $where['is_black']  =   1;
+        $where['status']    =   2;
+
 
         // ----条件结束----
 
@@ -326,8 +345,15 @@ class TeacherController extends HomebaseController {
             ->order("last_time DESC")
             ->select();
 
-        $this->assign('counseling_id', cookie('counseling_id'));
-        $this->assign('status', cookie('counseling_id'));
+        foreach($teacher_data as $k=>$teacher_data_one) {
+            $teacher_data[$k]['smeta']   =  json_decode($teacher_data_one['smeta'], true);
+        }
+
+
+
+        $this->assign('counseling_id', (int)cookie('counseling_id'));
+        $this->assign('status', (int)cookie('status'));
+        $this->assign('sex', (int)cookie('sex'));
         $this->assign("page", $page->show('Admin'));
         $this->assign("teacher_list", $teacher_data);
         $this->display();

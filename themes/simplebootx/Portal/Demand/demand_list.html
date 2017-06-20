@@ -1,0 +1,103 @@
+<tc_include file="Public:head" />
+<link rel="stylesheet" href="__TMPL__Public/assets/css/base.css">
+<link rel="stylesheet" href="__TMPL__Public/assets/css/iconfont/iconfont.css">
+<link rel="stylesheet" href="__TMPL__Public/assets/css/student.css">
+<style>
+    .on{background: #39c;color: #fff;}
+</style>
+</head>
+<body>
+<tc_include file="Public:nav" />
+<section class="student-container container clearfix">
+    <div class="student-left">
+        <ul class="stu-title">
+            <a href="{:U('Demand/demand_list',array('status'=>0,'id'=>5))}"><li class="active">预约成功</li></a>
+            <a href=""><li>报名中</li></a>
+        </ul>
+        <div class="app-box-tab app-success-container">
+            <div class="part-box">
+                <div class="part-info-title">
+                    <span>TD003123</span>
+                    <span>李学员</span>
+                    <span><i class="sex woman">女</i></span>
+                    <span>小学五年级</span>
+                </div>
+                <div class="part-info-content clearfix">
+                    <div class="part-info-left float-left">
+                        <p>教员性别：女</p>
+                        <p>求教科目：小学语文、小学数学、小学英语</p>
+                        <p>授课地址：上海市期莞尔莞尔</p>
+                        <p>授课时间：周一晚上、周三晚上、周五晚上、周六上午</p>
+                    </div>
+                    <div class="part-info-right float-right teacher-box">
+                        <div></div>
+                        <p>高老师已任教</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="app-box-tab registration-container">
+            <div class="part-box">
+                <div class="part-info-title">
+                    <span>TD003123</span>
+                    <span>李学员</span>
+                    <span><i class="sex woman">女</i></span>
+                    <span>小学五年级</span>
+                </div>
+                <div class="part-info-content clearfix">
+                    <div class="part-info-left float-left">
+                        <p>教员性别：女</p>
+                        <p>求教科目：小学语文、小学数学、小学英语</p>
+                        <p>授课地址：上海市期莞尔莞尔</p>
+                        <p>授课时间：周一晚上、周三晚上、周五晚上、周六上午</p>
+                    </div>
+                    <div class="part-info-right float-right">
+                        <div class="look">查看详情</div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="part-box">
+                <div class="part-info-title">
+                    <span>TD003123</span>
+                    <span>李学员</span>
+                    <span><i class="sex man">男</i></span>
+                    <span>小学五年级</span>
+                </div>
+                <div class="part-info-content clearfix">
+                    <div class="part-info-left float-left">
+                        <p>教员性别：女</p>
+                        <p>求教科目：小学语文、小学数学、小学英语</p>
+                        <p>授课地址：上海市期莞尔莞尔</p>
+                        <p>授课时间：周一晚上、周三晚上、周五晚上、周六上午</p>
+                    </div>
+                    <div class="part-info-right float-right">
+                        <div class="look">查看详情</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="student-right">
+        <h2 class="stu-right-title">
+            找家教需知
+        </h2>
+        <div class="stu-right-content">
+            <p>1、本站是南宁家教总动员。</p>
+            <p>2、重点学校的老师不等于好老师。</p>
+            <p>3、联系教员请咨询详细情况，勿听夸夸其谈。</p>
+        </div>
+        <div class="weixin">
+            <h2 class="stu-right-title">
+                关注微信
+            </h2>
+            <div class="weixin-box"></div>
+        </div>
+    </div>
+</section>
+<tc_include file="Public:footer"/>
+<tc_include file="Public:scripts"/>
+{:hook('footer_end')}
+</body>
+</html>
