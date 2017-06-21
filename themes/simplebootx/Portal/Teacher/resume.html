@@ -10,7 +10,9 @@
 <tc_include file="Public:nav" />
 <section class="container te-detail-container">
     <div class="top-content">
-        <div class="person-photo"></div>
+        <div class="person-photo">
+            <img src="{:sp_get_image_preview_url($smeta['thumb'])}" id="thumb-preview" width="200" style="cursor: hand"/>
+        </div>
         <div class="right-info">
             <div class="right-top-title">
                 <span class="teacher-name">{$data.name}</span>
@@ -20,6 +22,7 @@
             </div>
             <p class="sub"><span>辅导科目：</span>
                 <php>
+                    $counseling = sp_get_counseling();
                     $counseling_data = explode(',', trim($data['counseling_ids'],','));
                     $swap = array();
                     foreach($counseling_data as $counseling_one) {
@@ -54,31 +57,32 @@
                     <li>获奖经历</li>
                     <li>老师报价</li>
                 </ul>
-                <div class="yue-teacher">预约老师</div>
+                <div class="yue-teacher s-btn" style="cursor: pointer;">预约老师</div>
             </div>
             <div class="menu-content">
                 <div class="title-box clearfix">
                     <p class="title"><span class="vertical"></span>基本情况</p>
                 </div>
                 <div class="info">
-                    本人是安徽大学英语第毕业的，一直从事高中、初中英语教学15年，其中7年是高三英语教学。本人在教学期间参加过学校本人是安徽大学英语第毕业的，一直从事高中、初中英语教学15年，其中7年是高三英语教学。本人在教学期间参加过学校本人是安徽大学英语第毕业的，一直从事
-                    本人是安徽大学英语第毕业的，一直从事高中、初中英语教学15年，其中7年是高三英语教学。本人本人是安徽大学英语第毕业的，一直从事高中、初中英语教学15年，其中7年是高三英语教学。本人在教学期间参加过学校本人是安徽大学英语第毕业的，一直从事高中、初中英语教学1
+                    {$data['introduction']}
                 </div>
                 <div class="title-box clearfix">
                     <p class="title"><span class="vertical"></span>教学经历</p>
                 </div>
                 <div class="info">
-                    本人是安徽大学英语第毕业的，一直从事高中、初中英语教学15年，其中7年是高三英语教学。本人在教学期间参加过学校本人是安徽大学英语第毕业的，一直从事高中、初中英语教学15年，其中7年是高三英语教学。本人在教学期间参加过学校本人是安徽大学英语第毕业的，一直从事
-                    本人是安徽大学英语第毕业的，一直从事高中、初中英语教学15年，其中7年是高三英语教学。本人教学期间参加过学校本人是安徽大学英语第毕业的，一直从事高中、初中英语教学15年，其中7年是高三英语教学。本人在教学期间参加过学校本人是安徽大学英语第毕业的，一直从事高
+                    {$data['teaching_experience']}
                 </div>
                 <div class="title-box clearfix">
                     <p class="title"><span class="vertical"></span>获奖经历</p>
                 </div>
-                <div class="info">
-                    <div class="img"></div>
-                    <div class="img"></div>
+                <div class="info" style="text-indent:0">
+                    <foreach name="smeta['photo']" item="vo">
+                        <div class="img">
+                            <img width="390" src="{:sp_get_image_preview_url($vo['url'])}"/>
+                        </div>
+                    </foreach>
                 </div>
-                <div class="title-box clearfix">
+                <div class="title-box clearfix" style="clear:both">
                     <p class="title"><span class="vertical"></span>老师报价</p>
                 </div>
                 <div class="table">
@@ -88,9 +92,19 @@
                         <div class="col col-bg">约课</div>
                     </div>
                     <div class="row">
-                        <div class="col col-bg">小学英语</div>
-                        <div class="col">50元/小时</div>
-                        <div class="col"><span>点击预约</span></div>
+                        <div class="col col-bg">小学家教</div>
+                        <div class="col">{$data['small_cost']}元/小时</div>
+                        <div class="col s-btn" style="cursor: pointer;"><span>点击预约</span></div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-bg">初中家教</div>
+                        <div class="col">{$data['junior_cost']}元/小时</div>
+                        <div class="col s-btn" style="cursor: pointer;"><span>点击预约</span></div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-bg">高中家教</div>
+                        <div class="col">{$data['high_cost']}元/小时</div>
+                        <div class="col s-btn" style="cursor: pointer;"><span>点击预约</span></div>
                     </div>
                 </div>
 
@@ -99,36 +113,52 @@
         <div class="right-bo-content float-right">
             <h2 class="title">快速发布需求</h2>
             <div class="right-bo-form">
-                <form action="">
+                <form id="ksfrom">
                     <div class="form-items">
                         <p><span>*</span>姓名</p>
-                        <input type="text">
+                        <input type="text" class="ksname" name="name">
                     </div>
                     <div class="form-items">
                         <p><span>*</span>手机号</p>
-                        <input type="text">
+                        <input type="text" id="phone" name="phone">
                     </div>
                     <div class="form-items">
                         <p><span>*</span>辅导科目</p>
-                        <select></select>
-                        <input type="text" placeholder="请输入您要辅导的其它科目">
+                        <php>
+                            $counseling = sp_get_counseling();
+                        </php>
+                        <select class="kscounseling_id" name="counseling_id[]">
+                            <option value="">--请选择辅导课程--</option>
+                            <foreach name="counseling" key="k" item="vo">
+                                <option value="{$k}">{$vo}</option>
+                            </foreach>
+                        </select>
+                        <input name="counseling_other" class="kscounseling_other" type="text" placeholder="请输入您要辅导的其它科目">
                     </div>
                     <div class="form-items">
                         <p><span>*</span>家庭住址</p>
-                        <select></select>
-                        <input type="text" placeholder="请输入您的具体地址">
+                        <input name="address" class="ksaddress" type="text" placeholder="请输入您的具体地址">
                     </div>
+                    <?php
+                        if ($d_code == 2) {
+                    ?>
                     <div class="form-items">
                         <p><span>*</span>短信验证码</p>
-                        <input class="code-input" type="text">
-                        <span class="code-img message-code">接收短信验证码</span>
+                        <input class="code-input kssms" type="text" name="sms">
+                        <span class="code-img message-code kssms_1" style="cursor: pointer;">接收短信验证码</span>
                     </div>
+                    <?php
+                        } else {
+                    ?>
                     <div class="form-items">
                         <p><span>*</span>验证码</p>
-                        <input class="code-input" type="text">
-                        <span class="code-img">2951</span>
+                        <input class="code-input ksverify" type="text" name="verify">
+                        <span class="code-img" style="float: right;margin-top: 10px;">{:sp_verifycode_img('length=3&font_size=20&width=120&height=40&use_noise=1&use_curve=0','style="cursor: pointer;" title="点击获取"')}</span>
                     </div>
-                    <div class="form-btn">提交</div>
+                    <?php
+                        }
+                    ?>
+                    <div class="form-btn" id="ksbut" style="cursor: pointer;">提交</div>
                 </form>
                 <div class="weixin">
                     <h2 class="title">
@@ -140,8 +170,302 @@
         </div>
     </div>
 </section>
+
+<section class="login-container">
+    <div class="mask">
+        <div class="login-box">
+            <div class="title">
+                预约老师
+                <span class="close">X</span>
+            </div>
+            <div class="container-content">
+                <form id="from">
+                    <input type="hidden" name="teacher_id" class="teacher_id" value="{$data['id']}"/>
+                    <div class="form-control clearfix" style="margin-top: 65px;">
+                        <label><span>*</span>姓名</label>
+                        <input type="text" class="name" style='width:50%' placeholder="请输入姓名" name="name">
+                    </div>
+                    <div class="form-control clearfix">
+                        <label><span>*</span>手机号</label>
+                        <input type="text" placeholder="请输入手机号" style='width:50%' class="phone" name="phone">
+                    </div>
+                    <php>
+                        $counseling = sp_get_counseling();
+                    </php>
+                    <div class="form-control clearfix">
+                        <label><span>*</span>辅导科目</label>
+                        <select class="counseling_id" name="counseling_id[]" style='width:50%'>
+                            <option value="">--请选择辅导课程--</option>
+                            <foreach name="counseling" key="k" item="vo">
+                                <option value="{$k}">{$vo}</option>
+                            </foreach>
+                        </select>
+                    </div>
+                    <div class="form-control clearfix">
+                        <label for=""></label>
+                        <input name="counseling_other" class="counseling_other" style='width:50%' type="text" placeholder="请输入您要辅导的其它科目">
+                    </div>
+                    <div class="form-control clearfix">
+                        <label for=""><span>*</span>家庭住址</label>
+                        <input class="address" name="address" style='width:50%' type="text" placeholder="请输入您的家庭住址">
+                    </div>
+                    <?php
+                        if ($d_code == 1) {
+                    ?>
+                    <div class="form-control clearfix">
+                        <label><span>*</span>验证码</label>
+                        <input type="text" class="verify" style='width:50%' style="width: 51%;" name="verify">
+                        <span class="span-code">{:sp_verifycode_img('length=3&font_size=20&width=109&height=40&use_noise=1&use_curve=0','style="cursor: pointer;" title="点击获取"')}</span>
+                    </div>
+                    <?php
+                        } else {
+                    ?>
+                    <div class="form-control clearfix">
+                        <label><span>*</span>短信验证码</label>
+                        <input type="text" class="sms" style='width:50%' style="width: 51%;" name="sms">
+                        <span class="span-code span-btn sms_1">接收短信验证码</span>
+                    </div>
+                    <?php
+                        }
+                    ?>
+                    <input type="submit" id="but" style="width: 20%;" vlaue="提交" class="login-btn">
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
 <tc_include file="Public:footer"/>
 <tc_include file="Public:scripts"/>
+<script src="__TMPL__Public/assets/js/jquery.validate-1.13.1.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.kssms_1').click(function () {
+            var ksphone = $('#phone').val();
+            if (!isPhoneNo(ksphone)) {
+                alert('请输入正确的手机号');
+            } else {
+                $.ajax({
+                    url: '{:U("Demand/get_sms")}',
+                    dataType: "json",
+                    type: "post",
+                    data: {phone: ksphone},
+                    success: function (msg) {
+                        if (msg.code == 1) {
+                            $('.kssms').html('发送成功');
+                        } else {
+                            alert(msg.msg);
+                        }
+                    }
+                });
+            }
+        });
 
+        $('.sms_1').click(function () {
+            var ksphone = $('.phone').val();
+            if (!isPhoneNo(ksphone)) {
+                alert('请输入正确的手机号');
+            } else {
+                $.ajax({
+                    url: '{:U("Demand/get_sms")}',
+                    dataType: "json",
+                    type: "post",
+                    data: {phone: ksphone},
+                    success: function (msg) {
+                        if (msg.code == 1) {
+                            $('.sms_1').html('发送成功');
+                        } else {
+                            alert(msg.msg);
+                        }
+                    }
+                });
+            }
+        });
+
+        // 验证手机号
+        function isPhoneNo(phone) {
+            var pattern = /^1[34578]\d{9}$/;
+            return pattern.test(phone);
+        }
+
+        $('#ksbut').on('click', function(){
+            var name    =   $('.ksname').val();
+
+            if (!name) {
+                alert('请输入姓名');
+                return false;
+            }
+
+            var phone   =   $('#phone').val();
+
+            if (!phone) {
+                alert('请输入手机号');
+                return false;
+            }
+
+            var counseling = [];
+            counseling.push($('.kscounseling_id').val());
+
+            if (!$('.kscounseling_id').val()) {
+                alert('请选择辅导课程');
+                return false;
+            }
+
+            var address =   $('.ksaddress').val();
+
+            if (!address) {
+                alert('请输入地址');
+                return false;
+            }
+
+            <?php
+            if ($d_code == 1) {
+                ?>
+                var code    =   $('.ksverify').val();//验证码－图文
+                <?php
+            } else if($d_code == 2) {
+                ?>
+                var code    =   $('.kssms').val();//验证码－短信
+                <?php
+            }
+            ?>
+
+            if (!code) {
+                alert('请输入验证码');
+                return false;
+            }
+
+            var formData = {
+                "name": name,//名称
+                "phone": phone,//手机号
+                "counseling_id": counseling,//科目1
+                "counseling_other": $('.kscounseling_other').val(),//4
+                "address": address,//住址
+            <?php
+            if ($d_code == 1) {
+                ?>
+                "verify": code,//验证码－图文
+                <?php
+            } else if($d_code == 2) {
+                ?>
+                "sms": code,//验证码－短信
+                <?php
+            }
+            ?>
+
+            }
+
+            //调用AJAX提交表单
+            $.ajax({
+                url: '{:U("Demand/add_kspost")}',
+                dataType: "json",
+                type: "post",
+                data:formData,
+                success: function(data) {
+                    if (data.status == 0) {
+                        alert(data.info);
+                    } else if(data.status == 1) {
+                        alert(data.info);
+                        location.reload();
+                    }
+                }
+            });
+
+        });
+
+
+        //表单验证
+        $.validator.setDefaults({
+            debug: true
+        });
+
+        $('#from').validate({
+        rules: {
+            name: {
+                required: true
+            },
+            'phone': {
+                required: true
+            },
+            'counseling_id[]': {
+            required: true
+        },
+        address: {
+            required: true
+        },
+        },
+        messages: {
+            name: {
+            required: '请输入您的真实姓名'
+        },
+            'phone': {
+            required: '请选择手机号'
+        },
+            'counseling_id[]': {
+            required: "请至少选择一个科目"
+        },
+            address: {
+            required: "请选择一个地址"
+        },
+
+        },
+        submitHandler: function(form){
+            console.log($(form).serialize());
+        }
+        });
+
+        $('#but').on('click', function(){
+            var counseling = [];
+            counseling.push($('.counseling_id').val());
+
+            var formData = {
+                'teacher_id':  $('.teacher_id').val(),//老师id
+                "name": $('.name').val(),//名称
+                "phone": $('.phone').val(),//手机号
+                "counseling_id": counseling,//科目1
+                "counseling_other": $('.counseling_other').val(),//4
+                "address": $('.address').val(),//住址
+            <?php
+            if ($d_code == 1) {
+                ?>
+                "verify": $('.verify').val(),//验证码－图文
+                <?php
+            } else if($d_code == 2) {
+                ?>
+                "sms": $('.sms').val()//验证码－短信
+                <?php
+            }
+            ?>
+
+            }
+
+            if($('#from').valid()){
+                //调用AJAX提交表单
+                $.ajax({
+                    url: '{:U("Ptotorder/add_post")}',
+                    dataType: "json",
+                    type: "post",
+                    data:formData,
+                    success: function(data) {
+                        if (data.status == 0) {
+                            alert(data.info);
+                        } else if(data.status == 1) {
+                            alert(data.info);
+                            location.reload();
+                        }
+                    }
+                });
+            }
+        });
+
+
+    $('.s-btn').on('click', function(){
+        $('.login-container').show();
+    })
+    //关闭
+    $('.close').on('click', function(){
+        $('.login-container').hide();
+    });
+    })
+</script>
 </body>
 </html>

@@ -22,6 +22,9 @@ class TeacherController extends HomebaseController {
         // 得到老师用什么验证码：1图形验证码  2短信验证码
         $this->is_code = $option['doctor']['value'];
 
+        $d_code = $option['parents']['value'];
+
+        $this->assign('d_code', $d_code);
         $this->assign('is_code', $this->is_code);
     }
 
@@ -213,6 +216,7 @@ class TeacherController extends HomebaseController {
 
         $data = $this->teacher_model->where(array('id'=>$id))->find();
 
+        $this->assign("smeta",json_decode($data['smeta'],true));
         $this->assign('data', $data);
         $this->display();
     }

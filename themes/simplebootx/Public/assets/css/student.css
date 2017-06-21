@@ -2,8 +2,8 @@ body,html{
     background-color: #F6F6F6;
 }
 .student-container{
-    margin-top: 40px;
-    padding: 80px 20px 0 20px;
+    margin-top: 135px;
+    padding: 0px 20px;
 }
 .student-right{
     width: 280px;
@@ -58,7 +58,8 @@ body,html{
 .part-box .part-info-title span:last-child{
     border-right: none;
 }
-.part-box .part-info-title .sex{
+.part-box .part-info-title .sex,
+.student-detail .part-info-title .sex{
     width: 22px;
     height:22px;
     border-radius: 50%;
@@ -68,10 +69,12 @@ body,html{
     color: #fff;
     font-size: 12px;
 }
-.part-box .part-info-title .sex.woman{
+.part-box .part-info-title .sex.woman,
+.student-detail .part-info-title .sex.woman{
     background-color: #FF8E8E;
 }
-.part-box .part-info-title .sex.man{
+.part-box .part-info-title .sex.man,
+.student-detail .part-info-title .sex.man{
     background-color: #4AADF2;
 }
 .part-info-left{
@@ -212,4 +215,94 @@ body,html{
 }
 .all-faculty{
     display: block;
+}
+/*student detail*/
+.student-name{
+    line-height: 70px;
+    font-size: 16px;
+    border-bottom: 1px solid #f0f0f0;
+}
+.student-detail .faculty-left-top{
+    padding-top: 0;
+    padding-bottom: 0;
+}
+.student-detail .part-info-title{
+    line-height: 70px;
+}
+.student-detail .part-info-title span{
+    padding: 0 8px;
+    border-right: 1px solid #e5e5e5;
+}
+.student-detail-tab{
+    float: left;
+}
+.send-btn{
+    float: right;
+    width: 120px;
+    height: 40px;
+    border-radius: 3px;
+    background-color: #FF4242;
+    line-height: 40px;
+    text-align: center;
+    color: #fff;
+    margin-top: 10px;
+    cursor: pointer;
+}
+.student-detail-tab li{
+    text-align: center;
+    padding: 0 8px;
+    line-height: 60px;
+    float: left;
+}
+.student-detail .faculty-content{
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 0;
+}
+.detail-text-content{
+    padding: 30px 0;
+}
+.text-item{
+    line-height: 28px;
+}
+.red-color{
+    color: #FF4242;
+    font-weight: 700;
+}
+.student-detail .form-control{
+    padding-left: 0;
+}
+.order-container .order-content-box{
+    width: 100%;
+    background-color: #fff;
+}
+.table-header{
+    border-bottom: 1px solid #4AADF2;
+    display: flex;
+}
+.table-col{
+    flex: 1;
+    text-align: center;
+}
+.table-header .table-col{
+    font-size: 16px;
+    height: 50px;
+    line-height: 50px;
+}
+.table-body .table-tr{
+    display: flex;
+}
+.table-body .table-col{
+    font-size: 14px;
+    padding: 15px 0;
+}
+.table-body .status{
+    color: #f37676;
+}
+.table-body .look{
+    color: #4AADF2;
+}
+.student-detail .look{
+    background-color: #fff;
+    height: 0;
+    line-height: 0;
 }
