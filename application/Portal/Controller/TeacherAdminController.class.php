@@ -116,6 +116,27 @@ class TeacherAdminController extends AdminbaseController {
             }
         }
 
+		$small_cost	=	(int)$post['small_cost'];
+		if (!$small_cost) {
+			$array = array('info'=>'小学课时费不能为空','status'=>0);
+			echo json_encode($array);die;
+		}
+		$data['small_cost']		=	$small_cost;
+
+		$junior_cost	=	(int)$post['junior_cost'];
+		if (!$junior_cost) {
+			$array = array('info'=>'初中课时费不能为空','status'=>0);
+			echo json_encode($array);die;
+		}
+		$data['junior_cost']		=	$junior_cost;
+
+		$high_cost	=	(int)$post['high_cost'];
+		if (!$high_cost) {
+			$array = array('info'=>'高中课时费不能为空','status'=>0);
+			echo json_encode($array);die;
+		}
+		$data['high_cost']		=	$high_cost;
+
 
         $email_auth =   '/^([a-z0-9])(([-a-z0-9._])*([a-z0-9]))*\@([a-z0-9])*(\.([a-z0-9])([-a-z0-9_-])([a-z0-9])+)*$/i';
         $email      =   $post['email'];

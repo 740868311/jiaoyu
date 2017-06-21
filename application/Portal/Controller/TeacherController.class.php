@@ -205,7 +205,7 @@ class TeacherController extends HomebaseController {
     // 老师简历
     public function resume()
     {
-        $id = get_teacher_id($_GET['id']);
+        $id = $_GET['teacher_id'];
 
         if (!$id) {
             $this->error('缺少教师id');

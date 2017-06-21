@@ -1,0 +1,147 @@
+<tc_include file="Public:head" />
+<link rel="stylesheet" href="__TMPL__Public/assets/css/base.css">
+<link rel="stylesheet" href="__TMPL__Public/assets/css/iconfont/iconfont.css">
+<link rel="stylesheet" href="__TMPL__Public/assets/css/teacher_detail.css">
+<style>
+    .on{background: #39c;color: #fff;}
+</style>
+</head>
+<body>
+<tc_include file="Public:nav" />
+<section class="container te-detail-container">
+    <div class="top-content">
+        <div class="person-photo"></div>
+        <div class="right-info">
+            <div class="right-top-title">
+                <span class="teacher-name">{$data.name}</span>
+                <span>{:get_teacher_show_id($data['id'])}</span>
+                <span>{$data['status'] == 1 ? '普通教员' : '明星教员'}</span>
+                <span class="sex {$data['sex'] == 1 ? 'girl' : 'boy'}">{$data['sex'] == 1 ? '女' : '男'}</span>
+            </div>
+            <p class="sub"><span>辅导科目：</span>
+                <php>
+                    $counseling_data = explode(',', trim($data['counseling_ids'],','));
+                    $swap = array();
+                    foreach($counseling_data as $counseling_one) {
+                    $swap[] = $counseling[$counseling_one];
+                    }
+                    $counseling_data = implode(',', $swap);
+                </php>
+                {$counseling_data}
+            </p>
+            <div class="dis-flex right-bottom-title">
+                <div class="flex-item">
+                    <h2>{$data['university']}</h2>
+                    <p>所在学校</p>
+                </div>
+                <div class="flex-item">
+                    <h2>{$data['profession']}</h2>
+                    <p>所学专业</p>
+                </div>
+                <div class="flex-item">
+                    <h2>{$data['grade']}</h2>
+                    <p>年级</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bottom-content clearfix">
+        <div class="left-bo-content float-left">
+            <div class="menu clearfix">
+                <ul class="tab">
+                    <li class="active">自我介绍</li>
+                    <li>教学经历</li>
+                    <li>获奖经历</li>
+                    <li>老师报价</li>
+                </ul>
+                <div class="yue-teacher">预约老师</div>
+            </div>
+            <div class="menu-content">
+                <div class="title-box clearfix">
+                    <p class="title"><span class="vertical"></span>基本情况</p>
+                </div>
+                <div class="info">
+                    本人是安徽大学英语第毕业的，一直从事高中、初中英语教学15年，其中7年是高三英语教学。本人在教学期间参加过学校本人是安徽大学英语第毕业的，一直从事高中、初中英语教学15年，其中7年是高三英语教学。本人在教学期间参加过学校本人是安徽大学英语第毕业的，一直从事
+                    本人是安徽大学英语第毕业的，一直从事高中、初中英语教学15年，其中7年是高三英语教学。本人本人是安徽大学英语第毕业的，一直从事高中、初中英语教学15年，其中7年是高三英语教学。本人在教学期间参加过学校本人是安徽大学英语第毕业的，一直从事高中、初中英语教学1
+                </div>
+                <div class="title-box clearfix">
+                    <p class="title"><span class="vertical"></span>教学经历</p>
+                </div>
+                <div class="info">
+                    本人是安徽大学英语第毕业的，一直从事高中、初中英语教学15年，其中7年是高三英语教学。本人在教学期间参加过学校本人是安徽大学英语第毕业的，一直从事高中、初中英语教学15年，其中7年是高三英语教学。本人在教学期间参加过学校本人是安徽大学英语第毕业的，一直从事
+                    本人是安徽大学英语第毕业的，一直从事高中、初中英语教学15年，其中7年是高三英语教学。本人教学期间参加过学校本人是安徽大学英语第毕业的，一直从事高中、初中英语教学15年，其中7年是高三英语教学。本人在教学期间参加过学校本人是安徽大学英语第毕业的，一直从事高
+                </div>
+                <div class="title-box clearfix">
+                    <p class="title"><span class="vertical"></span>获奖经历</p>
+                </div>
+                <div class="info">
+                    <div class="img"></div>
+                    <div class="img"></div>
+                </div>
+                <div class="title-box clearfix">
+                    <p class="title"><span class="vertical"></span>老师报价</p>
+                </div>
+                <div class="table">
+                    <div class="header">
+                        <div class="col col-bg">辅导科目</div>
+                        <div class="col col-bg">课时费</div>
+                        <div class="col col-bg">约课</div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-bg">小学英语</div>
+                        <div class="col">50元/小时</div>
+                        <div class="col"><span>点击预约</span></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="right-bo-content float-right">
+            <h2 class="title">快速发布需求</h2>
+            <div class="right-bo-form">
+                <form action="">
+                    <div class="form-items">
+                        <p><span>*</span>姓名</p>
+                        <input type="text">
+                    </div>
+                    <div class="form-items">
+                        <p><span>*</span>手机号</p>
+                        <input type="text">
+                    </div>
+                    <div class="form-items">
+                        <p><span>*</span>辅导科目</p>
+                        <select></select>
+                        <input type="text" placeholder="请输入您要辅导的其它科目">
+                    </div>
+                    <div class="form-items">
+                        <p><span>*</span>家庭住址</p>
+                        <select></select>
+                        <input type="text" placeholder="请输入您的具体地址">
+                    </div>
+                    <div class="form-items">
+                        <p><span>*</span>短信验证码</p>
+                        <input class="code-input" type="text">
+                        <span class="code-img message-code">接收短信验证码</span>
+                    </div>
+                    <div class="form-items">
+                        <p><span>*</span>验证码</p>
+                        <input class="code-input" type="text">
+                        <span class="code-img">2951</span>
+                    </div>
+                    <div class="form-btn">提交</div>
+                </form>
+                <div class="weixin">
+                    <h2 class="title">
+                        关注微信
+                    </h2>
+                    <div class="weixin-box"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<tc_include file="Public:footer"/>
+<tc_include file="Public:scripts"/>
+
+</body>
+</html>

@@ -4,6 +4,7 @@
 <link rel="stylesheet" href="__TMPL__Public/assets/css/student.css">
 <style>
     .on{background: #39c;color: #fff;}
+    .teacher-box img{width: 80px;height: 80px;border-radius: 50%;}
 </style>
 </head>
 <body>
@@ -11,73 +12,125 @@
 <section class="student-container container clearfix">
     <div class="student-left">
         <ul class="stu-title">
-            <a href="{:U('Demand/demand_list',array('status'=>0,'id'=>5))}"><li class="active">预约成功</li></a>
-            <a href=""><li>报名中</li></a>
+            <a href="{:U('Demand/demand_list',array('status'=>4,'id'=>6))}"><li class="{$status == 4? 'active' : ''}">预约成功</li></a>
+            <a href="{:U('Demand/demand_list',array('status'=>2,'id'=>6))}"><li class="{$status == 2? 'active' : ''}">报名中</li></a>
         </ul>
         <div class="app-box-tab app-success-container">
-            <div class="part-box">
-                <div class="part-info-title">
-                    <span>TD003123</span>
-                    <span>李学员</span>
-                    <span><i class="sex woman">女</i></span>
-                    <span>小学五年级</span>
-                </div>
-                <div class="part-info-content clearfix">
-                    <div class="part-info-left float-left">
-                        <p>教员性别：女</p>
-                        <p>求教科目：小学语文、小学数学、小学英语</p>
-                        <p>授课地址：上海市期莞尔莞尔</p>
-                        <p>授课时间：周一晚上、周三晚上、周五晚上、周六上午</p>
+            <foreach name="demand_data" item="vo">
+                <div class="part-box">
+                    <div class="part-info-title">
+                        <span>{$vo.id}</span>
+                        <span>{$vo.name}</span>
+                        <span><i class="sex {$vo['sex'] == 1 ? 'woman' : 'man'}">{$vo['sex'] == 1 ? '女' : '男'}</i></span>
+                        <span>{$grade[$vo['grade_id']]}</span>
                     </div>
-                    <div class="part-info-right float-right teacher-box">
-                        <div></div>
-                        <p>高老师已任教</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="app-box-tab registration-container">
-            <div class="part-box">
-                <div class="part-info-title">
-                    <span>TD003123</span>
-                    <span>李学员</span>
-                    <span><i class="sex woman">女</i></span>
-                    <span>小学五年级</span>
-                </div>
-                <div class="part-info-content clearfix">
-                    <div class="part-info-left float-left">
-                        <p>教员性别：女</p>
-                        <p>求教科目：小学语文、小学数学、小学英语</p>
-                        <p>授课地址：上海市期莞尔莞尔</p>
-                        <p>授课时间：周一晚上、周三晚上、周五晚上、周六上午</p>
-                    </div>
-                    <div class="part-info-right float-right">
-                        <div class="look">查看详情</div>
-                    </div>
-                </div>
+                    <div class="part-info-content clearfix">
+                        <div class="part-info-left float-left">
+                            <p>教员性别：{$vo['teacher_sex'] == 1 ? '女' : '男'}</p>
+                            <p>求教科目：
+                                <php>
+                                    $counseling_data = explode(',', $vo['counseling_ids']);
+                                    $swap = array();
+                                    foreach($counseling_data as $counseling_one) {
+                                        $swap[] = $counseling[$counseling_one];
+                                    }
+                                    $counseling_data = implode(',', $swap);
+                                </php>
+                                {$counseling_data}
+                            </p>
+                            <p>授课地址：{$vo.address}</p>
+                            <p>授课时间：
+                                <php>
+                                    $tutor_s    =   $vo['tutor_time_s'];
+                                    $tutor_s    =   explode(',', $tutor_s);
+                                    foreach($tutor_s as $tutor_s_one) {
+                                        $week_str   .=  $week[$tutor_s_one].'上午'.',';
+                                    }
+                                    $tutor_x    =   $vo['tutor_time_x'];
+                                    $tutor_x    =   explode(',', $tutor_x);
+                                    foreach($tutor_x as $tutor_x_one) {
+                                        $week_str   .=  $week[$tutor_x_one].'下午'.',';
+                                    }
+                                    $tutor_w   =   $vo['tutor_time_w'];
+                                    $tutor_w    =   explode(',', $tutor_w);
+                                    foreach($tutor_w as $tutor_w_one) {
+                                        $week_str   .=  $week[$tutor_x_one].'晚上'.',';
+                                    }
 
-            </div>
-            <div class="part-box">
-                <div class="part-info-title">
-                    <span>TD003123</span>
-                    <span>李学员</span>
-                    <span><i class="sex man">男</i></span>
-                    <span>小学五年级</span>
-                </div>
-                <div class="part-info-content clearfix">
-                    <div class="part-info-left float-left">
-                        <p>教员性别：女</p>
-                        <p>求教科目：小学语文、小学数学、小学英语</p>
-                        <p>授课地址：上海市期莞尔莞尔</p>
-                        <p>授课时间：周一晚上、周三晚上、周五晚上、周六上午</p>
-                    </div>
-                    <div class="part-info-right float-right">
-                        <div class="look">查看详情</div>
-                    </div>
-                </div>
+                                    $tutor_z    =   $vo['tutor_time_z'];
+                                    $tutor_z    =   explode(',', $tutor_z);
+                                    foreach($tutor_z as $tutor_z_one) {
+                                        $week_str   .=  $z[$tutor_z_one].',';
+                                    }
+                                    $week_str = trim($week_str,',');
+                                    echo $week_str;
+                                    $week_str = '';
+                                </php>
+                            </p>
+                        </div>
+                        <if condition="$status == 2">
+                            <div class="part-info-right float-right">
+                                <a href=""><div class="look">查看详情</div></a>
+                            </div>
+                        <else />
+                            <div class="part-info-right float-right teacher-box">
+                                <div>
+                                    <php>
+                                        $smeta = json_decode($vo['teacher']['smeta'], true);
+                                    </php>
 
-            </div>
+                                    <img src="{:sp_get_image_preview_url($smeta['thumb'])}" id="thumb-preview" width="135" style="cursor: hand"/>
+                                </div>
+                                <p>{$vo['teacher']['name']}已任教</p>
+                            </div>
+                        </if>
+
+                    </div>
+                </div>
+            </foreach>
         </div>
+        <!--<div class="app-box-tab registration-container">-->
+            <!--<div class="part-box">-->
+                <!--<div class="part-info-title">-->
+                    <!--<span>TD003123</span>-->
+                    <!--<span>李学员</span>-->
+                    <!--<span><i class="sex woman">女</i></span>-->
+                    <!--<span>小学五年级</span>-->
+                <!--</div>-->
+                <!--<div class="part-info-content clearfix">-->
+                    <!--<div class="part-info-left float-left">-->
+                        <!--<p>教员性别：女</p>-->
+                        <!--<p>求教科目：小学语文、小学数学、小学英语</p>-->
+                        <!--<p>授课地址：上海市期莞尔莞尔</p>-->
+                        <!--<p>授课时间：周一晚上、周三晚上、周五晚上、周六上午</p>-->
+                    <!--</div>-->
+                    <!--<div class="part-info-right float-right">-->
+                        <!--<div class="look">查看详情</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+
+            <!--</div>-->
+            <!--<div class="part-box">-->
+                <!--<div class="part-info-title">-->
+                    <!--<span>TD003123</span>-->
+                    <!--<span>李学员</span>-->
+                    <!--<span><i class="sex man">男</i></span>-->
+                    <!--<span>小学五年级</span>-->
+                <!--</div>-->
+                <!--<div class="part-info-content clearfix">-->
+                    <!--<div class="part-info-left float-left">-->
+                        <!--<p>教员性别：女</p>-->
+                        <!--<p>求教科目：小学语文、小学数学、小学英语</p>-->
+                        <!--<p>授课地址：上海市期莞尔莞尔</p>-->
+                        <!--<p>授课时间：周一晚上、周三晚上、周五晚上、周六上午</p>-->
+                    <!--</div>-->
+                    <!--<div class="part-info-right float-right">-->
+                        <!--<div class="look">查看详情</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+
+            <!--</div>-->
+        <!--</div>-->
     </div>
     <div class="student-right">
         <h2 class="stu-right-title">

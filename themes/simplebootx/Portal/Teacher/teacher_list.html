@@ -92,7 +92,7 @@
                             <p class="part-info-text">所在学校：{$vo.university}</p>
                         </div>
                         <div class="faculty-box-right">
-                            <div class="look">查看简历</div>
+                            <a href="{:U('Teacher/resume', array('id'=>4, 'teacher_id'=>$vo['id']))}"><div class="look">查看简历</div></a>
                         </div>
                     </div>
                 </foreach>

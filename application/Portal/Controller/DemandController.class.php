@@ -95,6 +95,79 @@ class DemandController extends HomebaseController {
 		}
 	}
 
+	public function add_kspost()
+	{
+		if (IS_POST) {
+			// 暂时注销掉，等页面都有了，在测试
+			if ($this->is_code == 1) {
+				// 检测图形验证码
+				if(!sp_check_verify_code()){
+					$array  =   array('info'=>'验证码出错，请重新输入', 'status'=>0);
+					echo json_encode($array);die;
+				}
+			} else {
+				// 检测短信验证码
+				if (!sp_check_sms_code()) {
+					$array  =   array('info'=>'短信验证码过期或者出错，请重新输入', 'status'=>0);
+					echo json_encode($array);die;
+				}
+			}
+
+			$post = I("post.");
+
+			if (!$post['name']) {
+				$array  =   array('info'=>'姓名不能为空', 'status'=>1);
+				echo json_encode($array);die;
+			}
+			$data['name']   =   htmlspecialchars($post['name']);
+
+			$counseling_ids = ',';
+
+			foreach($post['counseling_id'] as $counseling_one) {
+				if ((int)$counseling_one && strpos($counseling_ids, ','.(int)$counseling_one.',') === false) {
+					$counseling_ids .= (int)$counseling_one.',';
+				}
+			}
+
+			if (!empty($counseling_ids)) {
+				$data['counseling_ids']     =   trim($counseling_ids, ',');
+			} else {
+				$array = array('info'=>'请输入辅导课程','status'=>0);
+				echo json_encode($array);die;
+			}
+
+			$phone                  =   $post['phone'];
+			$phone_auth       =   '/^(0|86|17951)?(13[0-9]|15[012356789]|18[0-9]|14[57])[0-9]{8}$/';
+			if (!preg_match($phone_auth, $phone)) {
+				$array = array('info'=>'手机格式有误','status'=>0);
+				echo json_encode($array);die;
+			}
+			$data['phone']          =   $phone;
+
+			$data['address']        =   htmlspecialchars($post['address']);
+
+			$data['ip']         =   $_SERVER['REMOTE_ADDR'];
+			$data['add_time']   =   date('Y-m-d H:i:s', time());
+			$data['status']		=	1;
+
+			$res = $this->demand_model -> create($data);
+			if (!$res) {
+				$this->error($this->demand_model->getError());
+			} else{
+				$result = $this->demand_model->add($data);
+			}
+
+			if ($result) {
+				$this->add_json();
+				$array  =   array('info'=>'添加成功', 'status'=>1);
+				echo json_encode($array);die;
+			} else {
+				$array  =   array('info'=>'添加失败', 'status'=>0);
+				echo json_encode($array);die;
+			}
+		}
+	}
+
     public function get_sms()
     {
 		$phone	=	I('post.phone');
@@ -200,6 +273,10 @@ class DemandController extends HomebaseController {
 			$status = 2;
 		}
 
+		if ($status == 1 || $status == 3) {
+			echo '所选状态有误';die;
+		}
+
 		$where['status']	=	$status;
 
 		$count=$this->demand_model->count();
@@ -211,7 +288,48 @@ class DemandController extends HomebaseController {
 			->order("add_time DESC")
 			->select();
 
-		dump($demand_data);die;
+		// 年级
+		$grade = sp_get_grade_name();
+
+		// 得到辅导课程
+		$counseling = sp_get_counseling();
+
+		// 周几
+		$week	=	array(
+			1	=>	'周一',
+			2	=>	'周二',
+			3	=>	'周三',
+			4	=>	'周四',
+			5	=>	'周五',
+			6	=>	'周六',
+			7	=>	'周日',
+		);
+
+		//
+		$z	=	array(
+			1	=>	'寒假',
+			2	=>	'暑假',
+			3	=>	'长期',
+			4	=>	'面议'
+		);
+
+		$where = array();
+		if ($status == 4) {
+			foreach($demand_data as $k=>$demand_one) {
+				$where['a.demand_id']	=	$demand_one['id'];
+				$where['a.status']		=	3;
+				$data = M()->table('edu_ttoporder  as  a')->join('edu_teacher  as  b  on  b.id = a.teacher_id')->where($where)->find();
+				$demand_data[$k]['teacher']	=	$data;
+			}
+		}
+
+		$this->assign('week', $week);
+		$this->assign('status', $status);
+		$this->assign('z',	$z);
+		$this->assign('grade', $grade);
+		$this->assign('counseling', $counseling);
+		$this->assign("page", $page->show('Admin'));
+		$this->assign("demand_data", $demand_data);
 		$this->display();
 	}
 

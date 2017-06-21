@@ -3,6 +3,9 @@
 <link rel="stylesheet" href="__TMPL__Public/assets/css/base.css">
 <link rel="stylesheet" href="__TMPL__Public/assets/css/iconfont/iconfont.css">
 <link rel="stylesheet" href="__TMPL__Public/assets/css/tutor.css">
+<style>
+    .mask .input{width:50%}
+</style>
 </head>
 <body>
 <tc_include file="Public:nav" />
@@ -38,7 +41,7 @@
 <section class="demand-container">
     <div class="container demand-info-box">
         <h1>家长（学员）<span class="s-color">在线提交</span>完整需求</h1>
-        <h2>注册太麻烦？试试<span class="s-color s-btn">快速提交入口</span></h2>
+        <h2>注册太麻烦？试试<span class="s-color s-btn" style="cursor: pointer;">快速提交入口</span></h2>
 
         <form id="tutor-form">
             <div class="base-info">
@@ -232,7 +235,7 @@
                     <div class="form-control clearfix">
                         <label><span>*</span>短信验证码</label>
                         <input type="text" class="middel-input messge-code" name="sms">
-                        <span class="span-code span-btn" id="sms">接收短信验证码</span>
+                        <span class="span-code span-btn sms">接收短信验证码</span>
                     </div>
                 <?php
                     }
@@ -253,41 +256,55 @@
                 <span class="close">X</span>
             </div>
             <div class="container-content">
-                <form action="">
+                <form id="ksfrom">
                     <div class="form-control clearfix" style="margin-top: 65px;">
                         <label><span>*</span>姓名</label>
-                        <input type="text" name="username">
+                        <input type="text" class="ksname" style='width:50%' name="name">
                     </div>
                     <div class="form-control clearfix">
                         <label><span>*</span>手机号</label>
-                        <input type="text" name="username">
+                        <input type="text"  style='width:50%' id="phone" name="phone">
                     </div>
+                    <php>
+                        $counseling = sp_get_counseling();
+                    </php>
                     <div class="form-control clearfix">
                         <label><span>*</span>辅导科目</label>
-                        <select name="" id="">
-                            <option value="0" disabled>请选择您要辅导的科目</option>
-                            <option value="1">语文</option>
+                        <select class="kscounseling_id" name="counseling_id[]" style='width:50%'>
+                            <option value="">--请选择辅导课程--</option>
+                            <foreach name="counseling" key="k" item="vo">
+                                <option value="{$k}">{$vo}</option>
+                            </foreach>
                         </select>
                     </div>
                     <div class="form-control clearfix">
                         <label for=""></label>
-                        <input type="text" placeholder="请输入您要辅导的其它科目">
+                        <input name="counseling_other" class="kscounseling_other" style='width:50%' type="text" placeholder="请输入您要辅导的其它科目">
                     </div>
                     <div class="form-control clearfix">
                         <label for=""><span>*</span>家庭住址</label>
-                        <input type="text" placeholder="请输入您的家庭住址">
+                        <input class="ksaddress" name="address" style='width:50%' type="text" placeholder="请输入您的家庭住址">
                     </div>
+                    <?php
+                        if ($is_code == 1) {
+                    ?>
                     <div class="form-control clearfix">
                         <label><span>*</span>验证码</label>
-                        <input type="text" class="" style="width: 51%;" name="img-code">
+                        <input type="text" class="ksverify" style='width:50%' style="width: 51%;" name="verify">
                         <span class="span-code"></span>
                     </div>
+                    <?php
+                        } else {
+                    ?>
                     <div class="form-control clearfix">
                         <label><span>*</span>短信验证码</label>
-                        <input type="text" class="" style="width: 51%;" name="messge-code">
-                        <span class="span-code span-btn">接收短信验证码</span>
+                        <input type="text" class="kssms" style='width:50%' style="width: 51%;" name="sms">
+                        <span class="span-code span-btn kssms_1">接收短信验证码</span>
                     </div>
-                    <input type="submit" vlaue="提交" class="login-btn">
+                    <?php
+                        }
+                    ?>
+                    <input type="submit" id="ksbut" style="width: 20%;" vlaue="提交" class="login-btn">
                 </form>
             </div>
         </div>
@@ -312,7 +329,7 @@
 <script src="__TMPL__Public/assets/js/jquery.validate-1.13.1.js"></script>
 <script>
     $(document).ready(function(){
-        $('#sms').click(function(){
+        $('.sms').click(function(){
             var phone = $('.phone').val();
             if (!isPhoneNo(phone)) {
                 alert('请输入正确的手机号');
@@ -324,7 +341,28 @@
                     data:{phone:phone},
                     success: function(msg) {
                         if (msg.code == 1) {
-                            $('#sms').html('发送成功');
+                            $('.sms').html('发送成功');
+                        } else {
+                            alert(msg.msg);
+                        }
+                    }
+                });
+            }
+        })
+
+        $('.kssms_1').click(function(){
+            var ksphone = $('#phone').val();
+            if (!isPhoneNo(ksphone)) {
+                alert('请输入正确的手机号');
+            } else {
+                $.ajax({
+                    url: '{:U("Demand/get_sms")}',
+                    dataType: "json",
+                    type: "post",
+                    data:{phone:ksphone},
+                    success: function(msg) {
+                        if (msg.code == 1) {
+                            $('.kssms').html('发送成功');
                         } else {
                             alert(msg.msg);
                         }
@@ -344,6 +382,85 @@
         $.validator.setDefaults({
             debug: true
         });
+
+        $('#ksfrom').validate({
+            rules: {
+                name: {
+                    required: true
+                },
+                'phone': {
+                    required: true
+                },
+                'counseling_id[]': {
+                    required: true
+                },
+                address: {
+                    required: true
+                },
+            },
+            messages: {
+                name: {
+                    required: '请输入您的真实姓名'
+                },
+                'phone': {
+                    required: '请选择手机号'
+                },
+                'counseling_id[]': {
+                    required: "请至少选择一个科目"
+                },
+                address: {
+                    required: "请选择一个地址"
+                },
+
+            },
+            submitHandler: function(form){
+                console.log($(form).serialize());
+            }
+        });
+
+        $('#ksbut').on('click', function(){
+            var counseling = [];
+            counseling.push($('.kscounseling_id').val());
+
+            var formData = {
+                "name": $('.ksname').val(),//名称
+                "phone": $('#phone').val(),//手机号
+                "counseling_id": counseling,//科目1
+                "counseling_other": $('.kscounseling_other').val(),//4
+                "address": $('.ksaddress').val(),//住址
+            <?php
+            if ($is_code == 1) {
+                ?>
+                "verify": $('.ksverify').val(),//验证码－图文
+                <?php
+            } else if($is_code == 2) {
+                ?>
+                "sms": $('.kssms').val()//验证码－短信
+                <?php
+            }
+            ?>
+
+            }
+
+            if($('#ksfrom').valid()){
+                //调用AJAX提交表单
+                $.ajax({
+                    url: '{:U("Demand/add_kspost")}',
+                    dataType: "json",
+                    type: "post",
+                    data:formData,
+                    success: function(data) {
+                        if (data.status == 0) {
+                            alert(data.info);
+                        } else if(data.status == 1) {
+                            alert(data.info);
+                            location.reload();
+                        }
+                    }
+                });
+            }
+        })
+
         $('#tutor-form').validate({
             rules: {
                 name: {
@@ -367,12 +484,6 @@
                 address: {
                     required: true
                 },
-                "img-code": {
-                    required: true
-                },
-                "messge-code": {
-                    required: true
-                }
             },
             messages: {
                 name: {
@@ -393,12 +504,6 @@
                 address: {
                     required: "请输入地址"
                 },
-                "img-code": {
-                    required: "请输入正确的验证码"
-                },
-                "messge-code": {
-                    required: "请输入短信验证码"
-                }
             },
             submitHandler: function(form){
                 console.log($(form).serialize());
@@ -463,7 +568,7 @@
 //                    console.log(error);
 //                });
             }
-        })
+        });
     })
     //提示框关闭
     $('.alert-title .close').on('click', function(){
@@ -478,14 +583,7 @@
     $('.close').on('click', function(){
         $('.login-container').hide();
     });
-    //登录
-    $('.login-btn').on('click',function(){
-        $('.login-container').hide();
-    });
-    //登录
-    $('.fast-login').on('click', function(){
-        $('.login-container').show();
-    });
+
 </script>
 {:hook('footer_end')}
 </body>
