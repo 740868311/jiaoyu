@@ -24,6 +24,17 @@ function sp_is_user_login(){
 	return !empty($session_user);
 }
 
+// 得到所有的辅导课程 add by lisheng 2017/06/03
+function sp_get_counselings()
+{
+	$grade_model = M('counseling');
+	$data 	=  $grade_model->select();
+	foreach($data as $data_one) {
+		$swap[$data_one['id']]	= $data_one['counseling'];
+	}
+	return $swap;
+}
+
 /**
  * 获取当前登录的前台用户的信息，未登录时，返回false
  * @return array|boolean

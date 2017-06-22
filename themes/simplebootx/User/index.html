@@ -1,86 +1,428 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>{$site_name}</title>
-<meta name="keywords" content="{$site_seo_keywords}" />
-<meta name="description" content="{$site_seo_description}">
-<meta name="author" content="ThinkCMF">
 <tc_include file="Public:head" />
-<style>
-.control-label{
-	font-weight: bold;
-	float: left;
-	width: 70px;
-}
-</style>
+<script>
+    //全局变量
+    var GV = {
+        ROOT: "__ROOT__/",
+        WEB_ROOT: "__WEB_ROOT__/",
+        JS_ROOT: "public/js/",
+        APP:'{$Think.MODULE_NAME}'/*当前应用名*/
+    };
+</script>
+<link href="__PUBLIC__/js/artDialog/skins/default.css" rel="stylesheet" />
+<link rel="stylesheet" href="__TMPL__Public/assets/css/base.css">
+<link rel="stylesheet" href="__TMPL__Public/assets/css/iconfont/iconfont.css">
+<link rel="stylesheet" href="__TMPL__Public/assets/css/subscribe.css">
+<script type="text/html" id="photos-item-wrapper">
+    <li id="savedimage{id}">
+        <input id="photo-{id}" class="photos_url" type="hidden" name="photos_url[]" value="{filepath}">
+        <input id="photo-{id}-name" class="photos_alt" type="text" name="photos_alt[]" value="{name}" style="width: 160px;height:36px" title="图片名称">
+        <img id="photo-{id}-preview" src="{url}" style="height:36px;width: 36px;" onclick="parent.image_preview_dialog(this.src);">
+        <a href="javascript:upload_one_image('图片上传','#photo-{id}');">替换</a>
+        <a href="javascript:(function(){$('#savedimage{id}').remove();})();">移除</a>
+    </li>
+</script>
 </head>
-<body class="body-white" id="top">
-	<tc_include file="Public:nav" />
-
-		<div class="container tc-main">
-                <div class="row">
-                
-                <div class="tabs offset2 span8">
-                               <!-- <ul class="nav nav-tabs">
-                                   <li class="active"><a href="#one" data-toggle="tab"><i class="fa fa-list-alt"></i>个人中心</a></li>
-                               </ul> -->
-                               <div class="tab-content">
-                                   <div class="tab-pane active" id="one">
-                                   		<div class="span3">
-						                	<a href="javascript:;">
-						                	<if condition="empty($avatar)">
-								            <img src="__TMPL__Public/assets/images/headicon_128.png" class="headicon"/>
-								            <else/>
-								            <img src="{:sp_get_user_avatar_url($avatar)}" class="headicon"/>
-								            </if>
-								          	</a>
-							          	</div>
-							          	<div class="span3">
-					               			<div class="control-group">
-					               				<label class="control-label" for="input-user_nicename">昵称</label>
-					               				<div class="controls">
-					               					{$user_nicename|default='未填写'}
-					               				</div>
-					               			</div>
-					               			<div class="control-group">
-					               				<label class="control-label" for="input-sex">性别</label>
-					               				<div class="controls">
-					               				<php>
-					               				$sexs=array("0"=>"保密","1"=>"程序猿","2"=>"程序媛");
-					               				
-					               				</php>
-					               					{$sexs[$sex]}
-					               				</div>
-					               			</div>
-					               			<div class="control-group">
-					               				<label class="control-label" for="input-birthday">生日</label>
-					               				<div class="controls">
-					               					{$birthday|default='未填写'}
-					               				</div>
-					               			</div>
-					               			<div class="control-group">
-					               				<label class="control-label" for="input-user_url">个人网址</label>
-					               				<div class="controls">
-					               					{$user_url|default='未填写'}
-					               				</div>
-					               			</div>
-					               			<div class="control-group">
-					               				<label class="control-label" for="input-signature">个性签名</label>
-					               				<div class="controls">
-					               					{$signature|default='未填写'}
-					               				</div>
-					               			</div>
-					               		</div>
-                                   </div>
-                               </div>							
-                 </div>
-                </div>
-
-		<tc_include file="Public:footer" />
-
+<body>
+<tc_include file="Public:nav" />
+<section class="container subs-container clearfix">
+	<div class="subs-left float-left">
+		<div class="person-img"></div>
+		<h2>五老师</h2>
+		<span><i class="icon iconfont icon-star"></i>明星学员</span>
+		<ul class="left-tab">
+			<li class="active">修改简历</li>
+			<li>订阅信息</li>
+			<li>预约家长</li>
+			<li>修改密码</li>
+		</ul>
 	</div>
-	<!-- /container -->
+	<div class="subs-right float-right">
+		<div class="right-container change-resume-box">
+			<ul class="tab resume-tab">
+				<li class="active">个人资料</li>
+				<li>修改照片</li>
+			</ul>
+			<div class="my-resume-content person-info">
+				<div class="info-base-container">
+                    <form action="" class="teacher-validate">
+                        <div class="title-box clearfix">
+                            <p class="title"><span class="vertical"></span>基本情况</p>
+                        </div>
+                        <div class="info-base-box">
+                            <div class="form-control clearfix">
+                                <label><span>*</span>教员姓名</label>
+                                <input type="text" class="username" value="{$teacher.name}" name="username">
+                            </div>
+                            <div class="form-control clearfix sex-box">
+                                <label>性别</label>
+                                <span class="my-radio" oid="2"><i class="icon iconfont {$teacher['sex'] == 2 ? 'icon-choose active' : 'icon-ring'}"></i>男</span>
+                                <span class="my-radio" oid="1" style="margin-left:20px;"><i class="icon iconfont {$teacher['sex'] == 1 ? 'icon-choose active' : 'icon-ring'}"></i>女</span>
+                            </div>
+                            <div class="form-control clearfix">
+                                <label><span>*</span>教员身份</label>
+                                <select name="identity" class="identity">
+                                    <option  value="">请选择您的身份</option>
+                                    <option {$teacher['identity'] == 1 ? 'selected' : ''} value="1">大学生</option>
+                                    <option {$teacher['identity'] == 2 ? 'selected' : ''} value="2">研究生</option>
+                                    <option {$teacher['identity'] == 3 ? 'selected' : ''} value="3">在职老师</option>
+                                    <option {$teacher['identity'] == 4 ? 'selected' : ''} value="4">专职老师</option>
+                                </select>
+                            </div>
+                            <div class="form-control clearfix">
+                                <label><span>*</span>教学阶段</label>
+                                <select name="stage" class="stage">
+                                    <option value="0">--请选择教学阶段--</option>
+                                    <option value="1" {$teacher['stage'] == 1 ? 'selected' : ''}>高中老师</option>
+                                    <option value="2" {$teacher['stage'] == 2 ? 'selected' : ''}>初中老师</option>
+                                    <option value="3" {$teacher['stage'] == 3 ? 'selected' : ''}>小学老师</option>
+                                </select>
+                            </div>
+                            <div class="form-control clearfix">
+                                <label><span>*</span>年级</label>
+                                <input type="text" class="grade" value="{$teacher.grade}" name="grade">
+                            </div>
+                            <div class="form-control clearfix">
+                                <label class="float-left"><span>*</span>上传照片</label>
+                                <!--<div class="upload-box float-left" name="photo">-->
+                                <!--</div>-->
+                                <div style="text-align: left;">
+                                    <input type="hidden" name="smeta[thumb]" id="thumb" value="{$smeta.thumb|default=''}">
+                                    <a href="javascript:upload_one_image('图片上传','#thumb');">
+                                        <if condition="empty($smeta['thumb'])">
+                                            <img src="__TMPL__Public/assets/images/default-thumbnail.png" id="thumb-preview" width="135" style="cursor: hand"/>
+                                            <else />
+                                            <img src="{:sp_get_image_preview_url($smeta['thumb'])}" id="thumb-preview" width="135" style="cursor: hand"/>
+                                        </if>
+                                    </a>
 
-	<tc_include file="Public:scripts" />
+                                </div>
+                            </div>
+                            <php>
+                                $counseling = sp_get_counselings();
+                            </php>
+                            <foreach name="teacher['counseling_ids']" item="counseling_one">
+                                <div class="form-control clearfix">
+                                    <label><span>*</span>辅导科目</label>
+                                    <select class="large-sel subjects-one counseling_id" name="counseling_id[]">
+                                        <option value="">--请选择辅导课程--</option>
+                                        <foreach name="counseling" key="k" item="vo">
+                                            <option value="{$k}" {$counseling_one == $k ? 'selected' : ''}>{$vo}</option>
+                                        </foreach>
+                                    </select>
+                                </div>
+                            </foreach>
+                            <div class="form-control nolabel-form-control clearfix">
+                                <label></label>
+                                <input type="text" class="subject-four" name="counseling_other" value='{$teacher.counseling_other}'placeholder="输入您所要辅导的其它科目">
+                            </div>
+                            <div class="form-control clearfix">
+                                <label><span>*</span>自我介绍</label>
+                                <textarea class="myself" name="myself">{$teacher.introduction}</textarea>
+                            </div>
+                            <div class="form-control clearfix">
+                                <label class="float-left"><span>*</span>获奖经历</label>
+                                <div style="padding: 0 84px;">
+                                    <ul id="photos" class="pic-list unstyled">
+                                        <notempty name="smeta['photo']">
+                                            <foreach name="smeta['photo']" item="vo">
+                                                <php>$img_url=sp_get_image_preview_url($vo['url']);</php>
+                                                <li id="savedimage{$key}">
+                                                    <input id="photo-{$key}" type="hidden" class="photos_url" name="photos_url[]" value="{$img_url}">
+                                                    <input id="photo-{$key}-name" type="text" class="photos_alt" name="photos_alt[]" value="{$vo.alt}" style="width: 200px;" title="图片名称">
+                                                    <img id="photo-{$key}-preview" src="{:sp_get_image_preview_url($vo['url'])}" style="height:36px;width: 36px;" onclick="parent.image_preview_dialog(this.src);">
+                                                    <a href="javascript:upload_one_image('图片上传','#photo-{$key}');">替换</a>
+                                                    <a href="javascript:(function(){ $('#savedimage{$key}').remove();})();">移除</a>
+                                                </li>
+                                            </foreach>
+                                        </notempty>
+                                    </ul>
+                                    <div style="height: 10px;"></div>
+                                    <a href="javascript:upload_multi_image('图片上传','#photos','photos-item-wrapper');" style="color: #ffffff;padding: 2px 12px; text-decoration: none;text-shadow: none;background-image: none;border: 0;-webkit-box-shadow: none;-moz-box-shadow: none;box-shadow: none;-webkit-transition: .25s;-moz-transition: .25s;transition: .25s;background-color: #bfbcbc;" class="">选择图片</a>
+                                </div>
+                                <!--<div class="upload-box float-left" name="winning">-->
+                                <!--</div>-->
+                            </div>
+                            <div class="form-control clearfix">
+                                <label><span>*</span>教学经历</label>
+                                <textarea name="teaching" class="teaching">{$teacher.teaching_experience}</textarea>
+                            </div>
+                            <div class="btn btn_teacher">提交</div>
+                        </div>
+                    </form>
+				</div>
+				<div class="other-info-container">
+					<div class="title-box clearfix">
+						<p class="title"><span class="vertical"></span>其它情况</p>
+					</div>
+					<p style="color: #666;margin:0 0 20px 95px;"><i class="icon iconfont icon-info-active"></i>以下内容联系客服可修改</p>
+					<div class="form-control clearfix">
+						<label>电话号码</label>
+						<input type="text" disabled value="{$teacher.phone}" placeholder="电话号码">
+					</div>
+					<div class="form-control clearfix">
+						<label>毕业院校</label>
+						<input type="text" disabled placeholder="毕业院校" value="{$teacher.university}">
+					</div>
+					<div class="form-control clearfix">
+						<label>所学专业</label>
+						<input type="text" disabled placeholder="所学专业" value="{$teacher.profession}">
+					</div>
+					<!--<div class="btn">联系客服</div>-->
+				</div>
+			</div>
+			<div class="my-resume-content change-photo">
+				<div class="upload-box"></div>
+				<div class="btn">提交</div>
+			</div>
+		</div>
+		<div class="right-container subs-info-box">
+			<ul class="tab">
+				<li class="active">我的订阅</li>
+				<li>订阅中心</li>
+			</ul>
+			<div class="subs-info my-subs">
+				<div class="subs-item clearfix">
+					<p class="float-left">月光博客</p>
+					<div class="float-right subsed">订阅</div>
+				</div>
+				<div class="subs-item clearfix">
+					<p class="float-left">月光博客</p>
+					<div class="float-right subsed">订阅</div>
+				</div>
+				<div class="none-subs">
+					暂无订阅信息。<a href="">马上订阅></a>
+				</div>
+			</div>
+			<div class="subs-info subs-center"><div class="subs-item clearfix">
+				<p class="float-left">月光博客</p>
+				<div class="float-right no-subsed">
+					<span>已订阅</span>
+					<span>取消</span>
+				</div>
+			</div></div>
+		</div>
+		<div class="right-container app-parent">
+			<div class="title-box clearfix">
+				<p class="title"><span class="vertical"></span>预约家长</p>
+			</div>
+			<div class="app-parent-content">
+				<div class="part-box">
+					<div class="part-info-title">
+						<span>TD003123</span>
+						<span>李学员</span>
+						<span><i class="sex woman">女</i></span>
+						<span>小学五年级</span>
+					</div>
+					<div class="part-info-content clearfix">
+						<div class="part-info-left float-left">
+							<p>求教科目：小学语文、小学数学、小学英语</p>
+							<p>授课时间：周一晚上、周三晚上、周五晚上、周六上午</p>
+						</div>
+						<div class="part-info-right float-right success">
+							<p>投递成功</p>
+						</div>
+					</div>
+				</div>
+				<div class="part-box">
+					<div class="part-info-title">
+						<span>TD003123</span>
+						<span>李学员</span>
+						<span><i class="sex woman">女</i></span>
+						<span>小学五年级</span>
+					</div>
+					<div class="part-info-content clearfix">
+						<div class="part-info-left float-left">
+							<p>求教科目：小学语文、小学数学、小学英语</p>
+							<p>授课时间：周一晚上、周三晚上、周五晚上、周六上午</p>
+						</div>
+						<div class="part-info-right float-right success">
+							<p>投递成功</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="right-container password-box">
+			<div class="title-box clearfix">
+				<p class="title"><span class="vertical"></span>修改密码</p>
+			</div>
+			<form action="">
+				<div class="form-control clearfix">
+					<label><span>*</span>当前密码</label>
+					<input type="text">
+				</div>
+				<div class="form-control clearfix">
+					<label><span>*</span>新密码</label>
+					<input type="text">
+				</div>
+				<div class="form-control clearfix">
+					<label><span>*</span>确认密码</label>
+					<input type="text">
+				</div>
+			</form>
+			<div class="btn" style="margin-left:200px;">提交</div>
+		</div>
+	</div>
+</section>
+<tc_include file="Public:footer"/>
+<tc_include file="Public:scripts"/>
+<script src="__PUBLIC__/js/wind.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+<script src="__TMPL__Public/assets/js/jquery.validate-1.13.1.js"></script>
+<script>
+	$(function(){
+		//左右两侧的tab切换
+		//Tab('.left-tab li','.right-container');
+		$('.left-tab li').on('click', function(){
+			$(this).addClass('active').siblings().removeClass('active');
+			$('.right-container').hide();
+			$('.right-container'+':nth-child('+($(this).index()+1)+')').show();
+		});
+
+		//修改简历
+		$('.change-resume-box .resume-tab li').on('click', function(){
+			$(this).addClass('active').siblings().removeClass('active');
+			$('.my-resume-content').hide();
+			if($(this).index() == 0){
+				$('.person-info').show();
+			}else{
+				$('.change-photo').show();
+			}
+		});
+		//订阅信息
+		$('.subs-info-box .tab li').on('click', function(){
+			$(this).addClass('active').siblings().removeClass('active');
+			$('.subs-info').hide();
+			if($(this).index() == 0){
+				$('.my-subs').show();
+			}else{
+				$('.subs-center').show();
+			}
+		});
+
+	});
+
+
+    $.validator.setDefaults({
+        debug: true
+    });
+    $('.teacher-validate').validate({
+        rules: {
+            username: {
+                required: true
+            },
+            identity: {
+                required: true
+            },
+            "counseling_id": {
+                required: true
+            },
+            myself: {
+                required: true
+            },
+            teaching: {
+                required: true
+            },
+            phone: {
+                required: true
+            },
+        },
+        messages: {
+            username: {
+                required: "请输入您的真实姓名"
+            },
+            identity: {
+                required: "请选择一个身份"
+            },
+            school: {
+                required: "请输入所在院校"
+            },
+            specialty: {
+                required: "请输入所学专业"
+            },
+            company: {
+                required: "请输入您的在职院校"
+            },
+            "counseling_id": {
+                required: "请选择一个辅导科目"
+            },
+            myself: {
+                required: "请填写自我介绍"
+            },
+            teaching: {
+                required: "请填写教学经历"
+            },
+            phone: {
+                required: "请填写手机号"
+            },
+        },
+        submitHandler: function(form){
+            console.log($(form).serialize());
+        }
+    });
+
+    //提交
+    $('.btn_teacher').on('click', function(){
+        var counseling = [];
+        $('.counseling_id').each(function(){
+            if ($(this).val()) {
+                counseling.push($(this).val());
+            }
+        });
+
+
+        var photos_alt  =   [];
+        $('.photos_alt').each(function(){
+            if ($(this).val()) {
+                photos_alt.push($(this).val());
+            }
+        });
+
+
+        var photos_url  =   [];
+        $('.photos_url').each(function(){
+            if ($(this).val()) {
+                photos_url.push($(this).val());
+            }
+        });
+
+        var formData = {
+            "name": $('.username').val(),//名称
+            "sex": $('.icon-choose').parents('.my-radio').attr('oid'),//性别
+            "identity": $('.identity').val(),//身份
+            "grade": $('.grade').val(),//所在年级
+            "thumb": $('#thumb').val(),//照片
+            "counseling_id": counseling,//科目1
+            "counseling_other": $('.subject-four').val(),//4
+            "stage": $('.stage').val(),//*教学阶段
+            "introduction": $('.myself').val(),//自我介绍
+            "teaching_experience": $('.teaching').val(),//教学经历
+            "photos_alt": photos_alt,
+            "photos_url": photos_url,
+        }
+
+        console.log(formData);return false;
+
+        if($('.teacher-validate').valid()){
+                //调用AJAX提交表单
+                $.ajax({
+                    url: '{:U("Teacher/index_post")}',
+                    dataType: "json",
+                    type: "post",
+                    data:formData,
+                    success: function(data) {
+                        if (data.status == 0) {
+                            $('.verify_img').click();
+                            alert(data.info);
+                        } else if(data.status == 1) {
+                            $('.alert-content').html(data.info);
+                            $('.alert-mask').show();
+                        }
+                    }
+                });
+            }
+        });
+</script>
+{:hook('footer_end')}
 </body>
 </html>

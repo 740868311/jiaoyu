@@ -5,8 +5,21 @@
 			<div class="logo"></div>
 			<div class="info">
 				<div class="te">
-					<a href="{:U('Teacher/teacher_login')}" class="te-login">老师登录</a>
-					<a href="">老师注册</a>
+					<php>
+						if (sp_is_user_login()) {
+							$session_user=session('user');
+					</php>
+						<a href="{:U('User/index/index')}" class="te-login">{$session_user['name']}</a>
+						<a href="{:U('User/index/logout')}" class="te-login">退出登录</a>
+					<php>
+						} else {
+					</php>
+						<a href="{:U('Teacher/teacher_login')}" class="te-login">老师登录</a>
+						<a href="{:U('Teacher/index', array('id'=>3))}">老师注册</a>
+					<php>
+						}
+					</php>
+
 				</div>
 				<i class="icon iconfont icon-phone"></i>
 				<div>

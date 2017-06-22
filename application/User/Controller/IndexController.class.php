@@ -7,18 +7,26 @@ class IndexController extends HomebaseController {
     
     // 前台用户首页 (公开)
 	public function index() {
-	    
-		$id=I("get.id",0,'intval');
-		
-		$users_model=M("Users");
-		
-		$user=$users_model->where(array("id"=>$id))->find();
-		
-		if(empty($user)){
-			$this->error("查无此人！");
+
+		if (!sp_is_user_login()) {
+			redirect(__ROOT__."/");
 		}
-		
-		$this->assign($user);
+		$user = session("user");
+
+		$where	=	array(
+			'id'	=>	$user['id'],
+		);
+		$teacher     =   M("teacher")->where($where)->find();
+		$teacher['counseling_ids'] = explode(',', trim($teacher['counseling_ids'], ','));
+		while(true) {
+			if (count($teacher['counseling_ids']) < 3) {
+				$teacher['counseling_ids'][] = null;
+			} else {
+				break;
+			}
+		}
+		$this->assign("smeta",json_decode($teacher['smeta'],true));
+		$this->assign("teacher",$teacher);
 		$this->display(":index");
 
     }
