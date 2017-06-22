@@ -26,9 +26,9 @@ class IndexController extends HomebaseController {
     // 前台ajax 判断用户登录状态接口
     function is_login(){
     	if(sp_is_user_login()){
-    		$this->ajaxReturn(array("status"=>1,"user"=>sp_get_current_user()));
+    		$this->ajaxReturn(array("status"=>1));
     	}else{
-    		$this->ajaxReturn(array("status"=>0,"info"=>"此用户未登录！"));
+    		$this->ajaxReturn(array("status"=>0));
     	}
     }
 

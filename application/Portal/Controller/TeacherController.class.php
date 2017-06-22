@@ -82,6 +82,9 @@ class TeacherController extends HomebaseController {
                 $array  =   array('info'=>'添加失败', 'status'=>0);
                 echo json_encode($array);die;
             }
+        } else {
+            $array  =   array('info'=>'未知错误', 'status'=>0);
+            echo json_encode($array);die;
         }
     }
 
@@ -184,18 +187,59 @@ class TeacherController extends HomebaseController {
     // 老师登录
     public function teacher_dologin()
     {
-        if ($this->is_code == 1) {
-            // 检测图形验证码
-            if(!sp_check_verify_code()){
-                $array  =   array('info'=>'验证码出错，请重新输入', 'status'=>0);
+        // 检测图形验证码
+        if(!sp_check_verify_code()){
+            $array  =   array('info'=>'验证码出错，请重新输入', 'status'=>0);
+            echo json_encode($array);die;
+        }
+
+        if (IS_POST) {
+            $post = I('post.');
+
+            // 验证手机号
+            $phone_auth       =   '/^(0|86|17951)?(13[0-9]|15[012356789]|18[0-9]|14[57])[0-9]{8}$/';
+            $phone      =   $post['phone'];
+            if ($phone) {
+                if (!preg_match($phone_auth, $phone)) {
+                    $array = array('info'=>'手机格式有误','status'=>0);
+                    echo json_encode($array);die;
+                }
+            } else {
+                $array = array('info'=>'手机号不能为空','status'=>0);
+                echo json_encode($array);die;
+            }
+
+            $password   =   $post['password'];
+
+            if (!$password) {
+                $array = array('info'=>'密码不能为空','status'=>0);
+                echo json_encode($array);die;
+            }
+
+            $sign_where = array('phone' =>  $phone, 'password'  =>  md5('ak47'.$password));
+            $res = $this->teacher_model->where($sign_where)->find();
+
+
+            if ($res) {
+                if ($res['is_black']    ==  2) {
+                    $array = array('info'=>'手机号已经拉入黑名单，请联系网站管理员','status'=>0);
+                    echo json_encode($array);die;
+                }
+                // 修改老师的最后一次登录时间和当前ip
+                $data['id'] =   $res['id'];
+                $data['last_time']  =   date('Y-m-d H:i:s', time());
+                $data['ip']         =   $_SERVER['REMOTE_ADDR'];
+                $this->teacher_model->save($data);
+                session('user',$res);
+                $array = array('info'=>'登录成功','status'=>1);
+                echo json_encode($array);die;
+            } else {
+                $array = array('info'=>'账号或者密码错误','status'=>0);
                 echo json_encode($array);die;
             }
         } else {
-            // 检测短信验证码
-            if (!sp_check_sms_code()) {
-                $array  =   array('info'=>'短信验证码过期或者出错，请重新输入', 'status'=>0);
-                echo json_encode($array);die;
-            }
+            $array  =   array('info'=>'未知错误', 'status'=>0);
+            echo json_encode($array);die;
         }
 
         // 条件
@@ -203,6 +247,25 @@ class TeacherController extends HomebaseController {
         // is_black:1正常用户  2拉黑
         $where['is_black']  =   1;
 
+    }
+
+    public function teacher_index()
+    {
+        if (sp_is_user_login()) {
+
+        }
+    }
+
+    // 前台ajax 判断用户登录状态接口
+    function is_login(){
+
+        if(sp_is_user_login()){
+            $array  =   array('status'=>1);
+            echo json_encode($array);die;
+        }else{
+            $array  =   array('status'=>0);
+            echo json_encode($array);die;
+        }
     }
 
     // 老师简历

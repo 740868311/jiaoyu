@@ -1,0 +1,308 @@
+<tc_include file="Public:head" />
+<link rel="stylesheet" href="__TMPL__Public/assets/css/base.css">
+<link rel="stylesheet" href="__TMPL__Public/assets/css/iconfont/iconfont.css">
+<link rel="stylesheet" href="__TMPL__Public/assets/css/student.css">
+<style>
+    .on{background: #39c;color: #fff;}
+    .teacher-box img{width: 80px;height: 80px;border-radius: 50%;}
+    .td-status{
+        float: right;
+        width: 120px;
+        height: 40px;
+        border-radius: 3px;
+        line-height: 40px;
+        text-align: center;
+        margin-top: 10px;
+        font-size:18px;
+        color:red;
+    }
+</style>
+</head>
+<body>
+<tc_include file="Public:nav" />
+<section class="student-container container clearfix student-detail">
+    <div class="student-left faculty-left">
+        <div class="faculty-left-top">
+            <div class="student-name">{$demand.name}</div>
+            <div class="part-info-title">
+                <span>{$demand.id}</span>
+                <span><i class="sex {$demand['sex'] == 1 ? 'woman' : 'man'}">{$demand['sex'] == 1 ? '女' : '男'}</i></span>
+                <php>
+                    $grade = sp_get_grade_name();
+                </php>
+                <span>{$grade[$demand['grade_id']]}</span>
+            </div>
+        </div>
+        <div class="faculty-left-bottom">
+            <div class="faculty-content all-faculty clearfix">
+                <ul class="student-detail-tab">
+                    <li>详细信息</li>
+                    <li>预约记录</li>
+                </ul>
+                <div class="{$demand['status'] == 2 ? 'send-btn' : 'td-status'}">{$td_status[$demand['status']]}</div>
+            </div>
+            <div class="detail-text-content">
+                <div class="title-box clearfix">
+                    <p class="title"><span class="vertical"></span>详细信息</p>
+                </div>
+                <p class="text-item">拟付薪酬：<span class="red-color">{$demand.prepayments}</span>元/小时</p>
+                <php>
+                    $sf = array(
+                        1   =>  '大学生',
+                        2   =>  '研究生',
+                        3   =>  '在职老师',
+                        4   =>  '专职老师'
+                    );
+                </php>
+                <p class="text-item">教员要求：<span>{$demand['teacher_sex'] == 1 ? '女' : '男'}性、{$sf[$demand['teacher_identity']]}</span></p>
+                <p class="text-item">求教科目：<span>
+                    <php>
+                        $counseling = sp_get_counseling();
+                        $counseling_data = explode(',', $demand['counseling_ids']);
+                        $swap = array();
+                        foreach($counseling_data as $counseling_one) {
+                        $swap[] = $counseling[$counseling_one];
+                        }
+                        $counseling_data = implode(',', $swap);
+                    </php>
+                        {$counseling_data}
+                </span></p>
+                <p class="text-item">授课地址：<span>{$demand.address}</span></p>
+                <div class="form-control clearfix">
+                    <label class="float-left" for="">家教时间</label>
+                    <div class="float-left table">
+                        <div class="header">
+                            <div class="col"></div>
+                            <div class="col">周一</div>
+                            <div class="col">周二</div>
+                            <div class="col">周三</div>
+                            <div class="col">周四</div>
+                            <div class="col">周五</div>
+                            <div class="col">周六</div>
+                            <div class="col">周日</div>
+                            <div class="col">寒假</div>
+                            <div class="my-checkbox col"><i class="icon iconfont {:strpos($demand['tutor_time_z'], '1') !== false ? 'icon-check-squre' : 'icon-squre'}" oid="winter"></i></div>
+                        </div>
+                        <div class="row">
+                            <div class="col">上午</div>
+                            <for start="1" end="8">
+                                <!--<td width="26" bgcolor="#d9d6d5"><input type="checkbox" {:strpos($demand['tutor_time_s'], "$i") !== false ? 'checked' : ''} name="S[]" value="{$i}"></td>-->
+                                <div class="my-checkbox col"><i class="icon iconfont {:strpos($demand['tutor_time_s'], "$i") !== false ? 'icon-check-squre' : 'icon-squre'}"></i></div>
+                            </for>
+                            <div class="col">暑假</div>
+                            <div class="my-checkbox col"><i class="icon iconfont {:strpos($demand['tutor_time_z'], '2') !== false ? 'icon-check-squre' : 'icon-squre'}" oid="summer"></i></div>
+                        </div>
+                        <div class="row">
+                            <div class="col">下午</div>
+                            <for start="1" end="8">
+                                <!--<td width="26" bgcolor="#d9d6d5"><input type="checkbox" {:strpos($demand['tutor_time_s'], "$i") !== false ? 'checked' : ''} name="S[]" value="{$i}"></td>-->
+                                <div class="my-checkbox col"><i class="icon iconfont {:strpos($demand['tutor_time_x'], "$i") !== false ? 'icon-check-squre' : 'icon-squre'}"></i></div>
+                            </for>
+                            <div class="col">长期</div>
+                            <div class="my-checkbox col"><i class="icon iconfont {:strpos($demand['tutor_time_z'], '3') !== false ? 'icon-check-squre' : 'icon-squre'}" oid="long"></i></div>
+                        </div>
+                        <div class="row">
+                            <div class="col">晚上</div>
+                            <for start="1" end="8">
+                                <!--<td width="26" bgcolor="#d9d6d5"><input type="checkbox" {:strpos($demand['tutor_time_s'], "$i") !== false ? 'checked' : ''} name="S[]" value="{$i}"></td>-->
+                                <div class="my-checkbox col"><i class="icon iconfont {:strpos($demand['tutor_time_w'], "$i") !== false ? 'icon-check-squre' : 'icon-squre'}"></i></div>
+                            </for>
+                            <div class="col">面议</div>
+                            <div class="my-checkbox col"><i class="icon iconfont {:strpos($demand['tutor_time_z'], '4') !== false ? 'icon-check-squre' : 'icon-squre'}" oid="negotiable"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-item">其它要求：<span>{$demand['remarks']}</span></p>
+                <div class="title-box clearfix" style="margin-top: 40px;">
+                    <p class="title"><span class="vertical"></span>预约记录</p>
+                </div>
+                <div class="order-content-box">
+                    <div class="table-header">
+                        <div class="table-col">编号</div>
+                        <div class="table-col">姓名</div>
+                        <div class="table-col">性别</div>
+                        <div class="table-col">大学</div>
+                        <div class="table-col">专业</div>
+                        <div class="table-col">状态</div>
+                        <div class="table-col">操作</div>
+                    </div>
+                    <div class="table-body">
+                        <php>
+                            if (empty($teacher)) {
+                        </php>
+                                <div class="table-col">暂时没有订单</div>
+                        <php>
+                            } else {
+                        </php>
+                            <foreach name="teacher" item="vo">
+                                <div class="table-tr">
+
+                                    <div class="table-col">{:get_teacher_show_id($vo['id'])}</div>
+                                    <div class="table-col">{$vo.name}</div>
+                                    <div class="table-col">{$vo['sex'] == 1 ? '女' : '男'}</div>
+                                    <div class="table-col">{$vo.university}</div>
+                                    <div class="table-col">{$vo.profession}</div>
+                                    <div class="table-col status">{$status[$ttoporder[$vo['id']]]}</div>
+                                    <div class="table-col"><a class="look" href="{:U('Teacher/resume', array('id'=>5, 'teacher_id'=>$vo['id']))}">点击查看</a></div>
+                                </div>
+                            </foreach>
+                        <php>
+                            }
+                        </php>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="student-right">
+        <h2 class="stu-right-title">
+            找家教需知
+        </h2>
+        <div class="stu-right-content">
+            <p>1、本站是南宁家教总动员。</p>
+            <p>2、重点学校的老师不等于好老师。</p>
+            <p>3、联系教员请咨询详细情况，勿听夸夸其谈。</p>
+        </div>
+        <div class="weixin">
+            <h2 class="stu-right-title">
+                关注微信
+            </h2>
+            <div class="weixin-box"></div>
+        </div>
+    </div>
+</section>
+
+<section class="login-container">
+    <div class="mask">
+        <div class="login-box">
+            <div class="title">
+                投递简历
+                <span class="close">X</span>
+            </div>
+            <div class="container-content">
+                <form id="from">
+                    <input type="hidden" class="demand_id" name="demand_id" value="{$demand.id}">
+                    <div class="form-control clearfix" style="margin-top: 65px;">
+                        <label><span>*</span>留言</label>
+                        <textarea class="teacher_message" name="teacher_message"></textarea>
+                    </div>
+                    <?php
+                        if ($d_code == 1) {
+                    ?>
+                    <div class="form-control clearfix">
+                        <label><span>*</span>验证码</label>
+                        <input type="text" class="verify" style='width:50%' style="width: 51%;" name="verify">
+                        <span class="span-code">{:sp_verifycode_img('length=3&font_size=20&width=109&height=40&use_noise=1&use_curve=0','style="cursor: pointer;" title="点击获取"')}</span>
+                    </div>
+                    <?php
+                        } else {
+                    ?>
+                    <div class="form-control clearfix">
+                        <label><span>*</span>短信验证码</label>
+                        <input type="text" class="verify" style='width:50%' style="width: 51%;" name="sms">
+                        <span class="span-code span-btn sms_1">接收短信验证码</span>
+                    </div>
+                    <?php
+                        }
+                    ?>
+                    <input type="submit" id="but" style="width: 20%;" vlaue="提交" class="login-btn">
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<tc_include file="Public:footer"/>
+
+<script src="https://cdn.bootcss.com/jquery/2.2.2/jquery.js"></script>
+<script src="__TMPL__Public/assets/js/swiper-3.4.2.jquery.min.js"></script>
+<script src="__TMPL__Public/assets/js/jquery.validate-1.13.1.js"></script>
+<script>
+    $('.send-btn').on('click', function(){
+
+        $.ajax({
+            url: '{:U("user/index/is_login")}',
+            dataType: "json",
+            type: "get",
+            async: false,
+            success: function (data) {
+                if (data.status == 0) {
+                    alert('请先登录');
+                    return false;
+                } else {
+                    $('.login-container').show();
+                }
+            }
+        });
+    })
+    //关闭
+    $('.close').on('click', function(){
+        $('.login-container').hide();
+    });
+
+    $.validator.setDefaults({
+        debug: true
+    });
+    $('#from').validate({
+        rules: {
+            teacher_message: {
+                required: true
+            },
+        },
+        messages: {
+            teacher_message: {
+                required: "请填写留言"
+            },
+        },
+        submitHandler: function(form){
+            console.log($(form).serialize());
+        }
+    });
+
+    // 验证手机号
+    function isPhoneNo(phone) {
+        var pattern = /^1[34578]\d{9}$/;
+        return pattern.test(phone);
+    }
+
+    $('#but').on('click', function(){
+        var formData = {
+            "teacher_message": $('.teacher_message').val(),//手机号
+            "demand_id":$('.demand_id').val(),
+            <?php
+            if ($d_code == 1) {
+                ?>
+                "verify": $('.verify').val(),//验证码－图文
+                <?php
+            } else if($d_code == 2) {
+                ?>
+                "sms": $('.verify').val()//验证码－短信
+                <?php
+            }
+            ?>
+
+        }
+
+        if($('#from').valid()) {
+            //调用AJAX提交表单
+            $.ajax({
+                url: '{:U("Demand/add_order")}',
+                dataType: "json",
+                type: "post",
+                data: formData,
+                success: function (data) {
+                    if (data.status == 0) {
+                        alert(data.info);
+                    } else if (data.status == 1) {
+                        location.reload();
+                    }
+                }
+            });
+        }
+
+    });
+</script>
+{:hook('footer_end')}
+</body>
+</html>

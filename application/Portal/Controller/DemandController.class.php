@@ -10,6 +10,7 @@ class DemandController extends HomebaseController {
 
 	// 验证码方式：1是图形验证   2：短信验证
 	public $is_code;
+	protected $d_code;
 
 	protected $demand_model;
     protected $status;
@@ -29,10 +30,14 @@ class DemandController extends HomebaseController {
 		$option = M('Options')->field('option_value')->where($where)->find();
 		$option = json_decode($option['option_value'], true);
 
-		// 得到老师用什么验证码：1图形验证码  2短信验证码
+		// 得到家长用什么验证码：1图形验证码  2短信验证码
 		$this->is_code = $option['parents']['value'];
 
+		// 得到老师用什么验证码：1图形验证码  2短信验证码
+		$this->d_code	=	$option['doctor']['value'];
+
 		$this->assign('is_code', $this->is_code);
+		$this->assign('d_code', $option['doctor']['value']);
 	}
 
 	// 家长发布需求的页面
@@ -85,7 +90,7 @@ class DemandController extends HomebaseController {
 			}
 
 			if ($result) {
-                $this->add_json();
+//                $this->add_json();
                 $array  =   array('info'=>'添加成功', 'status'=>1);
                 echo json_encode($array);die;
 			} else {
@@ -158,7 +163,7 @@ class DemandController extends HomebaseController {
 			}
 
 			if ($result) {
-				$this->add_json();
+//				$this->add_json();
 				$array  =   array('info'=>'添加成功', 'status'=>1);
 				echo json_encode($array);die;
 			} else {
@@ -336,19 +341,121 @@ class DemandController extends HomebaseController {
 	// 学员详情
 	public function demand_show()
 	{
-		$id = (int)I('get.id');
+		$id = (int)I('get.demand_id');
 
-		if ($id) {
+		if (!$id) {
 			$this->error('缺少ID');
 		}
 		$where['id']	=	$id;
-		$this->demand_model->where($where)->select();
+		$where['status']=	array('gt', 1);
+		$demand_data = $this->demand_model->where($where)->find();
+		if (!$demand_data) {
+//			$this->error();
+		}
+
+		// 得到预约的老师
+		$ttop_where	=	array('demand_id'	=>	$id);
+		$ttoporder = M('ttoporder')->where($ttop_where)->select();
+
+		$teacher_ids = array();
+		$ttop_swap	=	array();
+		foreach($ttoporder as $ttoporder_one) {
+			$ttop_swap[$ttoporder_one['teacher_id']]	=	$ttoporder_one['status'];
+			$teacher_ids[] = $ttoporder_one['teacher_id'];
+		}
+		$teacher_ids = implode(',', $teacher_ids);
+
+		$teacher_data = M('teacher')->where(array('id'=>array('in',$teacher_ids)))->select();
+
+		$status = array(
+			1   =>  '报名中',
+			2   =>  '试讲中',
+			3   =>  '成功',
+		);
+
+
+
+		$this->assign('status', $status);
+		$this->assign('teacher', $teacher_data);
+		$this->assign('ttoporder', $ttop_swap);
+		// 得到预约的老师 end
+
+		$td_status = array(
+			2	=>	'投递简历',
+			3	=>	'试讲中',
+			4	=>	'成功'
+		);
+		// 得到当前需求的状态
+		$this->assign('td_status', $td_status);
+
+		// 得到辅导课程
+		$counseling = sp_get_counseling();
+
+		$this->assign('counseling', $counseling);
+		$this->assign('demand', $demand_data);
+		$this->display();
+	}
+
+	// 投递简历
+	public function add_order()
+	{
+		if (IS_POST) {
+			// 暂时注销掉，等页面都有了，在测试
+			if ($this->d_code == 1) {
+				// 检测图形验证码
+				if(!sp_check_verify_code()){
+					$array  =   array('info'=>'验证码出错，请重新输入', 'status'=>0);
+					echo json_encode($array);die;
+				}
+			} else {
+				// 检测短信验证码
+				if (!sp_check_sms_code()) {
+					$array  =   array('info'=>'短信验证码过期或者出错，请重新输入', 'status'=>0);
+					echo json_encode($array);die;
+				}
+			}
+
+			if (!sp_is_user_login()) {
+				$this->ajaxReturn(array("status"=>0,'info'=>'请先登录'));
+			}
+			$user = sp_get_current_user();
+			$data['teacher_id']	=	$user['id'];
+
+			$post 	=	I('post.');
+			$demand_id = (int)$post['demand_id'];
+
+			if (!$demand_id) {
+				$this->ajaxReturn(array("status"=>0, 'info'=>'请刷新后重新尝试'));
+			}
+			$data['demand_id']	=	$demand_id;
+
+			$teacher_message = $post['teacher_message'];
+			if (empty($teacher_message)) {
+				$this->ajaxReturn(array("status"=>0, 'info'=>'留言不能为空'));
+			}
+			$data['teacher_message']	=	$teacher_message;
+
+			$data['status']	=	1;
+			$data['add_time']	=	date('Y-m-d H:i:s', time());
+
+			$res = M("ttoporder")->add($data);
+			if ($res) {
+				$this->ajaxReturn(array("status"=>1, 'info'=>'投递成功'));
+			} else {
+				$this->ajaxReturn(array("status"=>0, 'info'=>'投递失败'));
+			}
+		} else {
+			$this->ajaxReturn(array("status"=>0, 'info'=>'未知错误'));
+		}
+
+
 	}
 
     // 更新首页家长需求的json      首页家长需求显示
     public function add_json()
     {
-        $demand_data = $this->demand_model->order('add_time desc')->limit('0,10')->select();
+		$where['status']	=	array('gt',1);
+        $demand_data = $this->demand_model->where($where)->order('add_time desc')->limit('0,10')->select();
 
         $json_array	=	file_get_contents(SITE_PATH.'/index_json/index.json');
 
