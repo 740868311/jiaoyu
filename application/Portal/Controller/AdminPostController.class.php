@@ -488,22 +488,23 @@ class AdminPostController extends AdminbaseController {
 	// 更新首页新闻公告的json
 	public function add_json()
 	{
-		$term_id    =   array('8','9','10','11','12','13');
+		$term_id    =   array('3','4','5','6','7','8');
 		$term_name	=	array(
-			8	=>	'最新公告',
-			9	=>	'家长必读',
-			10	=>	'老师必读',
-			11	=>	'家教经验',
-			12	=>	'教育资讯',
-			13	=>	'学习经验'
+			3	=>	'最新公告',
+			4	=>	'家长必读',
+			5	=>	'老师必读',
+			6	=>	'家教经验',
+			7	=>	'教育资讯',
+			8	=>	'学习经验'
 		);
 
+		$obj_id = array();
 		$obj_data	=	array();
 		$k 	=	0;
 		foreach($term_id as $term_id_one) {
 			$data = $this->term_relationships_model->where(array('term_id'=>$term_id_one))->limit('0,10')->select();
-			foreach($data as $data_one) {
-				$obj_id[]	=	$data_one['object_id'];
+			foreach($data as $k=>$data_one) {
+				$obj_id[$k]	=	$data_one['object_id'];
 			}
 			$obj_id	=	implode(',', $obj_id);
 

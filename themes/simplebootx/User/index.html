@@ -26,9 +26,15 @@
 <tc_include file="Public:nav" />
 <section class="container subs-container clearfix">
 	<div class="subs-left float-left">
-		<div class="person-img"></div>
-		<h2>五老师</h2>
-		<span><i class="icon iconfont icon-star"></i>明星学员</span>
+		<div class="person-img">
+            <img src="{:sp_get_image_preview_url($smeta['thumb'])}" width="140" height="140" style="border-radius: 50%;"/>
+        </div>
+		<h2>{$teacher.name}</h2>
+        <if condition="($teacher['status'] eq 1)">
+            <span><i class="icon iconfont"></i>普通教员</span>
+            <else />
+            <span><i class="icon iconfont icon-star"></i>明星教员</span>
+        </if>
 		<ul class="left-tab">
 			<li class="active">修改简历</li>
 			<li>订阅信息</li>
@@ -40,7 +46,6 @@
 		<div class="right-container change-resume-box">
 			<ul class="tab resume-tab">
 				<li class="active">个人资料</li>
-				<li>修改照片</li>
 			</ul>
 			<div class="my-resume-content person-info">
 				<div class="info-base-container">
@@ -128,7 +133,7 @@
                                                 <php>$img_url=sp_get_image_preview_url($vo['url']);</php>
                                                 <li id="savedimage{$key}">
                                                     <input id="photo-{$key}" type="hidden" class="photos_url" name="photos_url[]" value="{$img_url}">
-                                                    <input id="photo-{$key}-name" type="text" class="photos_alt" name="photos_alt[]" value="{$vo.alt}" style="width: 200px;" title="图片名称">
+                                                    <input id="photo-{$key}-name" type="text" class="photos_alt" name="photos_alt[]" value="{$vo.alt}" style="width: 160px;height:36px" title="图片名称">
                                                     <img id="photo-{$key}-preview" src="{:sp_get_image_preview_url($vo['url'])}" style="height:36px;width: 36px;" onclick="parent.image_preview_dialog(this.src);">
                                                     <a href="javascript:upload_one_image('图片上传','#photo-{$key}');">替换</a>
                                                     <a href="javascript:(function(){ $('#savedimage{$key}').remove();})();">移除</a>
@@ -180,87 +185,143 @@
 				<li class="active">我的订阅</li>
 				<li>订阅中心</li>
 			</ul>
+
+            <!--我的订阅-->
 			<div class="subs-info my-subs">
-				<div class="subs-item clearfix">
-					<p class="float-left">月光博客</p>
-					<div class="float-right subsed">订阅</div>
-				</div>
-				<div class="subs-item clearfix">
-					<p class="float-left">月光博客</p>
-					<div class="float-right subsed">订阅</div>
-				</div>
-				<div class="none-subs">
-					暂无订阅信息。<a href="">马上订阅></a>
-				</div>
+                <if condition="tag_in">
+                    <foreach name="tag_in" item="tag_in_one">
+                        <div class="subs-item clearfix">
+                            <p class="float-left">{$tag[$tag_in_one]}</p>
+                            <div class="float-right subsed un_s" style="cursor: pointer;" data="{$tag_in_one}">取消订阅</div>
+                        </div>
+                    </foreach>
+                <else />
+                    <div class="none-subs">
+                        暂无订阅信息。
+                    </div>
+                </if>
 			</div>
-			<div class="subs-info subs-center"><div class="subs-item clearfix">
-				<p class="float-left">月光博客</p>
-				<div class="float-right no-subsed">
-					<span>已订阅</span>
-					<span>取消</span>
-				</div>
-			</div></div>
+            <!--我的订阅end-->
+
+            <!--订阅标签-->
+			<div class="subs-info subs-center">
+                <foreach name="tag" key="k" item="tag_one">
+                    <div class="subs-item clearfix">
+                        <p class="float-left">{$tag_one}</p>
+                        <div class="float-right no-subsed">
+                            <if condition="in_array($k, $tag_in)">
+                                <span>已订阅</span>
+                                <span data="{$k}" class="un_s">取消</span>
+                            <else />
+                                <span data='{$k}' style="border:none" class="on_s">订阅</span>
+                            </if>
+
+                        </div>
+                    </div>
+                </foreach>
+            </div>
+            <!--订阅标签end-->
 		</div>
+
+        <php>
+            $grade_model = M('grade');
+            $data	= 	$grade_model->select();
+            foreach($data as $data_one) {
+                $swap[$data_one['id']]	= $data_one['grade_name'];
+            }
+            $grade_array = $swap;
+        </php>
+        <!--预约家长-->
 		<div class="right-container app-parent">
 			<div class="title-box clearfix">
 				<p class="title"><span class="vertical"></span>预约家长</p>
 			</div>
+
 			<div class="app-parent-content">
-				<div class="part-box">
-					<div class="part-info-title">
-						<span>TD003123</span>
-						<span>李学员</span>
-						<span><i class="sex woman">女</i></span>
-						<span>小学五年级</span>
-					</div>
-					<div class="part-info-content clearfix">
-						<div class="part-info-left float-left">
-							<p>求教科目：小学语文、小学数学、小学英语</p>
-							<p>授课时间：周一晚上、周三晚上、周五晚上、周六上午</p>
-						</div>
-						<div class="part-info-right float-right success">
-							<p>投递成功</p>
-						</div>
-					</div>
-				</div>
-				<div class="part-box">
-					<div class="part-info-title">
-						<span>TD003123</span>
-						<span>李学员</span>
-						<span><i class="sex woman">女</i></span>
-						<span>小学五年级</span>
-					</div>
-					<div class="part-info-content clearfix">
-						<div class="part-info-left float-left">
-							<p>求教科目：小学语文、小学数学、小学英语</p>
-							<p>授课时间：周一晚上、周三晚上、周五晚上、周六上午</p>
-						</div>
-						<div class="part-info-right float-right success">
-							<p>投递成功</p>
-						</div>
-					</div>
-				</div>
+                <php>
+                    $counseling = sp_get_counselings();
+                </php>
+                <foreach name="demand" item="demand_one">
+                    <div class="part-box">
+                        <div class="part-info-title">
+                            <span>{$demand_one.id}</span>
+                            <span>{$demand_one.name}</span>
+                            <span><i class="sex {$demand_one['sex'] == 1 ? 'woman' : 'man'}">{$demand_one['sex'] == 1 ? '女' : '男'}</i></span>
+                            <span>{$grade_array[$demand_one['grade_id']]}</span>
+                        </div>
+                        <div class="part-info-content clearfix">
+                            <div class="part-info-left float-left">
+                                <p>求教科目：
+                                    <php>
+                                        $counseling_data = explode(',', $demand_one['counseling_ids']);
+                                        $swap = array();
+                                        foreach($counseling_data as $counseling_one) {
+                                        $swap[] = $counseling[$counseling_one];
+                                        }
+                                        $counseling_data = implode(',', $swap);
+                                    </php>
+                                    {$counseling_data}
+                                </p>
+                                <p>授课时间：
+                                    <php>
+                                        $tutor_s    =   $demand_one['tutor_time_s'];
+                                        $tutor_s    =   explode(',', $tutor_s);
+                                        foreach($tutor_s as $tutor_s_one) {
+                                        $week_str   .=  $week[$tutor_s_one].'上午'.',';
+                                        }
+                                        $tutor_x    =   $demand_one['tutor_time_x'];
+                                        $tutor_x    =   explode(',', $tutor_x);
+                                        foreach($tutor_x as $tutor_x_one) {
+                                        $week_str   .=  $week[$tutor_x_one].'下午'.',';
+                                        }
+                                        $tutor_w   =   $demand_one['tutor_time_w'];
+                                        $tutor_w    =   explode(',', $tutor_w);
+                                        foreach($tutor_w as $tutor_w_one) {
+                                        $week_str   .=  $week[$tutor_x_one].'晚上'.',';
+                                        }
+
+                                        $tutor_z    =   $demand_one['tutor_time_z'];
+                                        $tutor_z    =   explode(',', $tutor_z);
+                                        foreach($tutor_z as $tutor_z_one) {
+                                        $week_str   .=  $z[$tutor_z_one].',';
+                                        }
+                                        $week_str = trim($week_str,',');
+                                        echo $week_str;
+                                        $week_str = '';
+                                    </php>
+                                </p>
+                            </div>
+                            <div class="part-info-right float-right success">
+                                <p>
+                                    {$status[$ttop_status[$demand_one['id']]]}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </foreach>
 			</div>
 		</div>
+        <!--预约家长end-->
+
 		<div class="right-container password-box">
 			<div class="title-box clearfix">
 				<p class="title"><span class="vertical"></span>修改密码</p>
 			</div>
-			<form action="">
+			<form id="pas">
 				<div class="form-control clearfix">
 					<label><span>*</span>当前密码</label>
-					<input type="text">
+					<input type="password" class="old" name="old">
 				</div>
 				<div class="form-control clearfix">
 					<label><span>*</span>新密码</label>
-					<input type="text">
+					<input type="password" class="password" name="password">
 				</div>
 				<div class="form-control clearfix">
 					<label><span>*</span>确认密码</label>
-					<input type="text">
+					<input type="password" class="repassword" name="repassword">
 				</div>
 			</form>
-			<div class="btn" style="margin-left:200px;">提交</div>
+			<div class="btn pas_btn" style="margin-left:200px;">提交</div>
 		</div>
 	</div>
 </section>
@@ -300,6 +361,43 @@
 			}
 		});
 
+        // 取消订阅
+        $('.un_s').on('click', function(){
+            var tag_id  =   $(this).attr('data');
+            $.ajax({
+                url: '{:U("User/index/edit_subscription")}',
+                dataType: "json",
+                type: "post",
+                data:{'tag_id':tag_id,'action':'un'},
+                success: function(data) {
+                    if (data.status == 0) {
+
+                        alert(data.info);
+                    } else if(data.status == 1) {
+                        window.location.reload();
+                    }
+                }
+            });
+        })
+
+        // 订阅
+        $('.on_s').on('click', function(){
+            var tag_id  =   $(this).attr('data');
+            $.ajax({
+                url: '{:U("User/index/edit_subscription")}',
+                dataType: "json",
+                type: "post",
+                data:{'tag_id':tag_id,'action':'on'},
+                success: function(data) {
+                    if (data.status == 0) {
+
+                        alert(data.info);
+                    } else if(data.status == 1) {
+                        window.location.reload();
+                    }
+                }
+            });
+        })
 	});
 
 
@@ -360,6 +458,65 @@
             console.log($(form).serialize());
         }
     });
+    $.validator.setDefaults({
+        debug: true
+    });
+    $('#pas').validate({
+        rules: {
+            old: {
+                required: true
+            },
+            password: {
+                required: true
+            },
+            repassword: {
+                required: true
+            },
+        },
+        messages: {
+            old: {
+                required: "请填写旧密码"
+            },
+            password: {
+                required: "请填写新密码"
+            },
+            repassword: {
+                required: "请填写重复密码"
+            },
+        },
+        submitHandler: function(form){
+            console.log($(form).serialize());
+        }
+    });
+    //提交
+    $('.pas_btn').on('click', function(){
+
+        var formData = {
+            "old": $('.old').val(),//教学经历
+            "password": $('.password').val(),
+            "repassword": $('.repassword').val(),
+        }
+
+//        console.log(formData);return false;
+
+        if($('#pas').valid()){
+            //调用AJAX提交表单
+            $.ajax({
+                url: '{:U("User/index/repass")}',
+                dataType: "json",
+                type: "post",
+                data:formData,
+                success: function(data) {
+                    if (data.status == 0) {
+                        alert(data.info);
+                    } else if(data.status == 1) {
+                        window.location.reload();
+                    }
+                }
+            });
+        }
+    });
+
 
     //提交
     $('.btn_teacher').on('click', function(){
@@ -369,7 +526,6 @@
                 counseling.push($(this).val());
             }
         });
-
 
         var photos_alt  =   [];
         $('.photos_alt').each(function(){
@@ -401,27 +557,25 @@
             "photos_url": photos_url,
         }
 
-        console.log(formData);return false;
+//        console.log(formData);return false;
 
         if($('.teacher-validate').valid()){
                 //调用AJAX提交表单
                 $.ajax({
-                    url: '{:U("Teacher/index_post")}',
+                    url: '{:U("User/index/edit_post")}',
                     dataType: "json",
                     type: "post",
                     data:formData,
                     success: function(data) {
                         if (data.status == 0) {
-                            $('.verify_img').click();
                             alert(data.info);
                         } else if(data.status == 1) {
-                            $('.alert-content').html(data.info);
-                            $('.alert-mask').show();
+                            window.location.reload();
                         }
                     }
                 });
-            }
-        });
+        }
+    });
 </script>
 {:hook('footer_end')}
 </body>
