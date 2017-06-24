@@ -14,6 +14,7 @@ class ArticleController extends HomebaseController {
     //文章内页
     public function index() {
     	$article_id=I('get.id',0,'intval');
+    	$article_id=I('get.article_id',0,'intval');
     	$term_id=I('get.cid',0,'intval');
     	
     	$posts_model=M("Posts");

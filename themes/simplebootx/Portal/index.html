@@ -186,22 +186,30 @@
                         +'<div class="table-col">'+orders[i].counseling+'</div>'
                         +'<div class="table-col">'+orders[i].address+'</div>'
                         +'<div class="table-col status">'+orders[i].status+'</div>'
-                        +'<div class="table-col"><a class="look" href="">点击查看</a></div>' +
+                        +'<div class="table-col"><a class="look" href="'+orders[i].url+'">点击查看</a></div>' +
                         '</div>';
             }
             $('.table-body').html(html);
         }
         function renderStar(stars){
-            var html = '';
-            for(var i=0;i<stars.length;i++){
-                html +='<div class="person-box">'+
-                        '<div class="person-photo"><img width="220" height="220" src="'+stars[i].url+'"></div>'+
-                        '<p class="title"><span class="vertical"></span>'+stars[i].name+'</p>'+
-                        '<p class="school"><i class="icon iconfont "></i>'+stars[i].university+'</p>'+
-                        '</div>'
-            }
-            $('.person-content').html(html);
-        }
+			var html = '';
+			for(var i=0;i<stars.length;i++){
+				html +='<a href="'+stars[i].url+'">' +
+						'<div class="person-box">'+
+						'<div class="person-photo"><img width="220" height="220" src="'+stars[i].thumb+'"></div>'+
+						'<p class="title"><span class="vertical"></span>'+stars[i].name+'</p>'+
+						'<p class="school"><i class="icon iconfont "></i>'+stars[i].university+'</p>'+
+						'</div></a>'
+			}
+			$('.person-content').html(html);
+		}
+		function renderBanner(slide){
+			var html = '';
+			for(var i=0;i<slide.length;i++){
+				html +=	'<div class="swiper-slide"><img src="'+slide[i].slide_pic+'" alt=""></div>'
+			}
+			$('.swiper-wrapper').html(html);
+		}
         function renderNotice(notices){
             var html = '';
             for(var i=0;i<notices.length;i++){
@@ -225,6 +233,7 @@
             renderOrder(data.demand);//最新请家教订单
             renderStar(data.teacher);//明星教员
             renderNotice(data.notices);//公告
+//			renderBanner(data.slide);
         },function(){
 
         });

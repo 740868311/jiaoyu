@@ -9,7 +9,7 @@
 </head>
 <body>
 <tc_include file="Public:nav" />
-<section class="please-tutor-container">
+<section class="please-tutor-container" style="padding-top: 40px;">
     <div class="container">
         <p>在本站，您有<span style="color: #ff5347;">三种方式</span>可以找到老师</p>
         <div class="content-box">
@@ -362,7 +362,7 @@
                     data:{phone:ksphone},
                     success: function(msg) {
                         if (msg.code == 1) {
-                            $('.kssms').html('发送成功');
+                            $('.kssms_1').html('发送成功');
                         } else {
                             alert(msg.msg);
                         }

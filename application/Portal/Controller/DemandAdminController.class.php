@@ -316,7 +316,8 @@ class DemandAdminController extends AdminbaseController {
     // 更新首页家长需求的json      首页家长需求显示
     public function add_json()
     {
-        $demand_data = $this->demand_model->order('add_time desc')->limit('0,10')->select();
+        $where['status']	=	array('gt',1);
+        $demand_data = $this->demand_model->where($where)->order('add_time desc')->limit('0,10')->select();
 
         $json_array	=	file_get_contents(SITE_PATH.'/index_json/index.json');
 
@@ -346,6 +347,7 @@ class DemandAdminController extends AdminbaseController {
             $demand_data[$k]['grade_name']  =   $grade[$demand_one['grade_id']];
             $demand_data[$k]['sex']         =   $sex[$demand_one['sex']];
             $demand_data[$k]['status']      =   $this->status[$demand_one['status']];
+            $demand_data[$k]['url']         =   U('Demand/demand_show', array('id'=>6, 'demand_id'=>$demand_one['id']));
         }
 
         $json_array['demand']	=	$demand_data;

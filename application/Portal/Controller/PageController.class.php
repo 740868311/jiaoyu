@@ -15,8 +15,13 @@ class PageController extends HomebaseController{
     // 页面内页
 	public function index() {
 		$id=I('get.id',0,'intval');
+		if ($id ==	7) {
+			$id	=	4;
+		}
+        if ($page_id = I('get.page_id',0,'intval')) {
+            $id =   $page_id;
+        }
 		$content=sp_sql_page($id);
-		
 		if(empty($content)){
 		    header('HTTP/1.1 404 Not Found');
 		    header('Status:404 Not Found');

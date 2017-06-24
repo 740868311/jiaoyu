@@ -91,6 +91,17 @@ class DemandController extends HomebaseController {
 
 			if ($result) {
 //                $this->add_json();
+				// 判断是否
+				$where = array('option_name'=>'email_warn');
+				$option = M('Options')->where($where)->find();
+				if($option){
+					$options = json_decode($option['option_value'], true);
+					// 如果是1则想指定邮箱发送提示邮件
+					if ($options['value'] == 1) {
+                        sp_send_email($options['options']['to'], $options['options']['title'], $options['options']['template']);
+					}
+				}
+
                 $array  =   array('info'=>'添加成功', 'status'=>1);
                 echo json_encode($array);die;
 			} else {
@@ -164,6 +175,16 @@ class DemandController extends HomebaseController {
 
 			if ($result) {
 //				$this->add_json();
+				// 判断是否
+				$where = array('option_name'=>'email_warn');
+				$option = M('Options')->where($where)->find();
+				if($option){
+					$options = json_decode($option['option_value'], true);
+					// 如果是1则想指定邮箱发送提示邮件
+					if ($options['value'] == 1) {
+						sp_send_email($options['options']['to'], $options['options']['title'], $options['options']['template']);
+					}
+				}
 				$array  =   array('info'=>'添加成功', 'status'=>1);
 				echo json_encode($array);die;
 			} else {

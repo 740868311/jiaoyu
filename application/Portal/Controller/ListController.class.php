@@ -15,7 +15,12 @@ class ListController extends HomebaseController {
 	public function index() {
 		$term_id	=	I('get.id',0,'intval');
 
+
+
 		$type_id	=	sp_get_menu_type_id($term_id);
+		if ($id = I('get.term_id',0,'intval')) {
+			$type_id	=	$id;
+		}
 
 		$term=sp_get_term($type_id);
 		
@@ -31,7 +36,7 @@ class ListController extends HomebaseController {
 		$tplname=$term["list_tpl"];
     	$tplname=sp_get_apphome_tpl($tplname, "list");
     	$this->assign($term);
-    	$this->assign('cat_id', $term_id);
+    	$this->assign('cat_id', $type_id);
     	$this->display(":$tplname");
 	}
 	

@@ -2,7 +2,7 @@ body,html{
     background-color: #F6F6F6;
 }
 .help-container{
-    margin-top: 40px;
+    margin-top: 135px;
 }
 .help-left-container{
     width: 280px;
@@ -78,4 +78,24 @@ body,html{
 .parent-help{
     display: block;
 }
-
+/*new-list*/
+.news-box{
+    padding-top: 20px;
+}
+.new-list a{
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+.new-list a:hover{
+    color: #000;
+}
+.new-list{
+    padding: 8px 6px;
+}
+.new-list .new-content{
+    float: left;
+}
+.new-list .time{
+    float: right;
+}
