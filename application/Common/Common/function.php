@@ -629,6 +629,15 @@ function sp_get_menu($id="main",$menu_root_ul_id="mainmenu",$filetpl="<span clas
 	return $tree->get_treeview_menu(0,$menu_root_ul_id, $filetpl, $foldertpl,  $showlevel,$ul_class,$li_class,  $menu_root_ul_class,  1, FALSE, $dropdown);
 }
 
+function sp_get_phone_black()
+{
+	$Phoneblack = M('PhoneBlack')->select();
+	foreach($Phoneblack as $phone_one) {
+		$swap[]	=	$phone_one['phone'];
+	}
+	return $swap;
+}
+
 
 function _sp_get_menu_datas($id){
 	$nav_obj= M("Nav");
@@ -1905,7 +1914,7 @@ function sp_send_sms($type, $phone, $message, $code='0000')
 			$_SESSION['yzm']['time']	=	time();
 		} else if ((time() - $_SESSION['yzm']['time']) < 60) {
 			$data['code']	=	0;
-			$data['msg']	=	'发送太频繁，请'.(60-(time()-$_SESSION['yzm']['time'])).'秒后，重新发送验证码！';
+			$data['info']	=	'发送太频繁，请'.(60-(time()-$_SESSION['yzm']['time'])).'秒后，重新发送验证码！';
 			echo json_encode($data);
 			return true;
 		} else {

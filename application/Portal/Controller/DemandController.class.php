@@ -131,6 +131,15 @@ class DemandController extends HomebaseController {
 
 			$post = I("post.");
 
+			$phone                  =   $post['phone'];
+
+			// 判断手机号是否是黑名单
+			$phone_balck	=	sp_get_phone_black();
+			if (in_array($phone, $phone_balck)) {
+				$array  =   array('info'=>'手机号已被拉黑，请联系管理员', 'status'=>1);
+				echo json_encode($array);die;
+			}
+
 			if (!$post['name']) {
 				$array  =   array('info'=>'姓名不能为空', 'status'=>1);
 				echo json_encode($array);die;
@@ -152,7 +161,6 @@ class DemandController extends HomebaseController {
 				echo json_encode($array);die;
 			}
 
-			$phone                  =   $post['phone'];
 			$phone_auth       =   '/^(0|86|17951)?(13[0-9]|15[012356789]|18[0-9]|14[57])[0-9]{8}$/';
 			if (!preg_match($phone_auth, $phone)) {
 				$array = array('info'=>'手机格式有误','status'=>0);
@@ -201,6 +209,12 @@ class DemandController extends HomebaseController {
 		if (!preg_match($phone_auth, $phone)) {
 			$array = array('info'=>'手机格式有误','status'=>0);
             echo json_encode($array);die;
+		}
+		// 判断手机号是否是黑名单
+		$phone_balck	=	sp_get_phone_black();
+		if (in_array($phone, $phone_balck)) {
+			$array  =   array('info'=>'手机号已被拉黑，请联系管理员', 'status'=>1);
+			echo json_encode($array);die;
 		}
 
 		$code = rand(1000,9999);

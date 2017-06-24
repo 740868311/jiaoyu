@@ -225,12 +225,18 @@
                         if (msg.code == 1) {
                             $('#sms').html('发送成功');
                         } else {
-                            alert(msg.msg);
+                            alert(msg.info);
                         }
                     }
                 });
             }
         })
+
+        // 验证手机号
+        function isPhoneNo(phone) {
+            var pattern = /^1[34578]\d{9}$/;
+            return pattern.test(phone);
+        }
 
         $.validator.setDefaults({
             debug: true

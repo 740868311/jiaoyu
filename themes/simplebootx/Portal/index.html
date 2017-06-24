@@ -10,9 +10,12 @@
 <section class="banner">
     <div class="swiper-container">
         <div class="swiper-wrapper">
-            <div class="swiper-slide"><img src="__TMPL__Public/assets/images/banner1.jpg" alt=""></div>
-            <div class="swiper-slide"><img src="__TMPL__Public/assets/images/banner2.jpg" alt=""></div>
-            <div class="swiper-slide"><img src="__TMPL__Public/assets/images/banner3.jpg" alt=""></div>
+			<foreach name="index_array['slide']" item="vo">
+				<div class="swiper-slide"><a href="{$vo.slide_url}"><img src="{$vo.slide_pic}" alt=""></a></div>
+			</foreach>
+
+            <!--<div class="swiper-slide"><img src="__TMPL__Public/assets/images/banner2.jpg" alt=""></div>-->
+            <!--<div class="swiper-slide"><img src="__TMPL__Public/assets/images/banner3.jpg" alt=""></div>-->
         </div>
         <!-- 如果需要分页器 -->
         <div class="swiper-pagination"></div>
