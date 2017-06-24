@@ -21,16 +21,6 @@
             <notempty name="term">
                 <button class="btn btn-primary btn-small js-ajax-submit" type="submit" data-action="{:U('DemandAdmin/listorders')}">{:L('SORT')}</button>
             </notempty>
-            <button class="btn btn-primary btn-small js-ajax-submit" type="submit" data-action="{:U('DemandAdmin/check',array('check'=>1))}" data-subcheck="true">审核</button>
-            <button class="btn btn-primary btn-small js-ajax-submit" type="submit" data-action="{:U('DemandAdmin/check',array('uncheck'=>1))}" data-subcheck="true">取消审核</button>
-            <button class="btn btn-primary btn-small js-ajax-submit" type="submit" data-action="{:U('DemandAdmin/top',array('top'=>1))}" data-subcheck="true">置顶</button>
-            <button class="btn btn-primary btn-small js-ajax-submit" type="submit" data-action="{:U('DemandAdmin/top',array('untop'=>1))}" data-subcheck="true">取消置顶</button>
-            <button class="btn btn-primary btn-small js-ajax-submit" type="submit" data-action="{:U('DemandAdmin/recommend',array('recommend'=>1))}" data-subcheck="true">推荐</button>
-            <button class="btn btn-primary btn-small js-ajax-submit" type="submit" data-action="{:U('DemandAdmin/recommend',array('unrecommend'=>1))}" data-subcheck="true">取消推荐</button>
-            <notempty name="term">
-                <button class="btn btn-primary btn-small js-articles-move" type="button">批量移动</button>
-            </notempty>
-            <button class="btn btn-primary btn-small js-articles-copy" type="button">批量复制</button>
             <button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:U('DemandAdmin/delete')}" data-subcheck="true" data-msg="您确定删除吗？">{:L('DELETE')}</button>
         </div>
         <table class="table table-hover table-bordered table-list">

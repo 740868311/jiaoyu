@@ -66,7 +66,7 @@
 <section class="order-container container">
 	<div class="title-box clearfix">
 		<p class="title"><span class="vertical"></span>最新请家教订单</p>
-		<p class="more">更多>></p>
+		<p class="more"><a href="{:U('Demand/demand_list', array('id'=>6))}">更多>></a></p>
 	</div>
 	<div class="order-content-box">
 		<div class="table-header">
@@ -137,7 +137,7 @@
 	<div class="container">
 		<div class="title-box clearfix">
 			<p class="title"><span class="vertical"></span>明星教员</p>
-			<p class="more">更多>></p>
+			<p class="more"><a href="{:U('Teacher/star_teacher', array('id'=>5))}">更多>></a></p>
 		</div>
 		<div class="person-content">
 			<!--<div class="person-box">
@@ -206,25 +206,18 @@
 			}
 			$('.person-content').html(html);
 		}
-		function renderBanner(slide){
-			var html = '';
-			for(var i=0;i<slide.length;i++){
-				html +=	'<div class="swiper-slide"><img src="'+slide[i].slide_pic+'" alt=""></div>'
-			}
-			$('.swiper-wrapper').html(html);
-		}
         function renderNotice(notices){
             var html = '';
             for(var i=0;i<notices.length;i++){
                 html ='<div class="notice-box">'+
                         '<div class="notice-box-title clearfix">'+
                         '<div class="float-left">'+notices[i].title+'</div>'+
-                        '<div class="float-right">更多>></div>'+
+                        '<a href="'+notices[i].url+'"><div class="float-right">更多>></div></a>'+
                         '</div>'+
                         '<ul>';
                 var inHtml = '';
                 for(var j=0;j<notices[i].content.length;j++){
-                    inHtml +='<li><span></span>'+notices[i].content[j]+'</li>'
+                    inHtml +='<a href="'+notices[i].content[j].url+'"><li><span></span>'+notices[i].content[j].title+'</li></a>'
                 }
                 html = html+inHtml+
                         '</ul>'+
