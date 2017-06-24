@@ -220,22 +220,37 @@
 <script src="__TMPL__Public/assets/js/jquery.validate-1.13.1.js"></script>
 <script>
     $('.send-btn').on('click', function(){
-
         $.ajax({
-            url: '{:U("user/index/is_login")}',
+            url: '{:U("Demand/is_login")}',
             dataType: "json",
             type: "get",
             async: false,
             success: function (data) {
                 if (data.status == 0) {
                     alert('请先登录');
-                    return false;
                 } else {
                     $('.login-container').show();
                 }
             }
         });
     })
+
+    $('.sms_1').click(function(){
+        $.ajax({
+            url: '{:U("Demand/get_sms")}',
+            dataType: "json",
+            type: "post",
+            data:{is_login:1},
+            success: function(msg) {
+                if (msg.code == 1) {
+                    $('.sms_1').html('发送成功');
+                } else {
+                    alert(msg.info);
+                }
+            }
+        });
+    })
+
     //关闭
     $('.close').on('click', function(){
         $('.login-container').hide();

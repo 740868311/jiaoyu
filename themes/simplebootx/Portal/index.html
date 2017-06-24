@@ -225,7 +225,7 @@
                 $('.notice-content').append(html);
             }
         }
-        AjaxGet('/index_json/index.json',function(data){
+        AjaxGet("{:U('index/index_json')}",function(data){
             renderOrder(data.demand);//最新请家教订单
             renderStar(data.teacher);//明星教员
             renderNotice(data.notices);//公告

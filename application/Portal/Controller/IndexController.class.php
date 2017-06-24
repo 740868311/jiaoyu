@@ -38,6 +38,11 @@ class IndexController extends HomebaseController {
     	$this->display(":index");
     }
 
+	public function index_json() {
+		$index_json = file_get_contents(SITE_PATH.'/index_json/index.json');
+		echo $index_json;die;
+	}
+
 }
 
 

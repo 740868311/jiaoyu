@@ -202,9 +202,33 @@ class DemandController extends HomebaseController {
 		}
 	}
 
+	// 前台ajax 判断用户登录状态接口
+	public function is_login(){
+		if(sp_is_user_login()){
+			$data	=	array('status'=>1,'info'=>'未知错误');
+			echo json_encode($data);die;
+		}else{
+			$data	=	array('status'=>0,'info'=>'未知错误');
+			echo  json_encode($data);die;
+		}
+	}
+
     public function get_sms()
     {
 		$phone	=	I('post.phone');
+
+        if (I('post.is_login')) {
+            if (!sp_is_user_login()) {
+                $array = array('info'=>'请先登陆','status'=>0);
+                echo json_encode($array);die;
+            }
+            $user = session("user");
+            $phone = $user['phone'];
+            if (!$phone) {
+                $array = array('info'=>'手机号为空','status'=>0);
+                echo json_encode($array);die;
+            }
+        }
 		$phone_auth       =   '/^(0|86|17951)?(13[0-9]|15[012356789]|18[0-9]|14[57])[0-9]{8}$/';
 		if (!preg_match($phone_auth, $phone)) {
 			$array = array('info'=>'手机格式有误','status'=>0);
