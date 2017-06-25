@@ -205,10 +205,10 @@ class DemandController extends HomebaseController {
 	// 前台ajax 判断用户登录状态接口
 	public function is_login(){
 		if(sp_is_user_login()){
-			$data	=	array('status'=>1,'info'=>'未知错误');
+			$data	=	array('status'=>1);
 			echo json_encode($data);die;
 		}else{
-			$data	=	array('status'=>0,'info'=>'未知错误');
+			$data	=	array('status'=>0);
 			echo  json_encode($data);die;
 		}
 	}
@@ -492,6 +492,11 @@ class DemandController extends HomebaseController {
 			if (empty($teacher_message)) {
 				$this->ajaxReturn(array("status"=>0, 'info'=>'留言不能为空'));
 			}
+			$res = M("ttoporder")->where($data)->find();
+			if ($res) {
+				$this->ajaxReturn(array("status"=>0, 'info'=>'请勿重复投递'));
+			}
+
 			$data['teacher_message']	=	$teacher_message;
 
 			$data['status']	=	1;

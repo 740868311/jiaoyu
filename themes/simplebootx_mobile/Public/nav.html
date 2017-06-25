@@ -1,0 +1,40 @@
+<header>
+    <div class="header-top clearfix">
+        <div class="logo-box float-left"></div>
+        <div class="header-right float-right">
+            <div class="person"></div>
+            <!--<span>王老师</span>-->
+            <!--<span class="exit">退出</span>-->
+            <php>
+                if (sp_is_user_login()) {
+                $session_user=session('user');
+            </php>
+            <a href="{:U('User/index/index')}"><span>{$session_user['name']}</span></a>
+            <a href="{:U('User/index/logout')}" class="te-login"><span class="exit">退出登录</span></a>
+            <php>
+                } else {
+            </php>
+            <a href="{:U('Teacher/teacher_login')}" class="te-login"><span>老师登录</span></a>
+            <a href="{:U('Teacher/index', array('id'=>3))}"><span>老师注册</span></a>
+            <php>
+                }
+            </php>
+        </div>
+    </div>
+    <ul class="nav">
+        <?php
+				$menu = sp_get_menu();
+				//dump($menu);die;
+				$current_id = $_REQUEST['id'] ? $_REQUEST['id'] : 1;
+				$current[$current_id] = 'active';
+				foreach($menu as $menu_one) {
+					echo '<li class="'.$current[$menu_one['id']].'" ><a href="'.$menu_one['href'].'">'.$menu_one['label'].'</a></li>';
+        }
+        ?>
+        <!--<li class="active">首页</li>-->
+        <!--<li>请家教</li>-->
+        <!--<li>当老师</li>-->
+        <!--<li>教员库</li>-->
+        <!--<li>明星教员</li>-->
+    </ul>
+</header>

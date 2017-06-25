@@ -1,0 +1,306 @@
+<tc_include file="Public:head" />
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0" />
+<link rel="stylesheet" href="__TMPL__Public/assets/css/iconfont/iconfont.css">
+<link rel="stylesheet" href="__TMPL__Public/assets/css/base.css">
+<link rel="stylesheet" href="__TMPL__Public/assets/css/student_detail.css">
+<style>
+    /*.alert-mask{display:block;}*/
+    .alert-box {
+
+        position: absolute;
+        width: 80%;
+        height: 370px;
+        background-color: #fff;
+        border-radius: 3px;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: 25% auto;
+    }
+    .look_1 {
+        width: 58px;
+        height: 29px;
+        border-radius: 2px;
+        line-height: 29px;
+        text-align: center;
+        color: #fff;
+        background-color: red;
+        cursor: pointer;
+        float: right;
+        margin: 10px;
+    }
+</style>
+</head>
+<body>
+<div class="header-top">
+    <i class="icon iconfont icon-back" style="color:#fff;" onclick="window.history.back();"></i>
+    学员详情
+</div>
+<div class="student-top-box">
+    <h2 class="clearfix">
+        <span>{$demand.name}</span>
+        <php>
+            if ($demand['status'] == 2) {
+                echo '<span class="look_1" style="color:#fff">投递简历</span>';
+            } else {
+                echo '<span>成功</span>';
+            }
+        </php>
+    </h2>
+    <div class="base-info">
+        <span>{$demand.id}</span>
+        <span class="sex {$demand['sex'] == 1 ? 'girl' : 'boy'}">{$demand['sex'] == 1 ? '女' : '男'}</span>
+        <php>
+            $grade = sp_get_grade_name();
+        </php>
+        <span>{$grade[$demand['grade_id']]}</span>
+    </div>
+</div>
+<div class="student-container">
+    <ul class="tab-title">
+        <li class="tab-item active">详细信息</li>
+        <li class="tab-item">预约记录</li>
+    </ul>
+    <div class="tab-content detail-info">
+        <div class="title-box clearfix">
+            <p class="title"><span class="vertical"></span>自我介绍</p>
+        </div>
+        <p class="p-text">拟付薪酬：<span><b class="c-red">{$demand.prepayments}</b>元/小时</span></p>
+        <php>
+            $sf = array(
+            1   =>  '大学生',
+            2   =>  '研究生',
+            3   =>  '在职老师',
+            4   =>  '专职老师'
+            );
+        </php>
+        <p class="p-text">教员要求：<span>{$demand['teacher_sex'] == 1 ? '女' : '男'}性、{$sf[$demand['teacher_identity']]}</span></p>
+        <p class="p-text">求教科目：<span>
+            <php>
+                $counseling = sp_get_counseling();
+                $counseling_data = explode(',', $demand['counseling_ids']);
+                $swap = array();
+                foreach($counseling_data as $counseling_one) {
+                $swap[] = $counseling[$counseling_one];
+                }
+                $counseling_data = implode(',', $swap);
+            </php>
+                        {$counseling_data}
+        </span></p>
+        <p class="p-text">授课地址：<span>{$demand.address}</span></p>
+        <p class="p-text">家教时间：<span><b class="c-red">
+            <php>
+                $tutor_s    =   $demand['tutor_time_s'];
+                $tutor_s    =   explode(',', $tutor_s);
+                foreach($tutor_s as $tutor_s_one) {
+                $week_str   .=  $week[$tutor_s_one].'上午'.',';
+                }
+                $tutor_x    =   $demand['tutor_time_x'];
+                $tutor_x    =   explode(',', $tutor_x);
+                foreach($tutor_x as $tutor_x_one) {
+                $week_str   .=  $week[$tutor_x_one].'下午'.',';
+                }
+                $tutor_w   =   $demand['tutor_time_w'];
+                $tutor_w    =   explode(',', $tutor_w);
+                foreach($tutor_w as $tutor_w_one) {
+                $week_str   .=  $week[$tutor_x_one].'晚上'.',';
+                }
+
+                $tutor_z    =   $demand['tutor_time_z'];
+                $tutor_z    =   explode(',', $tutor_z);
+                foreach($tutor_z as $tutor_z_one) {
+                $week_str   .=  $z[$tutor_z_one].',';
+                }
+                $week_str = trim($week_str,',');
+                echo $week_str;
+                $week_str = '';
+            </php>
+        </b></span></p>
+        <p class="p-text">其他要求：<span>{$demand['remarks']}</span></p>
+    </div>
+    <div class="tab-content">
+        <div class="title-box clearfix">
+            <p class="title"><span class="vertical"></span>预约记录</p>
+        </div>
+        <foreach name="teacher" item="vo">
+            <a class="look" href="{:U('Teacher/resume', array('id'=>5, 'teacher_id'=>$vo['id']))}">
+                <div class="app-item">
+                    <span>{:get_teacher_show_id($vo['id'])}</span>
+                    <span>{$vo.name}</span>
+                    <span class="sex girl">{$vo['sex'] == 1 ? '女' : '男'}</span>
+                    <span class="state">{$status[$ttoporder[$vo['id']]]}</span>
+                </div>
+            </a>
+        </foreach>
+    </div>
+</div>
+<!--提示信息弹出框-->
+<div class="alert-mask message_1">
+    <div class="alert-box">
+        <div class="alert-title">
+            投递简历
+            <span class="close">X</span>
+        </div>
+        <div class="alert-content">
+                <input type="hidden" class="demand_id" name="demand_id" value="{$demand.id}">
+                <div class="form-control clearfix" style="">
+                    <label>留言:</label><br>
+                    <textarea class="teacher_message" name="teacher_message" style="    width: 100%;
+    height: 140px;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    margin-left: 3px;
+    resize: none;
+    padding: 4px;
+    box-sizing: border-box;
+    vertical-align: middle;"></textarea>
+                </div>
+                <?php
+                        if ($d_code == 1) {
+                    ?>
+                <div class="form-control clearfix">
+                    <label>验证码</label><br>
+
+                        <input type="text" class="verify" style='width:50%' style="width: 51%;" name="verify">
+                        <span class="span-code" style="    width: 109px;
+    height: 40px;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 40px;
+    color: #fff;">{:sp_verifycode_img('length=3&font_size=20&width=109&height=40&use_noise=1&use_curve=0','style="cursor: pointer;" title="点击获取"')}</span>
+
+                </div>
+                <?php
+                        } else {
+                    ?>
+                <div class="form-control clearfix">
+                    <label>短信验证码</label><br>
+                    <input type="text" class="verify" style='width:50%' style="width: 51%;" name="sms">
+                    <span class="span-code span-btn sms_1" style="    background-color: #4AADF2;
+    border-color: #4AADF2;
+    text-align: center;
+    cursor: pointer;
+    width: 109px;
+    height: 40px;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 40px;
+    color: #fff;">接收短信验证码</span>
+                </div>
+                <?php
+                        }
+                    ?>
+                <div class="notince" style="color:red"></div>
+                <button id="but" style="width: 93%; height: 42px;line-height: 42px;background-color: #4AADF2;color: #fff;text-align: center;font-size: 16px;border-radius: 3px;margin: auto;margin-bottom: 10px;display: block;cursor: pointer;" vlaue="提交" class="login-btn">提交</button>
+        </div>
+    </div>
+</div>
+
+<!--提示信息弹出框-->
+<div class="alert-mask note">
+    <div class="alert-box" style="height: 150px;">
+        <div class="alert-title">
+            提示
+            <span class="close">X</span>
+        </div>
+        <div class="alert-content" style="    text-align: center;line-height: 50px;">
+            提交成功！
+        </div>
+    </div>
+</div>
+<tc_include file="Public:footer"/>
+<script src="__TMPL__Public/assets/js/zepto_1.1.6.min.js"></script>
+<script src="__TMPL__Public/assets/js/base.js"></script>
+<script src="__TMPL__Public/assets/js/swiper-3.4.2.jquery.min.js"></script>
+<tc_include file="Public:scripts"/>
+<script>
+    $('.look_1').on('click', function(){
+        $.ajax({
+            url: '{:U("Demand/is_login")}',
+            dataType: "json",
+            type: "get",
+            async: false,
+            success: function (data) {
+                if (data.status == 0) {
+                    $('.note').show();
+                    $('.alert-content').html('请先登录');
+                } else {
+                    $('.message_1').show();
+                }
+            }
+        });
+    })
+
+    $('.sms_1').click(function(){
+        $.ajax({
+            url: '{:U("Demand/get_sms")}',
+            dataType: "json",
+            type: "post",
+            data:{is_login:1},
+            success: function(msg) {
+                if (msg.code == 1) {
+                    $('.sms_1').html('发送成功');
+                } else {
+                    $('.sms_1').html('未知错误');
+                }
+            }
+        });
+    })
+
+    $('#but').on('click', function(){
+        var message = $('.teacher_message').val();
+        var demand_id   =   $('.demand_id').val();
+        var verify  =   $('.verify').val();
+
+        if (!message) {
+            $('.notince').html('留言不能为空');
+            return false;
+        } else if(!demand_id) {
+            $('.notince').html('id不能为空');
+            return false;
+        } else if(!verify) {
+            $('.notince').html('验证码不能为空');
+            return false;
+        }
+
+        var formData = {
+            "teacher_message": $('.teacher_message').val(),//手机号
+            "demand_id":$('.demand_id').val(),
+        <?php
+        if ($d_code == 1) {
+            ?>
+            "verify": $('.verify').val(),//验证码－图文
+            <?php
+        } else if($d_code == 2) {
+            ?>
+            "sms": $('.verify').val()//验证码－短信
+            <?php
+        }
+        ?>
+
+        }
+
+        //调用AJAX提交表单
+        $.ajax({
+            url: '{:U("Demand/add_order")}',
+            dataType: "json",
+            type: "post",
+            data: formData,
+            success: function (data) {
+                if (data.status == 0) {
+                    $('.notince').html(data.info);
+                } else if (data.status == 1) {
+                    $('.note').show();
+                    $('.alert-content').html('投递成功');
+                }
+            }
+        });
+    });
+</script>
+{:hook('footer_end')}
+</body>

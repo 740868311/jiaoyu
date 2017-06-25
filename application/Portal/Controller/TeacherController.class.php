@@ -426,7 +426,6 @@ class TeacherController extends HomebaseController {
         $this->display();
     }
 
-    // 更新首页家长需求的json      首页家长需求显示
     public function add_json()
     {
         $where['status']    =   2;
@@ -435,7 +434,8 @@ class TeacherController extends HomebaseController {
             $thumb  =   $teacher_one['smeta'];
             $thumb  =   json_decode($thumb, true);
             $thumb  =   $thumb['thumb'];
-            $teacher_data[$k]['url']   =   sp_get_image_preview_url($thumb);
+            $teacher_data[$k]['thumb']      =   sp_get_image_preview_url($thumb);
+            $teacher_data[$k]['url']        =   U('Teacher/resume', array('id'=>4, 'teacher_id'=>$teacher_one['id']));
         }
 
         $json_array	=	file_get_contents(SITE_PATH.'/index_json/index.json');

@@ -1,0 +1,160 @@
+<tc_include file="Public:head" />
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0" />
+
+<link rel="stylesheet" href="__TMPL__Public/assets/css/swiper-3.4.2.min.css">
+<link rel="stylesheet" href="__TMPL__Public/assets/css/iconfont/iconfont.css">
+<link rel="stylesheet" href="__TMPL__Public/assets/css/base.css">
+<link rel="stylesheet" href="__TMPL__Public/assets/css/index.css">
+<style>
+    body{
+        background-color: #f0f0f0;
+    }
+    .parent-container{
+        padding: 10px;
+    }
+    .parent-box{
+        margin-bottom: 10px;
+        padding: 10px;
+        background-color: #fff;
+    }
+    .parent-top-info{
+        padding: 10px 0;
+        border-top: 1px solid #f0f0f0;
+    }
+    .parent-top-info p{
+        line-height: 18px;
+    }
+    .parent-title{
+        margin-bottom: 5px;
+    }
+    .parent-box .bottom .photo{
+        width: 30px;
+        height:30px;
+        border-radius: 50%;
+        background: url('__TMPL__Public/assets/images/testimg.png') no-repeat center;
+        background-size: contain;
+        margin-right: 10px;
+        display: inline-block;
+        vertical-align: middle;
+    }
+    .parent-box .bottom{
+        padding-top: 6px;
+        border-top: 1px solid #f0f0f0;
+    }
+    .success-box{
+        display: block;
+    }
+    .tab-title{
+        background-color: #fff;
+        border-top: none;
+        margin: 0;
+    }
+    .tab-item a{color:#333;font-weight: 700;}
+    .tab-item  a.active{color:#4AADF1;}
+    .look {
+        width: 58px;
+        height: 29px;
+        border-radius: 2px;
+        line-height: 29px;
+        text-align: center;
+        color: #fff;
+        background-color: #4AADF2;
+        cursor: pointer;
+        float: right;
+    }
+</style>
+</head>
+<body>
+<tc_include file="Public:nav" />
+<div class="header-top">
+    <i class="icon iconfont icon-back"></i>
+    预约家长
+</div>
+<ul class="tab-title" style="padding-top: 50px;">
+    <li class="tab-item {$status == 4? 'active' : ''}"><a class="{$status == 4? 'active' : ''}" href="{:U('Demand/demand_list',array('status'=>4,'id'=>6))}">成功家教</a></li>
+    <li class="tab-item {$status == 2? 'active' : ''}"><a class="{$status == 2? 'active' : ''}" href="{:U('Demand/demand_list',array('status'=>2,'id'=>6))}">报名中</a></li>
+</ul>
+<div class="parent-container">
+    <php>
+
+    </php>
+    <foreach name="demand_data" item="vo">
+        <div class="tab-content success-box">
+            <div class="parent-box">
+                <div class="parent-title">
+
+                    <span>{$vo.id}</span>
+                    <span>{$vo.name}</span>
+                    <span class="sex {$vo['sex'] == 1 ? 'girl' : 'boy'}">{$vo['sex'] == 1 ? '女' : '男'}</span>
+                    <span>{$grade[$vo['grade_id']]}</span>
+
+                </div>
+                <div class="parent-top-info">
+                    <if condition="$status == 2">
+                        <a href="{:U('Demand/demand_show', array('id'=>6, 'demand_id'=>$vo['id']))}"><div class="look">查看详情</div></a>
+                    </if>
+                    <p>教员性别：<span>{$vo['teacher_sex'] == 1 ? '女' : '男'}</span></p>
+                    <p>求教科目：<span>
+                    <php>
+                        $counseling_data = explode(',', $vo['counseling_ids']);
+                        $swap = array();
+                        foreach($counseling_data as $counseling_one) {
+                        $swap[] = $counseling[$counseling_one];
+                        }
+                        $counseling_data = implode(',', $swap);
+                    </php>
+                                {$counseling_data}</span></p>
+                    <p>授课地址：<span>{$vo.address}</span></p>
+                    <p>授课时间：<span>
+                        <php>
+                            $tutor_s    =   $vo['tutor_time_s'];
+                            $tutor_s    =   explode(',', $tutor_s);
+                            foreach($tutor_s as $tutor_s_one) {
+                            $week_str   .=  $week[$tutor_s_one].'上午'.',';
+                            }
+                            $tutor_x    =   $vo['tutor_time_x'];
+                            $tutor_x    =   explode(',', $tutor_x);
+                            foreach($tutor_x as $tutor_x_one) {
+                            $week_str   .=  $week[$tutor_x_one].'下午'.',';
+                            }
+                            $tutor_w   =   $vo['tutor_time_w'];
+                            $tutor_w    =   explode(',', $tutor_w);
+                            foreach($tutor_w as $tutor_w_one) {
+                            $week_str   .=  $week[$tutor_x_one].'晚上'.',';
+                            }
+
+                            $tutor_z    =   $vo['tutor_time_z'];
+                            $tutor_z    =   explode(',', $tutor_z);
+                            foreach($tutor_z as $tutor_z_one) {
+                            $week_str   .=  $z[$tutor_z_one].',';
+                            }
+                            $week_str = trim($week_str,',');
+                            echo $week_str;
+                            $week_str = '';
+                        </php>
+                    </span></p>
+                </div>
+                <if condition="$status == 4">
+                    <div class="bottom">
+
+                        <php>
+                            $smeta = json_decode($vo['teacher']['smeta'], true);
+                        </php>
+                        <div class="photo"><img src="{:sp_get_image_preview_url($smeta['thumb'])}" id="thumb-preview" width="30" style="cursor: hand;    border-radius: 50%;"/></div>
+                        <span>{$vo['teacher']['name']}已任教</span>
+                    </div>
+                </if>
+            </div>
+        </div>
+    </foreach>
+    <div class="tab-content">
+        报名中
+    </div>
+</div>
+<tc_include file="Public:footer"/>
+<script src="__TMPL__Public/assets/js/zepto_1.1.6.min.js"></script>
+<script src="__TMPL__Public/assets/js/swiper-3.4.2.jquery.min.js"></script>
+<tc_include file="Public:scripts"/>
+{:hook('footer_end')}
+</body>
+</html>

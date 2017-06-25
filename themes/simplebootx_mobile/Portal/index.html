@@ -1,1 +1,172 @@
-just a demo!
+<tc_include file="Public:head" />
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0" />
+<link rel="stylesheet" href="__TMPL__Public/assets/css/base.css">
+<link rel="stylesheet" href="__TMPL__Public/assets/css/iconfont/iconfont.css">
+<link rel="stylesheet" href="__TMPL__Public/assets/css/index.css">
+<link rel="stylesheet" href="__TMPL__Public/assets/css/swiper-3.4.2.min.css">
+<style>
+    .swiper-slide img{width:100%}
+</style>
+</head>
+<body>
+<tc_include file="Public:nav" />
+<section class="swiper-container">
+    <div class="swiper-wrapper">
+        <foreach name="index_array['slide']" item="vo">
+            <div class="swiper-slide"><a href="{$vo.slide_url}"><img src="{$vo.slide_pic}" alt=""></a></div>
+        </foreach>
+        <!--<div class="swiper-slide"><img src="__TMPL__Public/assets/images/banner1.jpg" alt=""></div>-->
+        <!--<div class="swiper-slide"><img src="__TMPL__Public/assets/images/banner2.jpg" alt=""></div>-->
+        <!--<div class="swiper-slide"><img src="__TMPL__Public/assets/images/banner3.jpg" alt=""></div>-->
+    </div>
+    <!-- 如果需要分页器 -->
+    <div class="swiper-pagination"></div>
+
+    <!-- 如果需要导航按钮 -->
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+</section>
+<section class="flow-container">
+    <div class="flow-content">
+        <div class="flow-box communicate">
+            <div class="square-top">
+                <span>1</span>
+                <i class="icon iconfont icon-water"></i>
+            </div>
+            <p>在线预约需求</p>
+        </div>
+        <div class="flow-box try">
+            <div class="square-top">
+                <span>2</span>
+                <i class="icon iconfont icon-water"></i>
+            </div>
+            <p>沟通详细需求</p>
+        </div>
+        <div class="flow-box sure">
+            <div class="square-top">
+                <span>3</span>
+                <i class="icon iconfont icon-water"></i>
+            </div>
+            <p>老师上门试讲</p>
+        </div>
+        <div class="flow-box teaching">
+            <div class="square-top">
+                <span>4</span>
+                <i class="icon iconfont icon-water"></i>
+            </div>
+            <p>最终确定老师</p>
+        </div>
+        <div class="flow-box appoint">
+            <div class="square-top">
+                <span>5</span>
+                <i class="icon iconfont icon-water"></i>
+            </div>
+            <p>全程跟踪教学</p>
+        </div>
+    </div>
+</section>
+<section class="orders-container">
+    <div class="title-box clearfix">
+        <p class="title"><span class="vertical"></span>最新请家教订单</p>
+        <p class="more"><a href="{:U('Demand/demand_list', array('id'=>6))}">更多>></a></p>
+    </div>
+    <div class="orders-content">
+        <foreach name="index_array['demand']" item="vo">
+            <div class="order-box">
+                <div class="order-top">
+                    <span>{$vo.id}</span>
+                    <div class="trapezoidal">
+                        <div class="triangle"></div>
+                        <div class="square"></div>
+                    </div>
+                </div>
+                <p><i class="icon iconfont icon-sex"></i>{$vo.sex}</p>
+                <p><i class="icon iconfont icon-hat"></i>{$vo.grade_name}</p>
+                <p><i class="icon iconfont icon-books"></i>{$vo.counseling}</p>
+                <p><i class="icon iconfont icon-adress"></i>{$vo.address}</p>
+            </div>
+        </foreach>
+    </div>
+</section>
+<section class="advantages-container">
+    <div class="ad-box">
+        <i class="icon iconfont icon-hexagon">
+            <i class="icon iconfont icon-hat"></i>
+        </i>
+        <p>学霸经验</p>
+    </div>
+    <div class="ad-box">
+        <i class="icon iconfont icon-hexagon">
+            <i class="icon iconfont icon-certification"></i>
+        </i>
+        <p>实名认证</p>
+    </div>
+    <div class="ad-box">
+        <i class="icon iconfont icon-hexagon">
+            <i class="icon iconfont icon-draw"></i>
+        </i>
+        <p>个性化辅导</p>
+    </div>
+    <div class="ad-box">
+        <i class="icon iconfont icon-hexagon">
+            <i class="icon iconfont icon-door"></i>
+        </i>
+        <p>上门试讲</p>
+    </div>
+</section>
+<section class="star-container">
+    <div class="title-box clearfix">
+        <p class="title"><span class="vertical"></span>明星教员</p>
+        <p class="more"><a href="{:U('Teacher/star_teacher', array('id'=>5))}">更多>></a></p>
+    </div>
+    <div class="star-teacher-container">
+        <foreach name="index_array['teacher']" item="vo">
+
+            <div class="star-box">
+                <a href="{$vo.url}">
+                <div class="person-photo"><img width="50" height="50" style="border-radius: 50%;" src="{$vo.thumb}"></div>
+                <p class="title"><span class="vertical"></span>{$vo.name}</p>
+                <p class="school"><i class="icon iconfont icon-xuexiao"></i>{$vo.university}</p>
+                </a>
+            </div>
+
+        </foreach>
+    </div>
+</section>
+<section class="notice-container">
+    <foreach name="index_array['notices']" item="vo">
+        <div class="title-box clearfix">
+            <p class="title"><span class="vertical"></span>{$vo.title}</p>
+            <p class="more"><a href="{$vo.url}">更多>></a></p>
+        </div>
+        <ul class="notice-box">
+            <foreach name="vo.content" item="vo_one">
+                <li><span></span><a href="{$vo_one.url}">{$vo_one.title}</a></li>
+            </foreach>
+        </ul>
+    </foreach>
+</section>
+<tc_include file="Public:footer"/>
+<script src="__TMPL__Public/assets/js/zepto_1.1.6.min.js"></script>
+<script src="__TMPL__Public/assets/js/swiper-3.4.2.jquery.min.js"></script>
+<tc_include file="Public:scripts"/>
+<script>
+    $(function(){
+        //
+        var mySwiper = new Swiper ('.swiper-container', {
+            autoplay: 3000,
+            direction: 'horizontal',
+            loop: true,
+
+            // 如果需要分页器
+            pagination: '.swiper-pagination',
+
+            // 如果需要前进后退按钮
+            nextButton: '.swiper-button-next',
+            prevButton: '.swiper-button-prev'
+        });
+    })
+</script>
+{:hook('footer_end')}
+</body>
+</html>

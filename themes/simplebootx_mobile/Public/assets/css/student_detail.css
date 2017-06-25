@@ -1,0 +1,57 @@
+.student-top-box{
+    padding: 0 10px;
+    border-bottom: 10px solid #f0f0f0;
+}
+.student-top-box h2{
+    line-height: 60px;
+    border-bottom: 1px solid #f0f0f0;
+}
+.student-top-box h2 span:first-child{
+    font-size: 20px;
+    float: left;
+}
+.student-top-box h2 span:last-child{
+    color: #FE4241;
+    float: right;
+}
+.base-info{
+    line-height: 60px;
+}
+.tab-title{
+    border-top: none;
+}
+.c-red{
+    color: #FE4241;
+}
+.tab-content{
+    padding: 0 10px 10px;
+}
+.tab-content .p-text{
+    text-indent: 0;
+}
+.app-item{
+    line-height: 44px;
+    padding: 0 10px;
+    background-color: #f6f6f6;
+    margin-bottom: 10px;
+}
+.app-item .state{
+    float: right;
+    color: #FE4241;
+}
+.tab-content{
+    display: none;
+}
+.detail-info{
+    display: block;
+}
+.alert-box{
+    height: 270px;
+}
+.alert-box textarea{
+    margin-top: 10px;
+    height: 50px;
+    margin: 10px auto;
+    border: none;
+    border:1px solid #ddd;
+}

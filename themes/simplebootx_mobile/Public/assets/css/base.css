@@ -1,0 +1,573 @@
+/**
+ * Eric Meyer's Reset CSS v2.0 (http://meyerweb.com/eric/tools/css/reset/)
+ * http://cssreset.com
+ */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video, input {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font-weight: normal;
+    font-style: normal;
+    vertical-align: baseline;
+    font-family: 'microsoft yahei';
+    color:#333;
+}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, menu, nav, section {
+    display: block;
+}
+
+body {
+    line-height: 1;
+    font-size: 12px;
+    color: #333;
+    font-family: "microsoft yahei","Helvetica Neue","Helvetica","Arial","sans-serif";
+}
+
+blockquote, q {
+    quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/* custom */
+a {
+    color: #7e8c8d;
+    text-decoration: none;
+    -webkit-backface-visibility: hidden;
+}
+
+li {
+    list-style: none;
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+
+::-webkit-scrollbar-track-piece {
+    background-color: rgba(0, 0, 0, 0.2);
+    -webkit-border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:vertical {
+    height: 5px;
+    background-color: rgba(125, 125, 125, 0.7);
+    -webkit-border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:horizontal {
+    width: 5px;
+    background-color: rgba(125, 125, 125, 0.7);
+    -webkit-border-radius: 6px;
+}
+.clearfix:before,
+.clearfix:after {
+    content: "";
+    display: table;
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+.clearfix {
+    *zoom: 1;
+    /*IE/7/6*/
+}
+html, body {
+    width: 100%;
+}
+
+body {
+    -webkit-text-size-adjust: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+select,input{
+    font-family: 'microsoft yahei';
+}
+/*顶部*/
+header{
+    position: fixed;
+    width: 100%;
+    top:0;
+    left:0;
+    z-index: 98;
+    background-color: #fff;
+}
+.header-info{
+    height: 45px;
+    background-color: #fff;
+    border-top: 10px solid #4aadf2;
+}
+.container{
+    width: 1180px;
+    margin: 0 auto;
+}
+
+.nav{
+    height: 45px;
+    width: 100%;
+    background-color: #4AADF2;
+    display: box;			  /* OLD - Android 4.4- */
+    display: -webkit-box;	  /* OLD - iOS 6-, Safari 3.1-6 */
+    display: -moz-box;		 /* OLD - Firefox 19- (buggy but mostly works) */
+    display: -ms-flexbox;	  /* TWEENER - IE 10 */
+    display: -webkit-flex;	 /* NEW - Chrome */
+    display: flex;
+}
+.nav li{
+    -webkit-box-flex: 1;	  /* OLD - iOS 6-, Safari 3.1-6 */
+    -moz-box-flex: 1;		 /* OLD - Firefox 19- */
+    width: 20%;			   /* For old syntax, otherwise collapses. */
+    -webkit-flex: 1;		  /* Chrome */
+    -ms-flex: 1;			  /* IE 10 */
+    flex: 1;
+    line-height: 45px;
+    text-align: center;
+}
+.nav li a{
+    color: #fff;
+    width: 100%;
+    height: 100%;
+    font-weight: 700;
+}
+.nav li.active{
+    background-color: #369ADF;
+}
+.nav .star-li{
+    -webkit-box-flex: 2;	  /* OLD - iOS 6-, Safari 3.1-6 */
+    -moz-box-flex: 2;		 /* OLD - Firefox 19- */
+    -webkit-flex: 2;		  /* Chrome */
+    -ms-flex: 2;			  /* IE 10 */
+    flex: 2;
+}
+.header-info .logo{
+    width: 100px;
+    height: 35px;
+    margin:5px 0;
+    background-color: pink;
+    float: left;
+}
+.logo-box{
+    width: 120px;
+    height: 30px;
+    background-color: pink;
+}
+.header-info .info{
+    float: right;
+    position: relative;
+    height: 45px;
+}
+.header-info .info .te{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 110px;
+    height: 14px;
+    right: 190px;
+    margin: auto;
+}
+.header-info .info .te a{
+    cursor: pointer;
+}
+.header-info .info .te a:last-child{
+    border-right: none;
+}
+.header-info .info .te-login{
+    display: inline-block;
+    width: 50px;
+    border-right: 1px solid #666;
+}
+.header-info .info a{
+    font-size: 12px;
+    color: #666;
+}
+.header-info .info i{
+    font-size: 32px;
+    color: #de3b3b;
+}
+.header-info .info div{
+    display: inline-block;
+}
+.header-info .info div p:first-child{
+    font-size: 12px;
+    margin: 4px 0;
+}
+.header-info .info div p:last-child{
+    font-size: 16px;
+    color: #de3b3b;
+}
+/*布局*/
+.dis-flex{
+    display: box;			  /* OLD - Android 4.4- */
+    display: -webkit-box;	  /* OLD - iOS 6-, Safari 3.1-6 */
+    display: -moz-box;		 /* OLD - Firefox 19- (buggy but mostly works) */
+    display: -ms-flexbox;	  /* TWEENER - IE 10 */
+    display: -webkit-flex;	 /* NEW - Chrome */
+    display: flex;
+}
+.flex-item{
+    -webkit-box-flex: 1;	  /* OLD - iOS 6-, Safari 3.1-6 */
+    -moz-box-flex: 1;		 /* OLD - Firefox 19- */
+    width: 20%;			   /* For old syntax, otherwise collapses. */
+    -webkit-flex: 1;		  /* Chrome */
+    -ms-flex: 1;			  /* IE 10 */
+    flex: 1;
+}
+/*标题*/
+.title-box{
+    margin-bottom: 10px;
+}
+.title{
+    float: left;
+    font-size: 12px;
+}
+.form-title{
+    float: left;
+    font-size: 12px;
+}
+.more{
+    float: right;
+    font-size: 12px;
+    cursor: pointer;
+}
+.vertical{
+    width: 6px;
+    height: 12px;
+    background: #4AADF2;
+    display: inline-block;
+    margin-right: 10px;
+}
+.float-left{
+    float: left;
+}
+.float-right{
+    float: right;
+}
+.c-red{
+    color: #FF4244;
+}
+/*alert box*/
+.alert-mask{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, .7);
+    z-index: 100;
+    display: none;
+}
+.alert-box{
+    position: absolute;
+    width: 80%;
+    height: 150px;
+    background-color: #fff;
+    border-radius: 3px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+}
+.alert-title{
+    height:44px;
+    width: 100%;
+    line-height: 44px;
+    background-color: #4AADF2;
+    color: #fff;
+    text-align: center;
+    font-size: 14px;
+}
+.alert-title .close{
+    position: absolute;
+    top: 0px;
+    right: 18px;
+    cursor: pointer;
+}
+.alert-content{
+    text-align: left;
+    font-size: 14px;
+    padding: 20px;
+}
+
+.contact-container{
+    background-color: #fff;
+    padding: 10px;
+    border-top: 10px solid #f0f0f0;
+    border-bottom: 10px solid #f0f0f0;
+    text-align: center;
+    font-size: 12px;
+}
+.contact-container p{
+    margin-top: 10px;
+}
+.contact-container i{
+    font-size: 30px;
+}
+footer{
+    padding: 10px;
+    background-color: #fff;
+}
+footer p{
+    text-align: center;
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+footer span{
+    width: 50px;
+    height: 24px;
+    display: inline-block;
+    background:url('../img/360.png') no-repeat center;
+    background-size: contain;
+}
+footer span:last-child{
+    background: url('../img/cert.png') no-repeat center;
+    background-size: contain;
+}
+footer div{
+    width: 110px;
+    margin: auto;
+}
+/*login*/
+.form-control{
+    margin-bottom: 10px;
+    padding: 0 10px;
+    box-sizing: border-box;
+}
+.form-control input,
+.form-control .small{
+    width: 100%;
+    height: 44px;
+    padding: 0 6px;
+    box-sizing: border-box;
+    line-height: 44px;
+    border: 1px solid #DDDDDD;
+    border-radius: 3px;
+}
+.btn{
+    width: 100%;
+    height: 44px;
+    line-height: 44px;
+    text-align: center;
+    color: #fff;
+    font-size: 14px;
+    letter-spacing: 6px;
+    background-color: #4AADF1;
+}
+.form-control .middle{
+    width: 65%;
+    float: left;
+}
+.form-control .small{
+    width: 30%;
+    float: right;
+    text-align: center;
+}
+.form-control .to-reg{
+    float: left;
+}
+.form-control .to-pwd{
+    float: right;
+}
+.form-control .code{
+    background-color: #4AADF1;
+    color: #fff;
+    border: none;
+}
+.form-control-lb .half-left{
+    width: 60%;
+    height: 43px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    float: left;
+}
+.form-control-lb .half-right{
+    width: 33%;
+    height: 43px;
+    float: right;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+}
+.form-control-lb .mess-code{
+    border:none;
+    background-color: #4AADF1;
+    color:#fff;
+    text-align: center;
+}
+/*header*/
+.header-top{
+    height: 44px;
+    line-height: 44px;
+    background-color: #4AADF1;
+    color: #fff;
+    text-align: center;
+    font-size: 14px;
+}
+.header-top i{
+    position: absolute;
+    top: 0px;
+    left: 10px;
+    cursor: pointer;
+}
+.header-top .icon-back{
+    color: #fff;
+}
+/*teacher type*/
+.type{
+    width: 84px;
+    height: 20px;
+    line-height: 20px;
+    display: inline-block;
+    background-color: #FE992D;
+    color: #fff;
+    text-align: center;
+    border-radius: 20px;
+    margin-left: 4px;
+}
+.type i{
+    margin-right: 4px;
+    color: #fff;
+}
+.sex{
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: inline-block;
+    text-align: center;
+    line-height: 19px;
+    color: #fff;
+}
+.sex.girl{
+    background-color: #FF8E8E;
+}
+.sex.boy{
+    background-color: #4AADF1;
+}
+/*tab title*/
+.tab-title{
+    display: box;			  /* OLD - Android 4.4- */
+    display: -webkit-box;	  /* OLD - iOS 6-, Safari 3.1-6 */
+    display: -moz-box;		 /* OLD - Firefox 19- (buggy but mostly works) */
+    display: -ms-flexbox;	  /* TWEENER - IE 10 */
+    display: -webkit-flex;	 /* NEW - Chrome */
+    display: flex;
+    margin: 8px 0;
+    padding: 0 4px;
+    border-top: 1px solid #f0f0f0;
+    border-bottom: 1px solid #f0f0f0;
+}
+.tab-item{
+    -webkit-box-flex: 1;	  /* OLD - iOS 6-, Safari 3.1-6 */
+    -moz-box-flex: 1;		 /* OLD - Firefox 19- */
+    width: 20%;			   /* For old syntax, otherwise collapses. */
+    -webkit-flex: 1;		  /* Chrome */
+    -ms-flex: 1;			  /* IE 10 */
+    flex: 1;
+    line-height: 40px;
+    font-weight:700;
+    text-align: center;
+}
+.tab-item.active{
+    border-bottom: 2px solid #4AADF1;
+    color: #4AADF1;
+}
+.tab-content{
+    display: none;
+}
+.tab-item select{
+    border: none;
+    font-weight: 700;
+}
+.p-text{
+    color: #666;
+    line-height: 16px;
+    text-indent: 2em;
+    padding: 0 18px;
+}
+.img-container{
+    padding: 0 10px;
+}
+.img-container img{
+    width: 100%;
+    margin-bottom: 10px;
+}
+.offer-container{
+    padding: 0 10px;
+}
+.offer-item{
+    margin-bottom:10px;
+    background-color: #f6f6f6;
+    height: 43px;
+    line-height: 43px;
+    padding-left: 10px;
+}
+.offer-right{
+    float: right;
+}
+.offer-right .offer-btn{
+    width: 80px;
+    height: 100%;
+    background-color: #4AADF1;
+    color: #fff;
+    display: inline-block;
+    text-align: center;
+    margin-left: 10px;
+}
+.form-control-lb{
+    margin-bottom: 10px;
+    line-height: 43px;
+}
+.form-control-lb .form-left{
+    width: 30%;
+}
+.form-control .form-right{
+    width: 70%;
+}
+.form-control-lb .form-left span{
+    color: #FE0000;
+}
+.form-control-lb .form-right{
+    height: 43px;
+    width: 70%;
+    padding-left: 4px;
+    line-height: 43px;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    vertical-align: middle;
+}
+.form-control-lb textarea.form-right{
+    height: 60px;
+    resize:none;
+}
+.form-control-lb .icon-choose,
+.form-control-lb .icon-ring{
+    color: #48ADF5;
+    margin-right: 4px;
+}
