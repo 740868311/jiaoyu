@@ -119,6 +119,9 @@ header{
     z-index: 98;
     background-color: #fff;
 }
+.my-header{
+    border-top: 4px solid #4AADF2;
+}
 .header-info{
     height: 45px;
     background-color: #fff;

@@ -1,0 +1,495 @@
+<tc_include file="Public:head" />
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0" />
+
+<link rel="stylesheet" href="__TMPL__Public/assets/css/sm.min.css">
+<link rel="stylesheet" href="__TMPL__Public/assets/css/iconfont/iconfont.css">
+<link rel="stylesheet" href="__TMPL__Public/assets/css/base.css">
+<style>
+    body{
+        background-color: #f0f0f0;
+        overflow: auto;
+    }
+    .header-top{
+        background-color: #fff;
+        padding: 0 10px;
+    }
+    .logo-box{
+        margin-top: 7px;
+    }
+    .reg-container{
+        margin-top: 100px;
+    }
+    .base-container{
+        background-color: #fff;
+        padding: 10px;
+    }
+    .title-text h3{
+        text-align: center;
+        margin-top: 12px;
+        margin-bottom: 20px;
+    }
+    .title-text h2{
+        font-size: 16px;
+        text-align: center;
+    }
+    .require-container{
+        padding: 10px;
+        background-color: #fff;
+        margin: 10px 0 0;
+    }
+    .contact-container{
+        border-bottom: none;
+    }
+    .form-control-lb select{
+        height: 43px;
+        width: 70%;
+        padding-left: 4px;
+        line-height: 43px;
+        box-sizing: border-box;
+        border: 1px solid #ddd;
+        border-radius: 3px;
+        vertical-align: middle;
+    }
+    .alert-box {
+        position: absolute;
+        width: 80%;
+        height: 430px;
+        background-color: #fff;
+        border-radius: 3px;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: 25% auto;
+    }
+    .form-control label{line-height: 40px;}
+    .form-control input,select{width: 70%;float: right;height:40px}
+</style>
+</head>
+<body>
+<tc_include file="Public:nav" />
+<div class="reg-container">
+    <div class="base-container">
+        <div class="title-text">
+            <h2>家长（学员）<span class="c-red">在线提交</span>完整需求</h2>
+            <h3>注册太麻烦？试试<a href="javascript:void(0)" class="btn_msg"><span class="c-red">快速提交入口</span></a></h3>
+        </div>
+        <div class="title-box clearfix">
+            <p class="form-title"><span class="vertical"></span>基本情况</p>
+        </div>
+        <div class="form-control-lb clearfix">
+            <label class="float-left form-left"><span>*</span>您的称呼</label>
+            <div class="float-right" style="width: 70%">
+                <input type="text" class="half-left username" name="name"/>
+                <!--<input type="text" id="sex" class="sex "/>-->
+                <select name="sex" class="small-sel small-sel-two sex-sel half-right">
+                    <option value="1">女士</option>
+                    <option value="2">男士</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-control-lb clearfix">
+            <label class="float-left form-left"><span>*</span>学员年级</label>
+            <php>
+                $grade = sp_get_grade_name();
+            </php>
+            <select id="" class="large-sel grade" name="grade_id">
+                <option value="">--请选择年级--</option>
+                <foreach name="grade" key="k" item="vo">
+                    <option value="{$k}">{$vo}</option>
+                </foreach>
+            </select>
+        </div>
+        <php>
+            $counseling = sp_get_counseling();
+        </php>
+        <div class="form-control-lb clearfix">
+            <label class="float-left form-left"><span>*</span>辅导科目</label>
+            <select class="large-sel subjects-one counseling_id" name="counseling_id[]">
+                <option value="">--请选择辅导课程--</option>
+                <foreach name="counseling" key="k" item="vo">
+                    <option value="{$k}">{$vo}</option>
+                </foreach>
+            </select>
+        </div>
+        <div class="form-control-lb clearfix">
+            <label class="float-left form-left" style="visibility: hidden;"><span>*</span>辅导科目</label>
+            <select class="large-sel subjects-one counseling_id" name="counseling_id[]">
+                <option value="">--请选择辅导课程--</option>
+                <foreach name="counseling" key="k" item="vo">
+                    <option value="{$k}">{$vo}</option>
+                </foreach>
+            </select>
+        </div>
+        <div class="form-control-lb clearfix">
+            <label class="float-left form-left" style="visibility: hidden;"><span>*</span>辅导科目</label>
+            <select class="large-sel subjects-one counseling_id" name="counseling_id[]">
+                <option value="">--请选择辅导课程--</option>
+                <foreach name="counseling" key="k" item="vo">
+                    <option value="{$k}">{$vo}</option>
+                </foreach>
+            </select>
+        </div>
+        <div class="form-control-lb clearfix">
+            <label class="float-left form-left" style="visibility: hidden;"><span>*</span>辅导科目</label>
+            <input type="text" name='counseling_other' class="subjects-four form-right" placeholder="输入您需要辅导的其它科目">
+        </div>
+    </div>
+    <div class="require-container">
+        <div class="title-box clearfix">
+            <p class="form-title"><span class="vertical"></span>情况与要求</p>
+        </div>
+        <div class="form-control-lb clearfix">
+            <label class="float-left form-left">拟付薪酬</label>
+            <input type="text" class="float-right form-right money" placeholder="单位：元/小时">
+        </div>
+        <div class="form-control-lb clearfix">
+            <label class="float-left form-left">家教时间</label>
+            <input type="text" class="float-right form-right" readonly placeholder="" value="请联系客服修改，或者用pc选择家教时间">
+        </div>
+        <div class="form-control-lb clearfix">
+            <label class="float-left form-left">老师要求</label>
+            <select name="teacher_sex" class="small-sel small-sel-two teacher-sex">
+                <option value="1">女性</option>
+                <option value="2">男性</option>
+            </select>
+        </div>
+        <div class="form-control-lb clearfix">
+            <label class="float-left form-left" style="visibility: hidden;"><span>*</span>老师身份</label>
+            <select name="identity" class="middel-input identity">
+                <option value="">--请选择老师身份--</option>
+                <option value="1">大学生</option>
+                <option value="2">研究生</option>
+                <option value="3">在职老师</option>
+                <option value="4">专职老师</option>
+            </select>
+        </div>
+        <div class="form-control-lb clearfix">
+            <label class="float-left form-left">其它要求</label>
+            <textarea class="form-right float-right others"></textarea>
+        </div>
+    </div>
+    <div class="contact-container">
+        <form action="">
+            <div class="form-control-lb clearfix">
+                <label class="float-left form-left"><span>*</span>手机号码</label>
+                <input type="text" class="float-right form-right phone" name="phone" placeholder="请输入您的手机号码">
+            </div>
+            <?php
+                if ($is_code == 1) {
+            ?>
+            <div class="form-control-lb clearfix">
+                <label class="float-left form-left"><span>*</span>验证码</label>
+                <div class="float-right" style="width: 70%">
+                    <input type="text" class="middle half-left img-code" style="width:40%">
+                    <span class="half-right" style="width:50%">{:sp_verifycode_img('length=3&font_size=20&width=119&height=43&use_noise=1&use_curve=0','style="cursor: pointer;" title="点击获取"')}</span>
+                </div>
+            </div>
+            <?php
+                } else if($is_code == 2) {
+            ?>
+            <div class="form-control-lb clearfix">
+                <label class="float-left form-left"><span>*</span>手机验证</label>
+                <div class="float-right" style="width: 70%">
+                    <input type="text" class="half-left messge-code"  name="sms">
+                    <span class="half-right mess-code sms">获取验证码</span>
+                </div>
+            </div>
+            <?php
+                    }
+                ?>
+            <div class="form-control-lb clearfix">
+                <label class="float-left form-left"><span>*</span>家庭住址</label>
+                <input type="text" class="float-right form-right address" placeholder="请输入家庭地址">
+            </div>
+        </form>
+        <div class="btn">提交</div>
+    </div>
+</div>
+
+<!--提示信息弹出框-->
+<div class="alert-mask note">
+    <div class="alert-box" style="height: 150px;">
+        <div class="alert-title">
+            提示
+            <span class="close">X</span>
+        </div>
+        <div class="alert-content">
+            提交成功！
+        </div>
+    </div>
+</div>
+
+
+
+<!--提示信息弹出框-->
+<div class="alert-mask message_1">
+    <div class="alert-box">
+        <div class="alert-title">
+            家长（学员）快速注册
+            <span class="close">X</span>
+        </div>
+        <div class="alert-content">
+            <div class="form-control clearfix" style="">
+                <label><span>*</span>姓名</label>
+                <input type="text" class="name"  placeholder="请输入姓名" name="name">
+            </div>
+            <div class="form-control clearfix">
+                <label><span>*</span>手机号</label>
+                <input type="text" placeholder="请输入手机号"  id="phone" name="phone">
+            </div>
+            <php>
+                $counseling = sp_get_counseling();
+            </php>
+            <div class="form-control clearfix">
+                <label><span>*</span>辅导科目</label>
+                <select id="counseling_id" name="counseling_id[]" >
+                    <option value="">--请选择辅导课程--</option>
+                    <foreach name="counseling" key="k" item="vo">
+                        <option value="{$k}">{$vo}</option>
+                    </foreach>
+                </select>
+            </div>
+            <div class="form-control clearfix">
+                <label for=""></label>
+                <input name="counseling_other" class="counseling_other"  type="text" placeholder="请输入您要辅导的其它科目">
+            </div>
+            <div class="form-control clearfix">
+                <label for=""><span>*</span>家庭住址</label>
+                <input id="address" name="address"  type="text" placeholder="请输入您的家庭住址">
+            </div>
+            <?php
+                        if ($is_code == 1) {
+                    ?>
+            <div class="form-control clearfix">
+                <input type="text" class="verify" style='width:50%;float:none;' name="verify">
+                        <span class="span-code" style="    width: 109px;
+    height: 40px;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 40px;
+    color: #fff;float: right;">{:sp_verifycode_img('length=3&font_size=20&width=109&height=40&use_noise=1&use_curve=0','style="cursor: pointer;" title="点击获取"')}</span>
+
+            </div>
+            <?php
+                        } else {
+                    ?>
+            <div class="form-control clearfix">
+                <!--<label>短信验证码</label><br>-->
+                <input type="text" class="verify" style='width:50%;float:none' style="width: 51%;" name="sms">
+                    <span class="span-code span-btn sms_1" style="    background-color: #4AADF2;
+    border-color: #4AADF2;text-align: center;cursor: pointer; width: 109px;height: 40px;border: 1px solid #ccc;border-radius: 2px;display: inline-block;vertical-align: middle;
+    line-height: 40px;color: #fff;">接收短信验证码</span>
+            </div>
+            <?php
+                        }
+                    ?>
+            <div class="notince" style="color:red"></div>
+            <button id="but" style="width: 93%; height: 42px;line-height: 42px;background-color: #4AADF2;color: #fff;text-align: center;font-size: 16px;border-radius: 3px;margin: auto;margin-bottom: 10px;display: block;cursor: pointer;" vlaue="提交" class="login-btn">提交</button>
+        </div>
+    </div>
+</div>
+<tc_include file="Public:footer"/>
+<script src="__TMPL__Public/assets/js/swiper-3.4.2.jquery.min.js"></script>
+<script src="__TMPL__Public/assets/js/zepto.min.js"></script>
+<script src="__TMPL__Public/assets/js/sm.min.js"></script>
+<script src="__TMPL__Public/assets/js/base.js"></script>
+
+<tc_include file="Public:scripts"/>
+<script>
+    $('.btn_msg').on('click', function(){
+        $('.message_1').show();
+    })
+    $('.sms').click(function(){
+        var phone = $('.phone').val();
+        if (!isPhoneNo(phone)) {
+            $('.note').show().find('.alert-content').html('请输入正确的手机号');
+        } else {
+            $.ajax({
+                url: '{:U("Demand/get_sms")}',
+                dataType: "json",
+                type: "post",
+                data:{phone:phone},
+                success: function(msg) {
+                    if (msg.code == 1) {
+                        $('.sms').html('发送成功');
+                    } else {
+                        $('.note').show().find('.alert-content').html(msg.info);
+                    }
+                }
+            });
+        }
+    })
+
+    $('.sms_1').click(function () {
+        var ksphone = $('#phone').val();
+        if (!isPhoneNo(ksphone)) {
+            $('.notince').html('请输入正确的手机号');
+        } else {
+            $('.notince').html('');
+            $.ajax({
+                url: '{:U("Demand/get_sms")}',
+                dataType: "json",
+                type: "post",
+                data: {phone: ksphone},
+                success: function (msg) {
+                    if (msg.code == 1) {
+                        $('.sms_1').html('发送成功');
+                    } else {
+                        $('.sms_1').html('未知错误');
+                    }
+                }
+            });
+        }
+    });
+
+    $('#but').on('click', function(){
+        var name    =   $('.name').val();
+
+        if (!name) {
+            $('.notince').html('请输入姓名');
+            return false;
+        }
+
+        var phone   =   $('#phone').val();
+
+        if (!isPhoneNo(phone)) {
+            $('.notince').html('请输入正确的手机号');
+            return false;
+        }
+
+        var counseling = [];
+        counseling.push($('#counseling_id').val());
+
+        if (!$('#counseling_id').val()) {
+            $('.notince').html('请选择辅导课程');
+            return false;
+        }
+
+        var address =   $('#address').val();
+
+        if (!address) {
+            $('.notince').html('请输入地址');
+            return false;
+        }
+
+        <?php
+        if ($d_code == 1) {
+            ?>
+            var code    =   $('.verify').val();//验证码－图文
+            <?php
+        } else if($d_code == 2) {
+            ?>
+            var code    =   $('.verify').val();//验证码－短信
+            <?php
+        }
+        ?>
+
+        if (!code) {
+            $('.notince').html('请输入验证码');
+            return false;
+        }
+
+        var formData = {
+            "name": name,//名称
+            "phone": phone,//手机号
+            "counseling_id": counseling,//科目1
+            "counseling_other": $('.counseling_other').val(),//4
+            "address": address,//住址
+            <?php
+            if ($is_code == 1) {
+            ?>
+            "verify": code,//验证码－图文
+            <?php
+        } else if($is_code == 2) {
+            ?>
+            "sms": code,//验证码－短信
+            <?php
+        }
+            ?>
+
+        }
+
+        //调用AJAX提交表单
+        $.ajax({
+            url: '{:U("Demand/add_kspost")}',
+            dataType: "json",
+            type: "post",
+            data:formData,
+            success: function(data) {
+                if (data.status == 0) {
+                    $('.notince').html(data.info);
+                } else if(data.status == 1) {
+                    $('.message_1').hide();
+                    $('.note').show().find('.alert-content').html('预约成功');
+                    setTimeout("location.reload()",1000);
+                }
+            }
+        });
+
+    });
+
+    // 验证手机号
+    function isPhoneNo(phone) {
+        var pattern = /^1[34578]\d{9}$/;
+        return pattern.test(phone);
+    }
+
+    //提交
+    $('.btn').on('click', function(){
+        var counseling = [];
+        $('.counseling_id').each(function(){
+            if ($(this).val()) {
+                counseling.push($(this).val());
+            }
+        });
+        var formData = {
+            "sex": $('.sex-sel').val(),//性别
+            "name": $('.username').val(),//名称
+            "grade_id": $('.grade').val(),//年级
+            "identity": $('.identity').val(),//身份
+            "counseling_id": counseling,//科目1
+            "counseling_other": $('.subjects-four').val(),//4
+            "prepayments": $('.money').val(),//拟付薪酬
+            "teacher_sex": $('.teacher-sex').val(),//老师性别
+            "remarks": $('.others').val(),//其它要求
+            "phone": $('.phone').val(),//手机号
+            "address": $('.address').val(),//住址
+            "is_phone": 1,
+        <?php
+        if ($is_code == 1) {
+            ?>
+            "verify": $('.img-code').val(),//验证码－图文
+            <?php
+        } else if($is_code == 2) {
+            ?>
+            "sms": $('.messge-code').val()//验证码－短信
+            <?php
+        }
+        ?>
+
+        }
+
+            //调用AJAX提交表单
+            $.ajax({
+                url: '{:U("Demand/add_post")}',
+                dataType: "json",
+                type: "post",
+                data:formData,
+                success: function(data) {
+                    $('.alert-content').html(data.info);
+                    $('.alert-mask').show();
+                    if (data.status ==  1) {
+                        setTimeout("location.reload()",1000);
+                    } else {
+                        $('.verify_img').click();
+                    }
+                }
+            });
+        });
+</script>
+{:hook('footer_end')}
+</body>
+</html>

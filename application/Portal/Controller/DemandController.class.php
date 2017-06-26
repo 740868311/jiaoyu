@@ -161,6 +161,10 @@ class DemandController extends HomebaseController {
 				echo json_encode($array);die;
 			}
 
+			if (!empty($post['counseling_other'])) {
+				$data['counseling_other']   =   htmlspecialchars($post['counseling_other']);
+			}
+
 			$phone_auth       =   '/^(0|86|17951)?(13[0-9]|15[012356789]|18[0-9]|14[57])[0-9]{8}$/';
 			if (!preg_match($phone_auth, $phone)) {
 				$array = array('info'=>'手机格式有误','status'=>0);
@@ -308,23 +312,26 @@ class DemandController extends HomebaseController {
 
 
 
-        $time = $post['time'];
-        foreach($time as $time_one) {
-            $swap = explode('-', $time_one);
-            if (!$data['tutor_time_'.strtolower($swap[0])]) {
-                $data['tutor_time_'.strtolower($swap[0])]   =   $swap[1];
-            } else {
-                $data['tutor_time_'.strtolower($swap[0])]   .=   ','.$swap[1];
-            }
+		if (!$post['is_phone']) {
+			$time = $post['time'];
+			foreach($time as $time_one) {
+				$swap = explode('-', $time_one);
+				if (!$data['tutor_time_'.strtolower($swap[0])]) {
+					$data['tutor_time_'.strtolower($swap[0])]   =   $swap[1];
+				} else {
+					$data['tutor_time_'.strtolower($swap[0])]   .=   ','.$swap[1];
+				}
 
-        }
+			}
 
-		if ($time) {
+			if ($time) {
 
-		} else {
-			$array = array('info'=>'家教时间请至少选择一天','status'=>0);
-			echo json_encode($array);die;
+			} else {
+				$array = array('info'=>'家教时间请至少选择一天','status'=>0);
+				echo json_encode($array);die;
+			}
 		}
+
 		return $data;
 	}
 

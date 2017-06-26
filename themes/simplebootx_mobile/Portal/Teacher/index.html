@@ -1,0 +1,99 @@
+<tc_include file="Public:head" />
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0" />
+
+<link rel="stylesheet" href="__TMPL__Public/assets/css/sm.min.css">
+<link rel="stylesheet" href="__TMPL__Public/assets/css/iconfont/iconfont.css">
+<link rel="stylesheet" href="__TMPL__Public/assets/css/base.css">
+<style>
+    body{
+        background-color: #f0f0f0;
+        overflow: auto;
+    }
+    .header-top{
+        background-color: #fff;
+        padding: 0 10px;
+    }
+    .logo-box{
+        margin-top: 7px;
+    }
+    .reg-container{
+        margin-top: 100px;
+    }
+    .base-container{
+        background-color: #fff;
+        padding: 10px;
+    }
+    .title-text h3{
+        text-align: center;
+        margin-top: 12px;
+        margin-bottom: 20px;
+    }
+    .title-text h2{
+        font-size: 16px;
+        text-align: center;
+    }
+    .require-container{
+        padding: 10px;
+        background-color: #fff;
+        margin: 10px 0 0;
+    }
+    .contact-container{
+        border-bottom: none;
+    }
+</style>
+</head>
+<body>
+<tc_include file="Public:nav" />
+
+<tc_include file="Public:footer"/>
+<script src="__TMPL__Public/assets/js/zepto.min.js"></script>
+<script src="__TMPL__Public/assets/js/sm.min.js"></script>
+<script src="__TMPL__Public/assets/js/base.js"></script>
+<tc_include file="Public:scripts"/>
+<script>
+    //教员身份
+    $("#identity").picker({
+        toolbarTemplate: '<header class="bar bar-nav">\
+  <button class="button button-link pull-left close-picker"></button>\
+  <button class="button button-link pull-right close-picker">确定</button>\
+  <h1 class="title">教员身份</h1>\
+  </header>',
+        cols: [
+            {
+                textAlign: 'center',
+                values: ['在校大学生', '在职老师', '兼职老师', '社会人员']
+            }
+        ]
+    });
+    //辅导科目
+    $("#subjects").picker({
+        toolbarTemplate: '<header class="bar bar-nav">\
+  <button class="button button-link pull-left close-picker"></button>\
+  <button class="button button-link pull-right close-picker">确定</button>\
+  <h1 class="title">辅导科目</h1>\
+  </header>',
+        cols: [
+            {
+                textAlign: 'center',
+                values: ['小学语文', '小学数学', '小学英语', '初一数学','初一英语']
+            }
+        ]
+    });
+    //性别
+    $('#sex').picker({
+        toolbarTemplate: '<header class="bar bar-nav">\
+  <button class="button button-link pull-left close-picker"></button>\
+  <button class="button button-link pull-right close-picker">确定</button>\
+  <h1 class="title">性别</h1>\
+  </header>',
+        cols: [
+            {
+                textAlign: 'center',
+                values: ['男','女']
+            }
+        ]
+    })
+</script>
+{:hook('footer_end')}
+</body>
+</html>

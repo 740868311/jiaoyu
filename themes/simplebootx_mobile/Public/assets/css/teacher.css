@@ -1,9 +1,7 @@
 body{
     overflow: auto;
 }
-header{
-    border-top: 4px solid #4AADF2;
-}
+
 .header-top{
     height: 30px;
     background-color: #fff;
