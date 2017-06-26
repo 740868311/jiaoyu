@@ -1,0 +1,96 @@
+<tc_include file="Public:head" />
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0" />
+<link rel="stylesheet" href="__TMPL__Public/assets/css/swiper-3.4.2.min.css">
+<link rel="stylesheet" href="__TMPL__Public/assets/css/iconfont/iconfont.css">
+<link rel="stylesheet" href="__TMPL__Public/assets/css/base.css">
+<style>
+    body{
+        background-color: #f0f0f0;
+    }
+    .parent-container{
+        padding: 10px;
+    }
+    .parent-box{
+        margin-bottom: 10px;
+        padding: 10px;
+        background-color: #fff;
+    }
+    .parent-top-info{
+        padding: 10px 0;
+        border-top: 1px solid #f0f0f0;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    .parent-top-info p{
+        line-height: 18px;
+    }
+    .c-red{
+        margin-top: 4px;
+    }
+    .parent-title{
+        margin-bottom: 10px;
+    }
+</style>
+
+</head>
+<body>
+<div class="header-top">
+    <i class="icon iconfont icon-back" onclick="window.history.back();"></i>
+    预约家长
+</div>
+<div class="parent-container">
+    <php>
+        $counseling = sp_get_counselings();
+    </php>
+    <foreach name="demand" item="demand_one">
+        <div class="parent-box">
+            <div class="parent-title">
+                <span>{$demand_one.id}</span>
+                <span>{$demand_one.name}</span>
+                <span class="sex {$demand_one['sex'] == 1 ? 'girl' : 'boy'}">{$demand_one['sex'] == 1 ? '女' : '男'}</span>
+                <span>{$grade_array[$demand_one['grade_id']]}</span>
+            </div>
+            <div class="parent-top-info">
+                <p>求教科目：<span>
+                <php>
+                    $counseling_data = explode(',', $demand_one['counseling_ids']);
+                    $swap = array();
+                    foreach($counseling_data as $counseling_one) {
+                    $swap[] = $counseling[$counseling_one];
+                    }
+                    $counseling_data = implode(',', $swap);
+                </php>
+                                    {$counseling_data}</span></p>
+                <p>授课时间：<span><php>
+                    $tutor_s    =   $demand_one['tutor_time_s'];
+                    $tutor_s    =   explode(',', $tutor_s);
+                    foreach($tutor_s as $tutor_s_one) {
+                    $week_str   .=  $week[$tutor_s_one].'上午'.',';
+                    }
+                    $tutor_x    =   $demand_one['tutor_time_x'];
+                    $tutor_x    =   explode(',', $tutor_x);
+                    foreach($tutor_x as $tutor_x_one) {
+                    $week_str   .=  $week[$tutor_x_one].'下午'.',';
+                    }
+                    $tutor_w   =   $demand_one['tutor_time_w'];
+                    $tutor_w    =   explode(',', $tutor_w);
+                    foreach($tutor_w as $tutor_w_one) {
+                    $week_str   .=  $week[$tutor_x_one].'晚上'.',';
+                    }
+
+                    $tutor_z    =   $demand_one['tutor_time_z'];
+                    $tutor_z    =   explode(',', $tutor_z);
+                    foreach($tutor_z as $tutor_z_one) {
+                    $week_str   .=  $z[$tutor_z_one].',';
+                    }
+                    $week_str = trim($week_str,',');
+                    echo $week_str;
+                    $week_str = '';
+                </php></span></p>
+            </div>
+            <p class="c-red">{$status[$ttop_status[$demand_one['id']]]}</p>
+        </div>
+    </foreach>
+</div>
+</body>
+{:hook('footer_end')}
+</html>

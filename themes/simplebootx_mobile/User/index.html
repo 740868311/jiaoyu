@@ -1,0 +1,99 @@
+<tc_include file="Public:head" />
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0" />
+<link rel="stylesheet" href="__TMPL__Public/assets/css/iconfont/iconfont.css">
+<link rel="stylesheet" href="__TMPL__Public/assets/css/base.css">
+<style>
+    .person-top{
+        padding: 30px 0 20px;
+        text-align: center;
+    }
+    .person-phone{
+        width: 130px;
+        height: 130px;
+        border-radius: 50%;
+        background:url('img/testimg.png') no-repeat center;
+        background-size: contain;
+        margin: 0 auto;
+    }
+    .person-top h2{
+        text-align: center;
+        margin: 10px 0;
+    }
+    .to-item-box{
+        border-top: 1px solid #f6f6f6;
+        padding: 0 10px;
+        margin-bottom: 10px;
+    }
+    .to-item{
+        line-height: 44px;
+        padding: 0 10px 0 4px;
+        border-bottom: 1px solid #f6f6f6;
+    }
+    .to-item a{
+        width: 100%;
+        height: 100%;
+        display: block;
+    }
+    .to-item span .icon{
+        color: #4FB0F5;
+        margin-right: 10px;
+    }
+    .to-item .icon-enter{
+        color: #CDCDCD;
+        float: right;
+        font-size: 14px;
+    }
+</style>
+
+</head>
+<body>
+<div class="header-top">
+    <i class="icon iconfont icon-back" style="color:#fff;" onclick="window.history.back();"></i>
+    个人中心
+</div>
+<div class="person-top">
+    <div class="person-phone"><img style="border-radius:50%;width: 100%;" src="{:sp_get_image_preview_url($smeta['thumb'])}"/></div>
+    <h2>{$teacher.name}</h2>
+    <if condition="($teacher['status'] eq 1)">
+        <span><i class="icon iconfont"></i>普通教员</span>
+        <else />
+        <span class="type"><i class="icon iconfont icon-star"></i>明星教员</span>
+    </if>
+
+</div>
+<div class="to-item-box">
+    <div class="to-item">
+        <a href="">
+            <span><i class="icon iconfont icon-pen"></i>修改简历</span>
+            <i class="icon iconfont icon-enter"></i>
+        </a>
+    </div>
+    <div class="to-item">
+        <a href="{:U('User/index/book')}">
+            <span><i class="icon iconfont icon-p-book"></i>订阅信息</span>
+            <i class="icon iconfont icon-enter"></i>
+        </a>
+    </div>
+    <div class="to-item">
+        <a href="{:U('User/index/parent')}">
+            <span><i class="icon iconfont icon-clock"></i>预约家长</span>
+            <i class="icon iconfont icon-enter"></i>
+        </a>
+    </div>
+    <div class="to-item">
+        <a href="">
+            <span><i class="icon iconfont icon-lock"></i>修改密码</span>
+            <i class="icon iconfont icon-enter"></i>
+        </a>
+    </div>
+    <div class="to-item">
+        <a href="">
+            <span><i class="icon iconfont icon-camera"></i>修改照片</span>
+            <i class="icon iconfont icon-enter"></i>
+        </a>
+    </div>
+</div>
+
+</body>
+{:hook('footer_end')}
+</html>

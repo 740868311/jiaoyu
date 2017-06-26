@@ -167,6 +167,89 @@ class IndexController extends HomebaseController {
 		}
 	}
 
+	public function book()
+	{
+		// 订阅标签部分
+
+		$user = session("user");
+		// 得到该老师订阅的标签
+		$tag_where	=	array(
+			'teacher_id'	=>	$user['id'],
+		);
+		$tag_teacher = M('subscription_teacher')->field('tag_id')->where($tag_where)->select();
+		$tag_teacher_swap	=	array();
+		foreach($tag_teacher as $tag_teacher_one) {
+			$tag_teacher_swap[]	=	$tag_teacher_one['tag_id'];
+		}
+
+		$tag_data	=	M('subscription_tag')->select();
+		$tag_swap 	=	array();
+
+		foreach($tag_data as $tag_one) {
+			$tag_swap[$tag_one['id']]	=	$tag_one['tag'];
+		}
+
+		$this->assign('tag_in', $tag_teacher_swap);
+		$this->assign('tag', $tag_swap);
+		$this->display(":book");
+		// 订阅标签部分结束
+	}
+
+	public function parent()
+	{
+		$user = session("user");
+		// 预约家长
+		$ttop_where		=	array(
+			'teacher_id'	=>		$user['id'],
+		);
+		$ttop_data = M('ttoporder')->where($ttop_where)->select();
+
+		$demand_where_array	=	array();
+		$ttop_status		=	array();
+		foreach($ttop_data as $ttop_one) {
+			$demand_where_array[]	=	$ttop_one['demand_id'];
+			$ttop_status[$ttop_one['demand_id']]			=	$ttop_one['status'];
+		}
+
+		$demand_ids	=	implode(',', $demand_where_array);
+		$demand_where['id'] 	=	array('in', $demand_ids);
+
+		$demand_data = M('demand')->where($demand_where)->select();
+
+		$this->assign('demand', $demand_data);
+
+		// 周几
+		$week	=	array(
+			1	=>	'周一',
+			2	=>	'周二',
+			3	=>	'周三',
+			4	=>	'周四',
+			5	=>	'周五',
+			6	=>	'周六',
+			7	=>	'周日',
+		);
+
+		//
+		$z	=	array(
+			1	=>	'寒假',
+			2	=>	'暑假',
+			3	=>	'长期',
+			4	=>	'面议'
+		);
+
+		$status	=	array(
+			1	=>	'报名中',
+			2	=>	'试讲中',
+			3	=>	'成功'
+		);
+		$this->assign('week', $week);
+		$this->assign('z',	$z);
+		$this->assign('status', $status);
+		$this->assign('ttop_status', $ttop_status);
+		$this->display(":parent");
+		// 预约家长end
+	}
+
 	// 取消订阅或者添加
 	public function edit_subscription()
 	{

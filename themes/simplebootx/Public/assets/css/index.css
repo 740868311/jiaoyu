@@ -105,9 +105,19 @@ body{
 }
 .table-header{
     border-bottom: 1px solid #4AADF2;
+    display: box;			  /* OLD - Android 4.4- */
+    display: -webkit-box;	  /* OLD - iOS 6-, Safari 3.1-6 */
+    display: -moz-box;		 /* OLD - Firefox 19- (buggy but mostly works) */
+    display: -ms-flexbox;	  /* TWEENER - IE 10 */
+    display: -webkit-flex;
     display: flex;
 }
 .table-col{
+    -webkit-box-flex: 1;	  /* OLD - iOS 6-, Safari 3.1-6 */
+    -moz-box-flex: 1;		 /* OLD - Firefox 19- */
+    width: 20%;			   /* For old syntax, otherwise collapses. */
+    -webkit-flex: 1;		  /* Chrome */
+    -ms-flex: 1;
     flex: 1;
     text-align: center;
 }
@@ -117,6 +127,11 @@ body{
     line-height: 50px;
 }
 .table-body .table-tr{
+    display: box;			  /* OLD - Android 4.4- */
+    display: -webkit-box;	  /* OLD - iOS 6-, Safari 3.1-6 */
+    display: -moz-box;		 /* OLD - Firefox 19- (buggy but mostly works) */
+    display: -ms-flexbox;	  /* TWEENER - IE 10 */
+    display: -webkit-flex;
     display: flex;
 }
 .table-body .table-col{
@@ -172,6 +187,11 @@ body{
     background: #f6f6f6;
 }
 .person-content{
+    display: box;			  /* OLD - Android 4.4- */
+    display: -webkit-box;	  /* OLD - iOS 6-, Safari 3.1-6 */
+    display: -moz-box;		 /* OLD - Firefox 19- (buggy but mostly works) */
+    display: -ms-flexbox;	  /* TWEENER - IE 10 */
+    display: -webkit-flex;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
@@ -216,6 +236,11 @@ body{
     background: #f6f6f6;
 }
 .notice-container .notice-content{
+    display: box;			  /* OLD - Android 4.4- */
+    display: -webkit-box;	  /* OLD - iOS 6-, Safari 3.1-6 */
+    display: -moz-box;		 /* OLD - Firefox 19- (buggy but mostly works) */
+    display: -ms-flexbox;	  /* TWEENER - IE 10 */
+    display: -webkit-flex;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
