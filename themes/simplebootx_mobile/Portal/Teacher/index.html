@@ -38,9 +38,7 @@
         </div>
         <div class="form-control-lb clearfix">
             <label class="float-left form-left"><span>*</span>您的称呼</label>
-            <div class="float-left form-left" style="">
-                <input type="text" class="form-right float-right username"/>
-            </div>
+            <input type="text" class="form-right float-right username"/>
         </div>
         <div class="form-control-lb clearfix">
             <label class="float-left form-left"><span>*</span>性别</label>
@@ -71,7 +69,7 @@
         </div>
         <div class="form-control-lb clearfix">
             <label class="float-left form-left"><span>*</span>教学阶段</label>
-            <select style="min-width: 50px;width:130px" class="stage" name="stage">
+            <select class="stage form-right float-right" name="stage">
                 <option value="">--请选择教学阶段--</option>
                 <option value="1">高中老师</option>
                 <option value="2">初中老师</option>
@@ -83,7 +81,7 @@
         </php>
         <div class="form-control-lb clearfix">
             <label class="float-left form-left"><span>*</span>辅导科目</label>
-            <select class="large-sel subjects-one counseling_id" name="counseling_id[]">
+            <select class="large-sel subjects-one counseling_id form-right float-right" name="counseling_id[]">
                 <option value="">--请选择辅导课程--</option>
                 <foreach name="counseling" key="k" item="vo">
                     <option value="{$k}">{$vo}</option>
@@ -92,7 +90,7 @@
         </div>
         <div class="form-control-lb clearfix">
             <label class="float-left form-left" style="visibility: hidden;"><span>*</span>辅导科目</label>
-            <select class="large-sel subjects-one counseling_id" name="counseling_id[]">
+            <select class="large-sel subjects-one counseling_id form-right float-right" name="counseling_id[]">
                 <option value="">--请选择辅导课程--</option>
                 <foreach name="counseling" key="k" item="vo">
                     <option value="{$k}">{$vo}</option>
@@ -101,7 +99,7 @@
         </div>
         <div class="form-control-lb clearfix">
             <label class="float-left form-left" style="visibility: hidden;"><span>*</span>辅导科目</label>
-            <select class="large-sel subjects-one counseling_id" name="counseling_id[]">
+            <select class="large-sel subjects-one counseling_id form-right float-right" name="counseling_id[]">
                 <option value="">--请选择辅导课程--</option>
                 <foreach name="counseling" key="k" item="vo">
                     <option value="{$k}">{$vo}</option>
@@ -158,14 +156,17 @@
             <?php
                     } else if($is_code == 2) {
                 ?>
-            <div class="form-control clearfix">
-                <label><span>*</span>短信验证码</label>
-                <input type="text" class="middel-input messge-code" name="sms">
-                <span class="span-code span-btn" id="sms">接收短信验证码</span>
+            <div class="form-control-lb clearfix">
+                <label class="float-left form-left"><span>*</span>短信验证码</label>
+                <div class="float-right" style="width: 70%">
+                    <input type="text" class="half-left messge-code">
+                    <span class="half-right mess-code" id="sms">获取验证码</span>
+                </div>
             </div>
             <?php
                     }
                 ?>
+
             <!--<div class="form-control-lb clearfix">-->
                 <!--<label class="float-left form-left"><span>*</span>验证码</label>-->
                 <!--<div class="float-right" style="width: 70%">-->
@@ -173,19 +174,20 @@
                     <!--<span class="half-right">2587</span>-->
                 <!--</div>-->
             <!--</div>-->
-            <div class="form-control-lb clearfix">
-                <label class="float-left form-left"><span>*</span>手机验证</label>
-                <div class="float-right" style="width: 70%">
-                    <input type="text" class="half-left">
-                    <span class="half-right mess-code">获取验证码</span>
-                </div>
-            </div>
-            <div class="form-control-lb clearfix">
-                <label class="float-left form-left"><span>*</span>邮箱住址</label>
-                <input type="text" class="float-right form-right" placeholder="请输入邮箱地址">
-            </div>
         </form>
         <div class="btn">提交</div>
+    </div>
+</div>
+<!--提示信息弹出框-->
+<div class="alert-mask">
+    <div class="alert-box">
+        <div class="alert-title">
+            提示
+            <span class="close">X</span>
+        </div>
+        <div class="alert-content">
+            提交成功！
+        </div>
     </div>
 </div>
 <tc_include file="Public:footer"/>
@@ -193,6 +195,91 @@
 <script src="__TMPL__Public/assets/js/sm.min.js"></script>
 <script src="__TMPL__Public/assets/js/base.js"></script>
 <tc_include file="Public:scripts"/>
+
+<script>
+    $('#sms').click(function(){
+        var phone = $('.phone').val();
+        if (!isPhoneNo(phone)) {
+            $('.alert-mask').show().find('.alert-content').html('请输入正确的手机号');
+        } else {
+            $.ajax({
+                url: '{:U("Demand/get_sms")}',
+                dataType: "json",
+                type: "post",
+                data:{phone:phone},
+                success: function(msg) {
+                    if (msg.code == 1) {
+                        $('#sms').html('发送成功');
+                    } else {
+                        $('.alert-mask').show().find('.alert-content').html(data.info);
+                    }
+                }
+            });
+        }
+    })
+
+    // 验证手机号
+    function isPhoneNo(phone) {
+        var pattern = /^1[34578]\d{9}$/;
+        return pattern.test(phone);
+    }
+
+    //提交
+    $('.btn').on('click', function(){
+        var counseling = [];
+        $('.counseling_id').each(function(){
+            if ($(this).val()) {
+                counseling.push($(this).val());
+            }
+        });
+
+        var formData = {
+            "name": $('.username').val(),//名称
+            "sex": $('.icon-choose').parents('.my-radio').attr('oid'),//性别
+            "identity": $('.identity').val(),//身份
+            "university": $('.school').val(),//毕业院校
+            "email": $('.email').val(),//毕业院校
+            "profession": $('.specialty').val(),//所学专业
+            "grade": $('.grade').val(),//所在年级
+            "counseling_id": counseling,//科目1
+            "counseling_other": $('.subject-four').val(),//4
+            "stage": $('.stage').val(),//*教学阶段
+            "introduction": $('.myself').val(),//自我介绍
+            "teaching_experience":$('.teaching').val(),//教学经历
+            "phone": $('.phone').val(),//手机号
+            "password": $('.password').val(),//手机号
+            "repassword": $('.repassword').val(),//手机号
+        <?php
+        if ($is_code == 1) {
+            ?>
+            "verify": $('.img-code').val(),//验证码－图文
+            <?php
+        } else if($is_code == 2) {
+            ?>
+            "sms": $('.messge-code').val()//验证码－短信
+            <?php
+        }
+        ?>
+        }
+        
+
+        //调用AJAX提交表单
+        $.ajax({
+            url: '{:U("Teacher/index_post")}',
+            dataType: "json",
+            type: "post",
+            data:formData,
+            success: function(data) {
+                if (data.status == 0) {
+                    $('.verify_img').click();
+                    $('.alert-mask').show().find('.alert-content').html(data.info);
+                } else if(data.status == 1) {
+                    $('.alert-mask').show().find('.alert-content').html(data.info);
+                }
+            }
+        });
+    });
+</script>
 
 {:hook('footer_end')}
 </body>
