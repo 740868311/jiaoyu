@@ -276,6 +276,7 @@ class TeacherController extends HomebaseController {
         if (!$id) {
             $this->error('缺少教师id');
         }
+        $this->teacher_model->where(array('id'=>$id))->setInc('hits',1); // 老师的点击加1
 
         $data = $this->teacher_model->where(array('id'=>$id))->find();
 

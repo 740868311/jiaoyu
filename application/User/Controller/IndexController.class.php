@@ -111,6 +111,11 @@ class IndexController extends HomebaseController {
 		$this->display(":index");
     }
 
+	public function pass_index()
+	{
+		$this->display(":pass_index");
+	}
+
 	// 修改密码
 	public function repass()
 	{
@@ -300,6 +305,28 @@ class IndexController extends HomebaseController {
 			$array = array('info'=>'修改失败','status'=>0);
 			echo json_encode($array);die;
 		}
+	}
+
+	public function edit()
+	{
+		$user = session("user");
+
+		$where	=	array(
+			'id'	=>	$user['id'],
+		);
+		$teacher     =   M("teacher")->where($where)->find();
+		$teacher['counseling_ids'] = explode(',', trim($teacher['counseling_ids'], ','));
+		while(true) {
+			if (count($teacher['counseling_ids']) < 3) {
+				$teacher['counseling_ids'][] = null;
+			} else {
+				break;
+			}
+		}
+
+		$this->assign("smeta",json_decode($teacher['smeta'],true));
+		$this->assign("teacher",$teacher);
+		$this->display(":edit");
 	}
 
 	// 修改老师信息

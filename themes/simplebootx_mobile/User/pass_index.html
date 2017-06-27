@@ -1,0 +1,100 @@
+<tc_include file="Public:head" />
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0" />
+<link rel="stylesheet" href="__TMPL__Public/assets/css/swiper-3.4.2.min.css">
+<link rel="stylesheet" href="__TMPL__Public/assets/css/iconfont/iconfont.css">
+<link rel="stylesheet" href="__TMPL__Public/assets/css/base.css">
+
+</head>
+<body>
+<div class="header-top">
+    <i class="icon iconfont icon-back" onclick="window.history.back();"></i>
+    修改密码
+</div>
+<form style="margin-top: 10px;">
+    <div class="form-control">
+        <input type="password" placeholder="当前密码" class="old">
+    </div>
+    <div class="form-control">
+        <input type="password" placeholder="新密码" class="password">
+    </div>
+    <div class="form-control">
+        <input type="password" placeholder="确认密码" class="repassword">
+    </div>
+</form>
+<div class="form-control">
+    <div class="btn pas_btn">提交</div>
+</div>
+
+<!--提示信息弹出框-->
+<div class="alert-mask note">
+    <div class="alert-box" style="height: 150px;">
+        <div class="alert-title">
+            提示
+            <span class="close">X</span>
+        </div>
+        <div class="alert-content">
+            提交成功！
+        </div>
+    </div>
+</div>
+</body>
+<script src="__TMPL__Public/assets/js/zepto_1.1.6.min.js"></script>
+<script src="__TMPL__Public/assets/js/base.js"></script>
+<script src="__TMPL__Public/assets/js/swiper-3.4.2.jquery.min.js"></script>
+<script>
+    //提交
+    $('.pas_btn').on('click', function(){
+
+        var old    =   $('.old').val();
+
+        if (!old) {
+            $('.note').show().find('.alert-content').html('旧密码不能空');
+            return false;
+        }
+
+        var password    =   $('.password').val();
+
+        if (!password) {
+            $('.note').show().find('.alert-content').html('新密码不能为空');
+            return false;
+        }
+
+        var repassword    =   $('.repassword').val();
+
+        if (!repassword) {
+            $('.note').show().find('.alert-content').html('重复密码密码不能为空');
+            return false;
+        }
+
+        if (repassword != password) {
+            $('.note').show().find('.alert-content').html('两次输入不一致');
+            return false;
+        }
+
+        var formData = {
+            "old": old,//教学经历
+            "password": password,
+            "repassword": repassword,
+        }
+
+//        console.log(formData);return false;
+
+        //调用AJAX提交表单
+        $.ajax({
+            url: '{:U("User/index/repass")}',
+            dataType: "json",
+            type: "post",
+            data:formData,
+            success: function(data) {
+                if (data.status == 0) {
+                    $('.note').show().find('.alert-content').html(data.info);
+                } else if(data.status == 1) {
+                    $('.note').show().find('.alert-content').html('修改成功');
+                    setTimeout("location.reload()",1000);
+                }
+            }
+        });
+    });
+</script>
+{:hook('footer_end')}
+</html>

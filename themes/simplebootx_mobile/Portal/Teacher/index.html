@@ -1,13 +1,10 @@
 <tc_include file="Public:head" />
 <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0" />
-
-<link rel="stylesheet" href="__TMPL__Public/assets/css/sm.min.css">
 <link rel="stylesheet" href="__TMPL__Public/assets/css/iconfont/iconfont.css">
 <link rel="stylesheet" href="__TMPL__Public/assets/css/base.css">
 <style>
     body{
         background-color: #f0f0f0;
-        overflow: auto;
     }
     .header-top{
         background-color: #fff;
@@ -16,84 +13,187 @@
     .logo-box{
         margin-top: 7px;
     }
-    .reg-container{
-        margin-top: 100px;
+    .demand-container{
+        margin-top: 90px;
     }
     .base-container{
+        padding: 0 10px 10px;
         background-color: #fff;
-        padding: 10px;
     }
-    .title-text h3{
+    .base-container h2{
+        font-size: 18px;
+        padding: 30px 0;
         text-align: center;
-        margin-top: 12px;
-        margin-bottom: 20px;
-    }
-    .title-text h2{
-        font-size: 16px;
-        text-align: center;
-    }
-    .require-container{
-        padding: 10px;
         background-color: #fff;
-        margin: 10px 0 0;
-    }
-    .contact-container{
-        border-bottom: none;
     }
 </style>
 </head>
 <body>
 <tc_include file="Public:nav" />
-
+<div class="demand-container">
+    <div class="base-container">
+        <h2>教员在线提交个人简历</h2>
+        <div class="title-box clearfix">
+            <p class="form-title"><span class="vertical"></span>基本情况</p>
+        </div>
+        <div class="form-control-lb clearfix">
+            <label class="float-left form-left"><span>*</span>您的称呼</label>
+            <div class="float-left form-left" style="">
+                <input type="text" class="form-right float-right username"/>
+            </div>
+        </div>
+        <div class="form-control-lb clearfix">
+            <label class="float-left form-left"><span>*</span>性别</label>
+            <span class="my-radio" oid="2"><i class="icon iconfont icon-choose"></i>男</span>
+            <span class="my-radio" oid="1" style="margin-left:20px;"><i class="icon iconfont icon-ring"></i>女</span>
+        </div>
+        <div class="form-control-lb clearfix">
+            <label class="float-left form-left"><span>*</span>教员身份</label>
+            <select name="identity" class="identity form-right float-right">
+                <option value="">请选择您的身份</option>
+                <option value="1">大学生</option>
+                <option value="2">研究生</option>
+                <option value="3">在职老师</option>
+                <option value="4">专职老师</option>
+            </select>
+        </div>
+        <div class="form-control-lb clearfix">
+            <label class="float-left form-left"><span>*</span>所在院校</label>
+            <input type="text" class="form-right float-right school" placeholder="输入您所在院校"/>
+        </div>
+        <div class="form-control-lb clearfix">
+            <label class="float-left form-left"><span>*</span>所学专业</label>
+            <input type="text" class="form-right float-right specialty" placeholder="输入您的专业"/>
+        </div>
+        <div class="form-control-lb clearfix">
+            <label class="float-left form-left"><span>*</span>当前年级</label>
+            <input type="text" class="form-right float-right grade" placeholder="输入您的当前年级"/>
+        </div>
+        <div class="form-control-lb clearfix">
+            <label class="float-left form-left"><span>*</span>教学阶段</label>
+            <select style="min-width: 50px;width:130px" class="stage" name="stage">
+                <option value="">--请选择教学阶段--</option>
+                <option value="1">高中老师</option>
+                <option value="2">初中老师</option>
+                <option value="3">小学老师</option>
+            </select>
+        </div>
+        <php>
+            $counseling = sp_get_counseling();
+        </php>
+        <div class="form-control-lb clearfix">
+            <label class="float-left form-left"><span>*</span>辅导科目</label>
+            <select class="large-sel subjects-one counseling_id" name="counseling_id[]">
+                <option value="">--请选择辅导课程--</option>
+                <foreach name="counseling" key="k" item="vo">
+                    <option value="{$k}">{$vo}</option>
+                </foreach>
+            </select>
+        </div>
+        <div class="form-control-lb clearfix">
+            <label class="float-left form-left" style="visibility: hidden;"><span>*</span>辅导科目</label>
+            <select class="large-sel subjects-one counseling_id" name="counseling_id[]">
+                <option value="">--请选择辅导课程--</option>
+                <foreach name="counseling" key="k" item="vo">
+                    <option value="{$k}">{$vo}</option>
+                </foreach>
+            </select>
+        </div>
+        <div class="form-control-lb clearfix">
+            <label class="float-left form-left" style="visibility: hidden;"><span>*</span>辅导科目</label>
+            <select class="large-sel subjects-one counseling_id" name="counseling_id[]">
+                <option value="">--请选择辅导课程--</option>
+                <foreach name="counseling" key="k" item="vo">
+                    <option value="{$k}">{$vo}</option>
+                </foreach>
+            </select>
+        </div>
+        <div class="form-control-lb clearfix">
+            <label class="float-left form-left" style="visibility: hidden;"><span>*</span>辅导科目</label>
+            <input type="text" class="form-right float-right subject-four" id="subjects4" placeholder="请填写辅导科目4">
+        </div>
+        <div class="form-control-lb clearfix">
+            <label class="float-left form-left"><span>*</span>自我介绍</label>
+            <textarea class="form-right float-right myself"></textarea>
+        </div>
+        <div class="form-control-lb clearfix">
+            <label class="float-left form-left">教学经历</label>
+            <textarea class="form-right float-right teaching"></textarea>
+        </div>
+    </div>
+    <div class="contact-container">
+        <div class="title-box clearfix">
+            <p class="form-title"><span class="vertical"></span>联系方式</p>
+        </div>
+        <form action="">
+            <div class="form-control-lb clearfix">
+                <label class="float-left form-left"><span>*</span>手机号码</label>
+                <input type="text" class="float-right form-right phone" placeholder="请输入您的手机号码">
+            </div>
+            <div class="form-control-lb clearfix">
+                <label class="float-left form-left"><span>*</span>邮箱</label>
+                <input type="text" class="float-right form-right email" placeholder="请输入您的邮箱">
+            </div>
+            <div class="form-control-lb clearfix">
+                <label><span>*</span>登录密码</label>
+                <input type="password" class="float-right form-right password" name="password">
+            </div>
+            <div class="form-control-lb clearfix">
+                <label><span>*</span>重复密码</label>
+                <input type="password" class="float-right form-right repassword" name="repassword">
+            </div>
+            <?php
+                    if ($is_code == 1) {
+                ?>
+            <div class="form-control-lb clearfix">
+                <label class="float-left form-left"><span>*</span>验证码</label>
+                <div class="float-right" style="width: 70%">
+                    <input type="text" class="middle half-left img-code" style="width:40%" name="verify">
+                        <span class="half-right" style="width:53%">
+                            <!--<img src="/index.php?g=api&m=checkcode&a=index&length=4&font_size=20&width=109&height=40&use_noise=1&use_curve=0" onclick="this.src='/index.php?g=api&m=checkcode&a=index&length=3&font_size=18&width=109&height=40&use_noise=1&use_curve=0&time='+Math.random();" />-->
+                            {:sp_verifycode_img('length=3&font_size=20&width=128&height=45&use_noise=1&use_curve=0','style="cursor: pointer;" title="点击获取"')}
+                        </span>
+                </div>
+            </div>
+            <?php
+                    } else if($is_code == 2) {
+                ?>
+            <div class="form-control clearfix">
+                <label><span>*</span>短信验证码</label>
+                <input type="text" class="middel-input messge-code" name="sms">
+                <span class="span-code span-btn" id="sms">接收短信验证码</span>
+            </div>
+            <?php
+                    }
+                ?>
+            <!--<div class="form-control-lb clearfix">-->
+                <!--<label class="float-left form-left"><span>*</span>验证码</label>-->
+                <!--<div class="float-right" style="width: 70%">-->
+                    <!--<input type="text" class="middle half-left">-->
+                    <!--<span class="half-right">2587</span>-->
+                <!--</div>-->
+            <!--</div>-->
+            <div class="form-control-lb clearfix">
+                <label class="float-left form-left"><span>*</span>手机验证</label>
+                <div class="float-right" style="width: 70%">
+                    <input type="text" class="half-left">
+                    <span class="half-right mess-code">获取验证码</span>
+                </div>
+            </div>
+            <div class="form-control-lb clearfix">
+                <label class="float-left form-left"><span>*</span>邮箱住址</label>
+                <input type="text" class="float-right form-right" placeholder="请输入邮箱地址">
+            </div>
+        </form>
+        <div class="btn">提交</div>
+    </div>
+</div>
 <tc_include file="Public:footer"/>
 <script src="__TMPL__Public/assets/js/zepto.min.js"></script>
 <script src="__TMPL__Public/assets/js/sm.min.js"></script>
 <script src="__TMPL__Public/assets/js/base.js"></script>
 <tc_include file="Public:scripts"/>
-<script>
-    //教员身份
-    $("#identity").picker({
-        toolbarTemplate: '<header class="bar bar-nav">\
-  <button class="button button-link pull-left close-picker"></button>\
-  <button class="button button-link pull-right close-picker">确定</button>\
-  <h1 class="title">教员身份</h1>\
-  </header>',
-        cols: [
-            {
-                textAlign: 'center',
-                values: ['在校大学生', '在职老师', '兼职老师', '社会人员']
-            }
-        ]
-    });
-    //辅导科目
-    $("#subjects").picker({
-        toolbarTemplate: '<header class="bar bar-nav">\
-  <button class="button button-link pull-left close-picker"></button>\
-  <button class="button button-link pull-right close-picker">确定</button>\
-  <h1 class="title">辅导科目</h1>\
-  </header>',
-        cols: [
-            {
-                textAlign: 'center',
-                values: ['小学语文', '小学数学', '小学英语', '初一数学','初一英语']
-            }
-        ]
-    });
-    //性别
-    $('#sex').picker({
-        toolbarTemplate: '<header class="bar bar-nav">\
-  <button class="button button-link pull-left close-picker"></button>\
-  <button class="button button-link pull-right close-picker">确定</button>\
-  <h1 class="title">性别</h1>\
-  </header>',
-        cols: [
-            {
-                textAlign: 'center',
-                values: ['男','女']
-            }
-        ]
-    })
-</script>
+
 {:hook('footer_end')}
 </body>
 </html>

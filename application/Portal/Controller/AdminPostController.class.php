@@ -507,7 +507,7 @@ class AdminPostController extends AdminbaseController {
             $obj_id =   array();
             foreach($data as $data_one) {
 
-				$obj_id[$term_id_one]	=	$data_one['object_id'];
+				$obj_id[]	=	$data_one['object_id'];
 			}
 			$obj_id	=	implode(',', $obj_id);
 
@@ -518,6 +518,7 @@ class AdminPostController extends AdminbaseController {
 
             $obj_array  =   array();
 			$obj_data_array			=	$this->posts_model->where(array('id'=>array('in', $obj_id)))->select();
+
 			foreach($obj_data_array as $key=>$obj_data_array_one) {
 				$obj_array[$key]['title']	=	$obj_data_array_one['post_title'];
 				$obj_array[$key]['url']	=	leuu('article/index',array('id'=>7,'article_id'=>$obj_data_array_one['id'],'cid'=>$term_id_one));

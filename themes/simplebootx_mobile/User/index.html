@@ -11,7 +11,7 @@
         width: 130px;
         height: 130px;
         border-radius: 50%;
-        background:url('img/testimg.png') no-repeat center;
+        background:url('__TMPL__Public/assets/images/testimg.png') no-repeat center;
         background-size: contain;
         margin: 0 auto;
     }
@@ -63,7 +63,7 @@
 </div>
 <div class="to-item-box">
     <div class="to-item">
-        <a href="">
+        <a href="{:U('User/index/edit')}">
             <span><i class="icon iconfont icon-pen"></i>修改简历</span>
             <i class="icon iconfont icon-enter"></i>
         </a>
@@ -81,17 +81,17 @@
         </a>
     </div>
     <div class="to-item">
-        <a href="">
+        <a href="{:U('User/index/pass_index')}">
             <span><i class="icon iconfont icon-lock"></i>修改密码</span>
             <i class="icon iconfont icon-enter"></i>
         </a>
     </div>
-    <div class="to-item">
-        <a href="">
-            <span><i class="icon iconfont icon-camera"></i>修改照片</span>
-            <i class="icon iconfont icon-enter"></i>
-        </a>
-    </div>
+    <!--<div class="to-item">-->
+        <!--<a href="">-->
+            <!--<span><i class="icon iconfont icon-camera"></i>修改照片</span>-->
+            <!--<i class="icon iconfont icon-enter"></i>-->
+        <!--</a>-->
+    <!--</div>-->
 </div>
 
 </body>

@@ -38,6 +38,13 @@ class HomebaseController extends AppframeController {
 		if(sp_is_user_login()){
 			$this->assign("user",sp_get_current_user());
 		}
+
+		// 得到导航id，并得到相应关键词
+		$id	=	(int)$_GET['id'] ? (int)$_GET['id'] : 1;
+		if ($id) {
+			$nav = M('nav')->where(array('id'=>$id))->find();
+			$this->assign($nav);
+		}
 		
 	}
 	

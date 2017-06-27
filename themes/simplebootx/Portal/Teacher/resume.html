@@ -19,6 +19,7 @@
                 <span>{:get_teacher_show_id($data['id'])}</span>
                 <span>{$data['status'] == 1 ? '普通教员' : '明星教员'}</span>
                 <span class="sex {$data['sex'] == 1 ? 'girl' : 'boy'}">{$data['sex'] == 1 ? '女' : '男'}</span>
+                <span>点击量：{$data['hits']}</span>
             </div>
             <p class="sub"><span>辅导科目：</span>
                 <php>

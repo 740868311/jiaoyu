@@ -1,0 +1,163 @@
+<tc_include file="Public:head" />
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0" />
+<link rel="stylesheet" href="__TMPL__Public/assets/css/swiper-3.4.2.min.css">
+<link rel="stylesheet" href="__TMPL__Public/assets/css/iconfont/iconfont.css">
+<link rel="stylesheet" href="__TMPL__Public/assets/css/base.css">
+<style>
+    body{
+        overflow: auto;
+    }
+    .base-container{
+        padding: 10px;
+        background-color: #fff;
+    }
+</style>
+
+</head>
+<body>
+<div class="header-top">
+    <i class="icon iconfont icon-back" onclick="window.history.back();"></i>
+    修改简历
+</div>
+<div class="base-container">
+    <div class="title-box clearfix">
+        <p class="form-title"><span class="vertical"></span>自我介绍</p>
+    </div>
+    <form action="">
+        <div class="form-control-lb clearfix">
+            <label class="float-left form-left"><span>*</span>您的称呼</label>
+            <input type="text" value="{$teacher.name}" class="float-right form-right username" placeholder="请输入您的姓名">
+        </div>
+        <div class="form-control-lb clearfix">
+            <label class="float-left form-left"><span>*</span>性别</label>
+            <span class="my-radio" oid="2"><i class="icon iconfont {$teacher['sex'] == 2 ? 'icon-choose active' : 'icon-ring'}"></i>男</span>
+            <span class="my-radio" oid="1"><i class="icon iconfont {$teacher['sex'] == 1 ? 'icon-choose active' : 'icon-ring'}"></i>女</span>
+        </div>
+        <div class="form-control-lb clearfix">
+            <label class="float-left form-left"><span>*</span>教员身份</label>
+            <select name="identity" class="identity form-right float-right">
+                <option  value="">请选择您的身份</option>
+                <option {$teacher['identity'] == 1 ? 'selected' : ''} value="1">大学生</option>
+                <option {$teacher['identity'] == 2 ? 'selected' : ''} value="2">研究生</option>
+                <option {$teacher['identity'] == 3 ? 'selected' : ''} value="3">在职老师</option>
+                <option {$teacher['identity'] == 4 ? 'selected' : ''} value="4">专职老师</option>
+            </select>
+        </div>
+        <div class="form-control-lb clearfix">
+            <label class="float-left form-left"><span>*</span>教学阶段</label>
+            <select name="stage" class="stage form-right float-right">
+                <option value="0">--请选择教学阶段--</option>
+                <option value="1" {$teacher['stage'] == 1 ? 'selected' : ''}>高中老师</option>
+                <option value="2" {$teacher['stage'] == 2 ? 'selected' : ''}>初中老师</option>
+                <option value="3" {$teacher['stage'] == 3 ? 'selected' : ''}>小学老师</option>
+            </select>
+        </div>
+        <div class="form-control-lb clearfix">
+            <label class="float-left form-left"><span>*</span>年级（大学生）</label>
+            <input type="text" value="{$teacher.grade}"  class="grade float-right form-right username" placeholder="请输入您的年级">
+        </div>
+        <php>
+            $counseling = sp_get_counselings();
+        </php>
+        <foreach name="teacher['counseling_ids']" item="counseling_one">
+            <div class="form-control-lb clearfix">
+                <label class="float-left form-left"><span>*</span>辅导科目</label>
+                <select class="large-sel subjects-one counseling_id form-right float-right" name="counseling_id[]">
+                    <option value="">--请选择辅导课程--</option>
+                    <foreach name="counseling" key="k" item="vo">
+                        <option value="{$k}" {$counseling_one == $k ? 'selected' : ''}>{$vo}</option>
+                    </foreach>
+                </select>
+            </div>
+        </foreach>
+        <div class="form-control-lb clearfix">
+            <label class="float-left form-left" style="visibility: hidden;"><span>*</span>其他辅导科目</label>
+            <input type="text" class="subject-four form-right float-right" name="counseling_other" value='{$teacher.counseling_other}'placeholder="输入您所要辅导的其它科目">
+        </div>
+        <div class="form-control-lb clearfix">
+            <label class="float-left form-left"><span>*</span>自我介绍</label>
+            <textarea class="myself form-right float-right" name="myself">{$teacher.introduction}</textarea>
+        </div>
+        <!--<div class="form-control-lb clearfix">-->
+            <!--<label class="float-left form-left">获奖经历</label>-->
+            <!--<div class="form-right float-right" style="height: 60px;"></div>-->
+        <!--</div>-->
+        <div class="form-control-lb clearfix">
+            <label class="float-left form-left">教学经历</label>
+            <textarea name="teaching" class="teaching form-right float-right">{$teacher.teaching_experience}</textarea>
+        </div>
+    </form>
+    <div class="btn btn_teacher">提交</div>
+</div>
+<div class="contact-container">
+    <div class="title-box clearfix">
+        <p class="form-title"><span class="vertical"></span>联系方式</p>
+    </div>
+    <p style="color:#BBBBBB;text-align: left;"><i class="icon iconfont icon-info-active" style="color:#bbb;font-size:14px;"></i>以下内容联系客服可修改。</p>
+
+    <form action="">
+        <div class="form-control-lb clearfix">
+            <label class="float-left form-left"><span>*</span>手机号码</label>
+            <input type="text" class="float-right form-right" readonly placeholder="请输入您的手机号码">
+        </div>
+        <div class="form-control-lb clearfix">
+            <label class="float-left form-left"><span>*</span>毕业院校</label>
+            <input type="text" class="float-right form-right" readonly placeholder="请输入您毕业院校">
+        </div>
+        <div class="form-control-lb clearfix">
+            <label class="float-left form-left"><span>*</span>所学专业</label>
+            <input type="text" class="float-right form-right" readonly placeholder="请输入您的专业">
+        </div>
+    </form>
+</div>
+</body>
+<script src="__TMPL__Public/assets/js/zepto_1.1.6.min.js"></script>
+<script src="__TMPL__Public/assets/js/base.js"></script>
+<script src="__TMPL__Public/assets/js/swiper-3.4.2.jquery.min.js"></script>
+<script>
+    $('.my-radio').on('click', function(){
+        $('.my-radio').find('.icon').removeClass('icon-choose active').addClass('icon-ring');
+        $(this).find('.icon').removeClass('icon-ring').addClass('icon-choose active');
+    });
+    //提交
+    $('.btn_teacher').on('click', function(){
+        var counseling = [];
+        $('.counseling_id').each(function(){
+            if ($(this).val()) {
+                counseling.push($(this).val());
+            }
+        });
+
+        var formData = {
+            "name": $('.username').val(),//名称
+            "sex": $('.icon-choose').parents('.my-radio').attr('oid'),//性别
+            "identity": $('.identity').val(),//身份
+            "grade": $('.grade').val(),//所在年级
+            "counseling_id": counseling,//科目1
+            "counseling_other": $('.subject-four').val(),//4
+            "stage": $('.stage').val(),//*教学阶段
+            "introduction": $('.myself').val(),//自我介绍
+            "teaching_experience": $('.teaching').val(),//教学经历
+        }
+
+//        console.log(formData);return false;
+
+        //调用AJAX提交表单
+        $.ajax({
+            url: '{:U("User/index/edit_post")}',
+            dataType: "json",
+            type: "post",
+            data:formData,
+            success: function(data) {
+                if (data.status == 0) {
+                    $('.note').show().find('.alert-content').html(data.info);
+                } else if(data.status == 1) {
+                    window.location.reload();
+                }
+            }
+        });
+
+    });
+</script>
+{:hook('footer_end')}
+</html>
