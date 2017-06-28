@@ -526,7 +526,7 @@ class DemandController extends HomebaseController {
     public function add_json()
     {
 		$where['status']	=	array('gt',1);
-        $demand_data = $this->demand_model->where($where)->order('add_time desc')->limit('0,10')->select();
+        $demand_data = $this->demand_model->where($where)->order('add_time desc')->limit('0,8')->select();
 
         $json_array	=	file_get_contents(SITE_PATH.'/index_json/index.json');
 

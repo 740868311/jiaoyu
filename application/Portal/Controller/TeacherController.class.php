@@ -75,6 +75,9 @@ class TeacherController extends HomebaseController {
 
             $res = $this->teacher_model->add($data);
             if ($res) {
+                $where_id['id'] =   $res;
+                $user = $this->teacher_model->where($where_id)->find();
+                session('user', $user);
                 $this->add_json();
                 $array  =   array('info'=>'添加成功', 'status'=>1);
                 echo json_encode($array);die;
