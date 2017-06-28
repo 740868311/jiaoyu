@@ -1,0 +1,112 @@
+<tc_include file="Public:head" />
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0" />
+<link rel="stylesheet" href="__TMPL__Public/assets/css/sm.min.css">
+<link rel="stylesheet" href="__TMPL__Public/assets/css/iconfont/iconfont.css">
+<link rel="stylesheet" href="__TMPL__Public/assets/css/base.css">
+<link rel="stylesheet" href="__TMPL__Public/assets/css/teacher.css">
+<style>
+    .on{background: #39c;color: #fff;}
+</style>
+</head>
+<body>
+<tc_include file="Public:nav" />
+
+<div class="teacher-container">
+    <ul class="tab-title">
+        <li class="tab-item {$status == 0 ? 'active' : ''}"> <a href="{:U('Teacher/teacher_list',array('status'=>0,'id'=>4))}">全部教员</a></li>
+        <li class="tab-item {$status == 1 ? 'active' : ''}"><a href="{:U('Teacher/teacher_list',array('status'=>1,'id'=>4))}">普通教员</a></li>
+        <li class="tab-item {$status == 2 ? 'active' : ''}"><a href="{:U('Teacher/teacher_list',array('status'=>2,'id'=>4))}">明星教员</a></li>
+        <li class="tab-item choose choose-open">筛选</li>
+    </ul>
+    <div class="choose-box clearfix">
+        <ul class="li-tab">
+            <li class="active">辅导科目</li>
+            <li>教员性别</li>
+        </ul>
+        <div class="li-content">
+            <ul class="choose-subject">
+                <li class="{$counseling_id == 0 ? 'active' : ''}"><a href="{:U('Teacher/teacher_list',array('counseling_id'=>0,'id'=>4))}">不限</a></li>
+                <php>
+                    $counseling = sp_get_counseling();
+                </php>
+                <foreach name="counseling" key="k" item="vo">
+                    <li class="{$counseling_id == $k ? 'active' : ''}"><a href="{:U('Teacher/teacher_list',array('counseling_id'=>$k,'id'=>4))}" class="">{$vo}</a></li>
+                </foreach>
+            </ul>
+            <ul class="choose-sex">
+                <li class="{$sex == 0 ? 'active' : ''}"><a href="{:U('Teacher/teacher_list',array('sex'=>0,'id'=>4))}" >不限</a></li>
+                <li class="{$sex == 2 ? 'active' : ''}"><a href="{:U('Teacher/teacher_list',array('sex'=>2,'id'=>4))}" >男</a></li>
+                <li class="{$sex == 1 ? 'active' : ''}"><a href="{:U('Teacher/teacher_list',array('sex'=>1,'id'=>4))}" >女</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<foreach name="teacher_list" key="k" item="vo">
+    <a href="teacher_detail.html" style="width:100%;height:auto;display:block;">
+        <div class="teacher-box star-box">
+            <div class="teacher-left">
+                <div class="person-photo">
+                    <img src="{:sp_get_image_preview_url($vo['smeta']['thumb'])}" width="60" height="60" style="cursor: hand"/>
+                </div>
+            </div>
+            <div class="teacher-right">
+                <h2 class="title-type-box">
+                    <span>{$vo.name}</span>
+                    <span class="sex {$vo['sex'] == 1 ? 'girl' : 'boy'}">{$vo['sex'] == 1 ? '女' : '男'}</span>
+                    <span>{:get_teacher_show_id($vo['id'])}</span>
+                    <if condition="($vo['status'] eq 1)">
+                        <span>普通教员</span>
+                        <else />
+                        <span class="type"><i class="icon iconfont icon-star"></i>明星教员</span>
+                    </if>
+                </h2>
+                <p>辅导科目：<span>
+                    <php>
+                        $counseling_data = explode(',', trim($vo['counseling_ids'],','));
+                        $swap = array();
+                        foreach($counseling_data as $counseling_one) {
+                        $swap[] = $counseling[$counseling_one];
+                        }
+                        $counseling_data = implode(',', $swap);
+                    </php>
+                                {$counseling_data}
+                </span></p>
+                <p>所在院校：<span>{$vo.university}</span></p>
+            </div>
+        </div>
+    </a>
+</foreach>
+
+<tc_include file="Public:footer"/>
+<script src="__TMPL__Public/assets/js/zepto.min.js"></script>
+<script src="__TMPL__Public/assets/js/sm.min.js"></script>
+<tc_include file="Public:scripts"/>
+<script>
+    $(function(){
+        //筛选打开与关闭
+        $('.choose').on('click',function(){
+            if($(this).hasClass('choose-open')){
+                $(this).removeClass('choose-open').addClass('choose-close');
+                $('.choose-box').hide();
+                $('.li-content .active')
+            }else{
+                $(this).removeClass('choose-close').addClass('choose-open');
+                $('.choose-box').show();
+            }
+        });
+
+        //筛选切换
+        $('.li-tab li').on('click', function(){
+            $(this).addClass('active').siblings().removeClass('active');
+            $('.li-content ul').hide().eq($(this).index()).show();
+        });
+
+        //筛选选择
+        $('.li-content li').on('click', function(){
+            $(this).addClass('active').siblings().removeClass('active');
+        });
+    })
+</script>
+{:hook('footer_end')}
+</body>
+</html>

@@ -20,6 +20,7 @@ class PageController extends HomebaseController{
 		}
         if ($page_id = I('get.page_id',0,'intval')) {
             $id =   $page_id;
+			$this->assign('page_id', $page_id);
         }
 		$content=sp_sql_page($id);
 		if(empty($content)){

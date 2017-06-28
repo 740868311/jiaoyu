@@ -55,19 +55,19 @@
                 <option value="4">专职老师</option>
             </select>
         </div>
-        <div class="form-control-lb clearfix">
+        <div class="form-control-lb clearfix need-change">
             <label class="float-left form-left"><span>*</span>所在院校</label>
             <input type="text" class="form-right float-right school" placeholder="输入您所在院校"/>
         </div>
-        <div class="form-control-lb clearfix">
+        <div class="form-control-lb clearfix need-change">
             <label class="float-left form-left"><span>*</span>所学专业</label>
             <input type="text" class="form-right float-right specialty" placeholder="输入您的专业"/>
         </div>
-        <div class="form-control-lb clearfix">
+        <div class="form-control-lb clearfix need-change">
             <label class="float-left form-left"><span>*</span>当前年级</label>
             <input type="text" class="form-right float-right grade" placeholder="输入您的当前年级"/>
         </div>
-        <div class="form-control-lb clearfix">
+        <div class="form-control-lb clearfix work-form">
             <label class="float-left form-left"><span>*</span>教学阶段</label>
             <select class="stage form-right float-right" name="stage">
                 <option value="">--请选择教学阶段--</option>
@@ -261,7 +261,7 @@
         }
         ?>
         }
-        
+
 
         //调用AJAX提交表单
         $.ajax({
@@ -279,6 +279,22 @@
             }
         });
     });
+
+    //身份
+    $('.identity').change(function(){
+        if($(this).val() == 1 || $(this).val() == 2){
+            $('.need-change').show();
+            $('.school-form').hide();
+            $('.specialty-form').hide();
+            $('.grade-form').hide();
+        }else if($(this).val() == 3){
+            $('.need-change').hide();
+            $('.work-form').show();
+        }else{
+            $('.need-change').hide();
+            $('.work-form').hide();
+        }
+    })
 </script>
 
 {:hook('footer_end')}

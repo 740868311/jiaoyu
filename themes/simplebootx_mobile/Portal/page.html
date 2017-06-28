@@ -1,0 +1,150 @@
+<tc_include file="Public:head" />
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0" />
+<link rel="stylesheet" href="__TMPL__Public/assets/css/swiper-3.4.2.min.css">
+<link rel="stylesheet" href="__TMPL__Public/assets/css/iconfont/iconfont.css">
+<link rel="stylesheet" href="__TMPL__Public/assets/css/base.css">
+<style>
+    body{
+        background-color: #f0f0f0;
+    }
+    .notice-container{
+        padding: 10px 10px 0;
+        margin-top: 44px;
+    }
+    .notice-box{
+        margin-bottom: 10px;
+        background-color: #fff;
+        padding: 10px;
+    }
+    .notice-box h2{
+        margin-bottom: 15px;
+    }
+    .notice-box h2 a{
+        width: 100%;
+        height: 100%;
+        display: block;
+    }
+    .notice-box h2:last-child{
+        margin-bottom: 0;
+    }
+    .notice-box h2 .notice-title{
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        float: left;
+        width: 70%;
+    }
+    .notice-box h2 .time{
+        color: #666;
+        float: right;
+        width: 30%;
+        text-align: right;
+    }
+    .header-top{
+        width: 100%;
+        position: fixed;
+        top: 0;
+        z-index: 999;
+        color: #fff;
+    }
+    .icon-back{
+        width: 20px;
+        height: 20px;
+        position: absolute;
+        left: 4px;
+        top: 4px;
+    }
+    .nav-title{
+        height: 100%;
+        margin-left: 32px;
+        box-sizing: border-box;
+        overflow: hidden;
+        width: 100%;
+    }
+    .top-menu{
+        overflow: hidden;
+        overflow-x: scroll;
+    }
+    .top-menu-list{
+        white-space: nowrap;
+    }
+    .top-menu-list a{
+        color: #fff;
+        padding: 0 4px;
+    }
+    .top-menu-list a.active{
+        font-size: 16px;
+    }
+    .notice-container{
+        padding: 10px 10px 0;
+    }
+    .notice-box{
+        margin-bottom: 10px;
+        background-color: #fff;
+        padding: 10px;
+    }
+    .notice-box h2{
+        font-weight: 700;
+        font-size: 14px;
+        margin-bottom: 10px;
+    }
+    .notice-box p{
+        text-indent: 2em;
+        line-height: 18px;
+    }
+    .notice-box:last-child{
+        margin-bottom: 0;
+    }
+</style>
+</head>
+<body>
+<tc_include file="Public:nav" />
+<div class="header-top">
+    <a href="/"><i class="icon iconfont icon-back""></i></a>
+    <div class="nav-title">
+        <div class="top-menu">
+            <div class="top-menu-list">
+                <php>
+                    // 得到所有单页面 page
+                    $tag = 'field:post_title,id';
+                    $page_menu = sp_sql_pages($tag);
+                    foreach($page_menu as $page_one){
+                </php>
+                <a href="{:U('page/index', array('id'=>7,'page_id'=>$page_one['id']))}" class="{$page_id == $page_one['id'] ? 'active' : ''}">{$page_one['post_title']}</a>
+                <php>
+                    }
+                    // 得到所有分类 terms
+                    $tag 	=	'field:term_id,name';
+                    $terms = sp_get_terms($tag);
+                    foreach($terms as $terms_one){
+                </php>
+                <a href="{:U('list/index', array('id'=>7,'term_id'=>$terms_one['term_id']))}" class="{$term_id == $terms_one['term_id'] ? 'active' : ''}">{$terms_one['name']}</a>
+                <php>
+                    }
+                </php>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="notice-container">
+    <div class="notice-box">
+        <h2 style="text-align: center;">{$post_title}</h2>
+        <p style="text-align: center;">{$post_date}</p>
+        {$post_content}
+    </div>
+</div>
+
+<tc_include file="Public:footer"/>
+<script src="__TMPL__Public/assets/js/zepto.min.js"></script>
+<script src="__TMPL__Public/assets/js/base.js"></script>
+<tc_include file="Public:scripts"/>
+<script>
+    $(function(){
+        $('.top-menu-list a').on('click', function(){
+            $(this).addClass('active').siblings().removeClass('active');
+        })
+    })
+</script>
+{:hook('footer_end')}
+</body>
+</html>

@@ -178,10 +178,10 @@ class SlideController extends AdminbaseController{
 	{
 		$where['slide_status']	=	1;
 
-		$slide = $this->slide_model->field('slide_pic,slide_url')->where($where)->select();
+		$slide = $this->slide_model->field('slide_pic,slide_url,slide_cid')->where($where)->select();
 
 		foreach($slide as $k=>$slide_one) {
-			$slide[$k]['slide_pic']	=	'/data/upload/'.$slide[$k]['slide_pic'];
+			$swap[$slide_one['slide_cid']][$k]['slide_pic']	=	'/data/upload/'.$slide[$k]['slide_pic'];
 		}
 
 		$json_array	=	file_get_contents(SITE_PATH.'/index_json/index.json');
@@ -190,7 +190,7 @@ class SlideController extends AdminbaseController{
 			$json_array	=	json_decode($json_array, true);
 		}
 
-		$json_array['slide']	=	$slide;
+		$json_array['slide']	=	$swap;
 		$json_array 	=	json_encode($json_array);
 
 		file_put_contents(SITE_PATH.'/index_json/index.json', $json_array);

@@ -12,7 +12,7 @@
 <tc_include file="Public:nav" />
 <section class="swiper-container">
     <div class="swiper-wrapper">
-        <foreach name="index_array['slide']" item="vo">
+        <foreach name="index_array['slide'][1]" item="vo">
             <div class="swiper-slide"><a href="{$vo.slide_url}"><img src="{$vo.slide_pic}" alt=""></a></div>
         </foreach>
         <!--<div class="swiper-slide"><img src="__TMPL__Public/assets/images/banner1.jpg" alt=""></div>-->
