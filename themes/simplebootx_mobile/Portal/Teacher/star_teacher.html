@@ -41,7 +41,7 @@
     </div>
 </div>
 <foreach name="teacher_list" key="k" item="vo">
-    <a href="teacher_detail.html" style="width:100%;height:auto;display:block;">
+    <a href="{:U('Teacher/resume', array('id'=>4, 'teacher_id'=>$vo['id']))}" style="width:100%;height:auto;display:block;">
         <div class="teacher-box star-box">
             <div class="teacher-left">
                 <div class="person-photo">

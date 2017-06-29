@@ -40,7 +40,9 @@
     教师简介
 </div>
 <div class="detail-container">
-    <div class="person-photo"></div>
+    <div class="person-photo">
+        <img src="{:sp_get_image_preview_url($smeta['thumb'])}" id="thumb-preview" width="110" height="110" style="cursor: hand"/>
+    </div>
     <h2>{$data.name} <span class="sex {$data['sex'] == 1 ? 'girl' : 'boy'}">{$data['sex'] == 1 ? '女' : '男'}</span></h2>
 
     <p class="person-info">{:get_teacher_show_id($data['id'])}
@@ -68,6 +70,7 @@
     <p>所学专业：<span>{$data['profession']}</span></p>
     <p>当前年级：<span>{$data['grade']}</span></p>
     <p>点击量：<span>{$data['hits']}</span></p>
+    <p>最后一次登陆时间：<span>{$data['last_time']}</span></p>
     <ul class="tab-title">
         <li class="tab-item active">自我介绍</li>
         <li class="tab-item">教学经历</li>

@@ -58,6 +58,7 @@ class TeacherController extends HomebaseController {
 
             $data['ip']             =   $_SERVER['REMOTE_ADDR'];
             $data['add_time']       =   date('Y-m-d H:i:s', time());
+            $data['last_time']      =   date('Y-m-d H:i:s', time());
             $data['status']         =   1;
             $data['is_black']       =   1;
 

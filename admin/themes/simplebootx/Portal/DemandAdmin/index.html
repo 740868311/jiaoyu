@@ -33,6 +33,7 @@
                 <th>ID</th>
                 <th>学员姓名</th>
                 <th>年级</th>
+                <th>ip</th>
                 <th>辅导课程</th>
                 <th>预付课酬</th>
                 <th>手机号</th>
@@ -49,9 +50,12 @@
                         <td><input name="listorders[{$vo.tid}]" class="input input-order" type="text" size="5" value="{$vo.listorder}"></td>
                     </notempty>
                     <td><b>{$vo.id}</b></td>
-                    <td>{$vo.name}</td>
+                    <td><a target="_blank"  href="{:U('Demand/demand_show', array('id'=>6, 'demand_id'=>$vo['id']))}">{$vo.name}</a></td>
                     <td>
                         {$grade[$vo['grade_id']]}
+                    </td>
+                    <td>
+                        {$vo['ip']}
                     </td>
                     <td>
                         <php>

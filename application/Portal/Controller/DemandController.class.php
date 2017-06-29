@@ -412,11 +412,12 @@ class DemandController extends HomebaseController {
 		if (!$id) {
 			$this->error('缺少ID');
 		}
+        $this->demand_model->where(array('id'=>$id))->setInc('hits',1); // 点击加1
 		$where['id']	=	$id;
 		$where['status']=	array('gt', 1);
 		$demand_data = $this->demand_model->where($where)->find();
 		if (!$demand_data) {
-//			$this->error();
+			$this->error();
 		}
 
 		// 得到预约的老师

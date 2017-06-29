@@ -3,8 +3,7 @@
 <body>
 <div class="wrap js-check-wrap">
     <ul class="nav nav-tabs">
-        <li class="active"><a href="javascript:;">需求管理</a></li>
-        <li><a href="{:U('TeacherAdmin/add')}" target="_self">添加需求</a></li>
+        <li class="active"><a href="javascript:;">老师管理</a></li>
     </ul>
     <form class="well form-search" method="post" action="{:U('TeacherAdmin/index')}">
        老师编号：
@@ -41,7 +40,7 @@
                 <th>ID</th>
                 <th>老师姓名</th>
                 <th>手机号</th>
-                <th>邮箱</th>
+                <th>ip</th>
                 <th>身份</th>
                 <th>性别</th>
                 <th>辅导课程</th>
@@ -55,9 +54,9 @@
                 <tr>
                     <td><input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]" value="{$vo.id}" title="ID:{$vo.id}"></td>
                     <td><b>{:get_teacher_show_id($vo['id'])}</b></td>
-                    <td>{$vo.name}</td>
+                    <td><a target="_blank" href="{:U('Teacher/resume', array('id'=>4, 'teacher_id'=>$vo['id']))}">{$vo.name}</a></td>
                     <td>{$vo.phone}</td>
-                    <td>{$vo.email}</td>
+                    <td>{$vo.ip}</td>
                     <td>
                         {$identity[$vo['identity']]}
                     </td>
