@@ -182,12 +182,18 @@
                     <label><span>*</span>手机号码</label>
                     <input type="text" class="phone" name="phone">
                 </div>
-
+                <php>
+                    $area = sp_get_area();
+                </php>
                 <div class="form-control clearfix">
                     <label><span>*</span>家庭住址</label>
-                    <!--<select class="small-sel small-sel-two"></select>-->
-                    <!--<input type="text" class="middel-input">-->
-                    <input type="text" class="address" placeholder="请输入家庭住址" name="address">
+                    <select name="area_id" class="area_id small-sel small-sel-two">
+                        <option value="">请选择地区</option>
+                        <foreach name="area" key="k" item="area_one">
+                            <option value="{$k}">{$area_one}</option>
+                        </foreach>
+                    </select>
+                    <input type="text" class="middel-input address" placeholder="请输入家庭住址" name="address">
                 </div>
                 <?php
                     if ($is_code == 1) {
@@ -254,6 +260,15 @@
                     </div>
                     <div class="form-control clearfix">
                         <label for=""><span>*</span>家庭住址</label>
+                        <select name="area_id" class="ksarea_id" style="width:50%">
+                            <option value="">请选择地区</option>
+                            <foreach name="area" key="k" item="area_one">
+                                <option value="{$k}">{$area_one}</option>
+                            </foreach>
+                        </select>
+                    </div>
+                    <div class="form-control clearfix">
+                        <label for=""><span></span></label>
                         <input class="ksaddress" name="address" style='width:50%' type="text" placeholder="请输入您的家庭住址">
                     </div>
                     <?php
@@ -365,6 +380,9 @@
                 'counseling_id[]': {
                     required: true
                 },
+                area_id: {
+                    required: true
+                },
                 address: {
                     required: true
                 },
@@ -378,6 +396,9 @@
                 },
                 'counseling_id[]': {
                     required: "请至少选择一个科目"
+                },
+                area_id: {
+                    required: "请选择一个地区"
                 },
                 address: {
                     required: "请选择一个地址"
@@ -398,6 +419,7 @@
                 "phone": $('#phone').val(),//手机号
                 "counseling_id": counseling,//科目1
                 "counseling_other": $('.kscounseling_other').val(),//4
+                'area_id': $('.ksarea_id').val(),
                 "address": $('.ksaddress').val(),//住址
             <?php
             if ($is_code == 1) {
@@ -455,6 +477,9 @@
                 address: {
                     required: true
                 },
+                area_id: {
+                    required: true
+                }
             },
             messages: {
                 name: {
@@ -475,6 +500,9 @@
                 address: {
                     required: "请输入地址"
                 },
+                area_id: {
+                    required: "请选择地区"
+                }
             },
             submitHandler: function(form){
                 console.log($(form).serialize());
@@ -505,6 +533,7 @@
                 "remarks": $('.others').val(),//其它要求
                 "phone": $('.phone').val(),//手机号
                 "address": $('.address').val(),//住址
+                'area_id': $('.area_id').val(),
                 <?php
                     if ($is_code == 1) {
                 ?>
@@ -528,23 +557,18 @@
                     success: function(data) {
                         $('.alert-content').html(data.info);
                         $('.alert-mask').show();
+                        if (data.status == 1) {
+                            setTimeout("location.reload()",1000);
+                        }
                     }
                 });
-//                AjaxPut('{:U("Demand/add_post")}', formData, null, function(data){
-//                    if (data.status == 0) {
-//                        $('.alert-content').html(data.info);
-//                    }
-//                    $('.alert-mask').show();
-//                }, function(error){
-//                    console.log(error);
-//                });
             }
         });
     })
     //提示框关闭
     $('.alert-title .close').on('click', function(){
         $('.alert-mask').hide();
-        location.reload()
+//        location.reload()
     });
 
     $('.s-btn').on('click', function(){

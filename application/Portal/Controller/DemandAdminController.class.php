@@ -46,7 +46,7 @@ class DemandAdminController extends AdminbaseController {
 
 
 
-        $count=$this->demand_model->count();
+        $count=$this->demand_model->where($where)->count();
 
         $page = $this->page($count, 20);
         $demand_data = $this->demand_model

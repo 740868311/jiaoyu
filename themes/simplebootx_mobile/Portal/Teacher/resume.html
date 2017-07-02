@@ -9,14 +9,14 @@
     .alert-box {
         position: absolute;
         width: 80%;
-        height: 430px;
+        height: 480px;
         background-color: #fff;
         border-radius: 3px;
         top: 0;
         left: 0;
         right: 0;
         bottom: 0;
-        margin: 25% auto;
+        margin: 15% auto;
     }
     .look_1 {
         width: 58px;
@@ -32,6 +32,35 @@
     }
     .form-control label{line-height: 40px;}
     .form-control input,select{width: 70%;float: right;height:40px}
+
+    .menu-content .table {
+        border-top: 1px solid #4AADF2;
+        border-left: 1px solid #4AADF2;
+        width: 100%;
+    }
+    .table .header, .table .row {
+        display: flex;
+    }
+    .menu-content .header .col {
+        font-weight: 700;
+    }
+    .menu-content .col-bg {
+        background-color: #F3FAFF;
+    }
+    .menu-content .col {
+        height: 50px;
+        line-height: 52px;
+        border-right: 1px solid #4AADF2;
+        border-bottom: 1px solid #4AADF2;
+    }
+    .table .col {
+        flex: 1;
+        height: 32px;
+        line-height: 32px;
+        text-align: center;
+        border-right: 1px solid #ccc;
+        border-bottom: 1px solid #ccc;
+    }
 </style>
 </head>
 <body>
@@ -71,11 +100,13 @@
     <p>当前年级：<span>{$data['grade']}</span></p>
     <p>点击量：<span>{$data['hits']}</span></p>
     <p>最后一次登陆时间：<span>{$data['last_time']}</span></p>
+    <p>客服电话：<span style="color:red">{$cphone}</span></p>
     <ul class="tab-title">
         <li class="tab-item active">自我介绍</li>
         <li class="tab-item">教学经历</li>
         <li class="tab-item">获奖经历</li>
         <li class="tab-item">老师报价</li>
+        <li class="tab-item">成功家教</li>
     </ul>
     <div class="tab-content intro-myself">
         <div class="title-box clearfix">
@@ -131,6 +162,37 @@
             </div>
         </div>
     </div>
+    <div class="tab-content teacher-offer">
+        <div class="table">
+            <div class="header">
+                <div class="col col-bg">学员编号</div>
+                <div class="col col-bg">学员姓名</div>
+                <div class="col col-bg">申请时间</div>
+                <div class="col col-bg">申请科目</div>
+            </div>
+            <php>
+                $counseling = sp_get_counseling();
+            </php>
+            <foreach name="demand_data" item="vo">
+                <div class="row">
+                    <div class="col ">{:get_demand_show_id($vo['id'])}</div>
+                    <div class="col">{$vo.name}</div>
+                    <div class="col" style="line-height: 17px;">{$vo.time}</div>
+                    <div class="col">
+                        <php>
+                            $counseling_data = explode(',', $vo['counseling_ids']);
+                            $swap = array();
+                            foreach($counseling_data as $counseling_one) {
+                            $swap[] = $counseling[$counseling_one];
+                            }
+                            $counseling_data = implode(',', $swap);
+                        </php>
+                        {$counseling_data}
+                    </div>
+                </div>
+            </foreach>
+        </div>
+    </div>
 </div>
 
 <!--提示信息弹出框-->
@@ -166,8 +228,20 @@
                 <label for=""></label>
                 <input name="counseling_other" class="counseling_other"  type="text" placeholder="请输入您要辅导的其它科目">
             </div>
+            <php>
+                $area = sp_get_area();
+            </php>
             <div class="form-control clearfix">
                 <label for=""><span>*</span>家庭住址</label>
+                <select name="area_id" class="area_id">
+                    <option value="">--请选择地区--</option>
+                    <foreach name="area" key="k" item="area_one">
+                        <option value="{$k}">{$area_one}</option>
+                    </foreach>
+                </select>
+            </div>
+            <div class="form-control clearfix">
+                <label for=""><span></span></label>
                 <input class="address" name="address"  type="text" placeholder="请输入您的家庭住址">
             </div>
             <?php
@@ -282,6 +356,13 @@
                 return false;
             }
 
+            var area_id =   $('.area_id').val();
+
+            if (!area_id) {
+                $('.notince').html('请选择地址');
+                return false;
+            }
+
             var address =   $('.address').val();
 
             if (!address) {
@@ -312,6 +393,7 @@
                 "phone": phone,//手机号
                 "counseling_id": counseling,//科目1
                 "counseling_other": $('.kscounseling_other').val(),//4
+                "area_id": area_id,//住址
                 "address": address,//住址
                 <?php
                 if ($d_code == 1) {

@@ -57,7 +57,6 @@ class DemandController extends HomebaseController {
 	public function add_post()
 	{
 		if (IS_POST) {
-			// 暂时注销掉，等页面都有了，在测试
             if ($this->is_code == 1) {
                 // 检测图形验证码
                 if(!sp_check_verify_code()){
@@ -98,7 +97,12 @@ class DemandController extends HomebaseController {
 					$options = json_decode($option['option_value'], true);
 					// 如果是1则想指定邮箱发送提示邮件
 					if ($options['value'] == 1) {
-                        sp_send_email($options['options']['to'], $options['options']['title'], $options['options']['template']);
+						$grade = sp_get_grade_name();
+                        $area = sp_get_area();
+
+						$message = '有新的需求<br>姓名：'.$data['name']."<br>电话：".$data['phone'].'<br>年级：'.$grade[$data['grade_id']].'<br>地址：'.$area[$data['area_id']].' '.$data['address'];
+//                        sp_send_email($options['options']['to'], $options['options']['title'], $options['options']['template']);
+                        sp_send_email($options['options']['to'], $options['options']['title'], $message);
 					}
 				}
 
@@ -172,6 +176,13 @@ class DemandController extends HomebaseController {
 			}
 			$data['phone']          =   $phone;
 
+			$area_id				=	(int)$post['area_id'];
+			if (!$area_id) {
+				$array = array('info'=>'请选择地区','status'=>0);
+				echo json_encode($array);die;
+			}
+			$data['area_id']		=	$area_id;
+
 			$data['address']        =   htmlspecialchars($post['address']);
 
 			$data['ip']         =   $_SERVER['REMOTE_ADDR'];
@@ -194,7 +205,13 @@ class DemandController extends HomebaseController {
 					$options = json_decode($option['option_value'], true);
 					// 如果是1则想指定邮箱发送提示邮件
 					if ($options['value'] == 1) {
-						sp_send_email($options['options']['to'], $options['options']['title'], $options['options']['template']);
+                        $area = sp_get_area();
+
+                        $message = '有新的需求<br>姓名：'.$data['name']."<br>电话：".$data['phone'].'<br>地址：'.$area[$data['area_id']].' '.$data['address'];
+//                        sp_send_email($options['options']['to'], $options['options']['title'], $options['options']['template']);
+                        sp_send_email($options['options']['to'], $options['options']['title'], $message);
+
+//						sp_send_email($options['options']['to'], $options['options']['title'], $options['options']['template']);
 					}
 				}
 				$array  =   array('info'=>'添加成功', 'status'=>1);
@@ -298,6 +315,13 @@ class DemandController extends HomebaseController {
 			echo json_encode($array);die;
 		}
 
+		$area_id				=	(int)$post['area_id'];
+		if (!$area_id) {
+			$array = array('info'=>'请选择地区','status'=>0);
+			echo json_encode($array);die;
+		}
+		$data['area_id']		=	$area_id;
+
 		$data['remarks']        =   htmlspecialchars($post['remarks']);
 		$data['address']        =   htmlspecialchars($post['address']);
 		$data['note']           =   htmlspecialchars($post['note']);
@@ -350,7 +374,7 @@ class DemandController extends HomebaseController {
 
 		$where['status']	=	$status;
 
-		$count=$this->demand_model->count();
+		$count=$this->demand_model->where($where)->count();
 
 		$page = $this->page($count, 5);
 		$demand_data = $this->demand_model

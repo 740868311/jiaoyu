@@ -33,6 +33,8 @@
                     $counseling_data = implode(',', $swap);
                 </php>
                 {$counseling_data}
+
+                <span style="float: right;padding-right: 100px;color:red">客服电话：{$cphone}</span>
             </p>
             <div class="dis-flex right-bottom-title">
                 <div class="flex-item">
@@ -110,6 +112,39 @@
                     </div>
                 </div>
 
+                <br>
+                <div class="title-box clearfix" style="clear:both">
+                    <p class="title"><span class="vertical"></span>成功家教</p>
+                </div>
+                <div class="table">
+                    <div class="header">
+                        <div class="col col-bg">学员编号</div>
+                        <div class="col col-bg">学员姓名</div>
+                        <div class="col col-bg">申请时间</div>
+                        <div class="col col-bg">申请科目</div>
+                    </div>
+                    <php>
+                        $counseling = sp_get_counseling();
+                    </php>
+                    <foreach name="demand_data" item="vo">
+                        <div class="row">
+                            <div class="col ">{:get_demand_show_id($vo['id'])}</div>
+                            <div class="col">{$vo.name}</div>
+                            <div class="col">{$vo.time}</div>
+                            <div class="col">
+                                <php>
+                                    $counseling_data = explode(',', $vo['counseling_ids']);
+                                    $swap = array();
+                                    foreach($counseling_data as $counseling_one) {
+                                    $swap[] = $counseling[$counseling_one];
+                                    }
+                                    $counseling_data = implode(',', $swap);
+                                </php>
+                                {$counseling_data}
+                            </div>
+                        </div>
+                    </foreach>
+                </div>
             </div>
         </div>
         <div class="right-bo-content float-right">
@@ -137,8 +172,17 @@
                         </select>
                         <input name="counseling_other" class="kscounseling_other" type="text" placeholder="请输入您要辅导的其它科目">
                     </div>
+                    <php>
+                        $area = sp_get_area();
+                    </php>
                     <div class="form-items">
                         <p><span>*</span>家庭住址</p>
+                        <select name="area_id" class="ksarea_id">
+                            <option value="">请选择地区</option>
+                            <foreach name="area" key="k" item="area_one">
+                                <option value="{$k}">{$area_one}</option>
+                            </foreach>
+                        </select>
                         <input name="address" class="ksaddress" type="text" placeholder="请输入您的具体地址">
                     </div>
                     <?php
@@ -209,6 +253,15 @@
                     </div>
                     <div class="form-control clearfix">
                         <label for=""><span>*</span>家庭住址</label>
+                        <select name="area_id" class="area_id" style='width:50%'>
+                            <option value="">--请选择地区--</option>
+                            <foreach name="area" key="k" item="area_one">
+                                <option value="{$k}">{$area_one}</option>
+                            </foreach>
+                        </select>
+                    </div>
+                    <div class="form-control clearfix">
+                        <label for=""><span></span></label>
                         <input class="address" name="address" style='width:50%' type="text" placeholder="请输入您的家庭住址">
                     </div>
                     <?php
@@ -312,6 +365,12 @@
                 return false;
             }
 
+            var area_id =   $('.ksarea_id').val();
+            if (!area_id) {
+                alert('请选择地址');
+                return false;
+            }
+
             var address =   $('.ksaddress').val();
 
             if (!address) {
@@ -342,6 +401,7 @@
                 "counseling_id": counseling,//科目1
                 "counseling_other": $('.kscounseling_other').val(),//4
                 "address": address,//住址
+                "area_id": area_id,//住址
             <?php
             if ($d_code == 1) {
                 ?>
@@ -382,33 +442,38 @@
 
         $('#from').validate({
         rules: {
-            name: {
+            'name': {
                 required: true
             },
             'phone': {
                 required: true
             },
             'counseling_id[]': {
-            required: true
-        },
-        address: {
-            required: true
-        },
+                required: true
+            },
+            'address': {
+                required: true
+            },
+            'area_id': {
+                required: true
+            }
         },
         messages: {
-            name: {
-            required: '请输入您的真实姓名'
-        },
+            'name': {
+                required: '请输入您的真实姓名'
+            },
             'phone': {
-            required: '请选择手机号'
-        },
+                required: '请选择手机号'
+            },
             'counseling_id[]': {
-            required: "请至少选择一个科目"
-        },
-            address: {
-            required: "请选择一个地址"
-        },
-
+                required: "请至少选择一个科目"
+            },
+            'address': {
+                required: "请选择一个地址"
+            },
+            'area_id': {
+                required: "请选择一个地址"
+            }
         },
         submitHandler: function(form){
             console.log($(form).serialize());
@@ -425,6 +490,7 @@
                 "phone": $('.phone').val(),//手机号
                 "counseling_id": counseling,//科目1
                 "counseling_other": $('.counseling_other').val(),//4
+                "area_id": $('.area_id').val(),//住址
                 "address": $('.address').val(),//住址
             <?php
             if ($d_code == 1) {

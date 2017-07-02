@@ -284,6 +284,33 @@ class TeacherController extends HomebaseController {
 
         $data = $this->teacher_model->where(array('id'=>$id))->find();
 
+        $where = array('option_name'=>'customer_phone');
+        $option = M('Options')->where($where)->find();
+
+        if($option){
+            $this->assign('cphone', $option['option_value']);
+        }
+
+        $ttop_where['teacher_id']   =  $id;
+        $ttop_where['status']       =  3;
+        $ttop = M('ttoporder')->field('demand_id,add_time')->where($ttop_where)->select();
+
+        if ($ttop) {
+            foreach($ttop as $ttop_one) {
+                $demand_ids[]               =   $ttop_one['demand_id'];
+                $swap_ttop[$ttop_one['demand_id']] =   $ttop_one['add_time'];
+            }
+
+            $demand_ids =   implode(',', $demand_ids);
+            $demand_data = M('demand')->field('id,counseling_ids,name')->where(array('id'=>array('in',$demand_ids)))->select();
+
+            foreach($demand_data as $demand_one) {
+                $swap_demand[$demand_one['id']]         =   $demand_one;
+                $swap_demand[$demand_one['id']]['time'] =   $swap_ttop[$demand_one['id']];
+            }
+        }
+
+        $this->assign('demand_data', $swap_demand);
         $this->assign("smeta",json_decode($data['smeta'],true));
         $this->assign('data', $data);
         $this->display();
@@ -326,27 +353,13 @@ class TeacherController extends HomebaseController {
             }
         }
 
-        if (isset($data['status'])) {
-            $status         =   (int)$data['status'];
-            if ($status) {
-                cookie('status', $status);
-                $where['status']       =    $status;
-            } else {
-                cookie('status', null);
-            }
-        } else {
-            if ((int)cookie('status')) {
-                $where['status']    =   (int)cookie('status');
-            }
-        }
-
         $where['is_black']  =   1;
 
         // ----条件结束----
 
-        $count=$this->teacher_model->count();
+        $count=$this->teacher_model->where($where)->count();
 
-        $page = $this->page($count, 10);
+        $page = $this->page($count, 1);
         $teacher_data = $this->teacher_model
             ->where($where)
             ->limit($page->firstRow , $page->listRows)
@@ -358,7 +371,6 @@ class TeacherController extends HomebaseController {
         }
 
         $this->assign('counseling_id', (int)cookie('counseling_id'));
-        $this->assign('status', (int)cookie('status'));
         $this->assign('sex', (int)cookie('sex'));
         $this->assign("page", $page->show('Admin'));
         $this->assign("teacher_list", $teacher_data);
@@ -408,7 +420,7 @@ class TeacherController extends HomebaseController {
 
         // ----条件结束----
 
-        $count=$this->teacher_model->count();
+        $count=$this->teacher_model->where($where)->count();
 
         $page = $this->page($count, 10);
         $teacher_data = $this->teacher_model

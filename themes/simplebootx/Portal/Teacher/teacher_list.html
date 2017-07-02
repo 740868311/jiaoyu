@@ -35,13 +35,6 @@
                             <a href="{:U('Teacher/teacher_list',array('sex'=>1,'id'=>4))}" class="{$sex == 1 ? 'on' : ''}">女</a>
                         </dd>
                     </dl>
-                    <dl class=" listIndex clearfix" attr="terminal_os_s">
-                        <dt>教员级别：</dt>
-                        <dd><a href="{:U('Teacher/teacher_list',array('status'=>0,'id'=>4))}" >不限</a>
-                            <a href="{:U('Teacher/teacher_list',array('status'=>1,'id'=>4))}" class="{$status == 1 ? 'on' : ''}">普通教员</a>
-                            <a href="{:U('Teacher/teacher_list',array('status'=>2,'id'=>4))}" class="{$status == 2 ? 'on' : ''}">明星教员</a>
-                        </dd>
-                    </dl>
 
                 </div>
                 <!--<div class="hasBeenSelected">-->
@@ -56,11 +49,6 @@
             </div>
         </div>
         <div class="faculty-left-bottom">
-            <ul class="faculty-type">
-                <li class="{$status == 0 ? 'active' : ''}">全部教员</li>
-                <li class="{$status == 1 ? 'active' : ''}">普通教员</li>
-                <li class="{$status == 2 ? 'active' : ''}">明星教员</li>
-            </ul>
             <div class="faculty-content all-faculty">
                 <foreach name="teacher_list" key="k" item="vo">
                     <div class="faculty-box part-box">
@@ -97,6 +85,7 @@
                     </div>
                 </foreach>
             </div>
+            <div class="pagination">{$page}</div>
         </div>
     </div>
     <div class="student-right">

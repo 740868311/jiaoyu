@@ -58,6 +58,9 @@ class CheckcodeController extends Controller {
     	    }
     	}
 
+		$use_curve = 0;
+		$use_noise = 0;
+
     	$config = array(
 	        'codeSet'   =>  !empty($code_set)?$code_set:"2345678abcdefhijkmnpqrstuvwxyzABCDEFGHJKLMNPQRTUVWXY",             // 验证码字符集合
 	        'expire'    =>  1800,            // 验证码过期时间（s）

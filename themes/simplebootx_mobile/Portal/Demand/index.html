@@ -53,14 +53,14 @@
     .alert-box {
         position: absolute;
         width: 80%;
-        height: 430px;
+        height: 480px;
         background-color: #fff;
         border-radius: 3px;
         top: 0;
         left: 0;
         right: 0;
         bottom: 0;
-        margin: 25% auto;
+        margin: 15% auto;
     }
     .form-control label{line-height: 40px;}
     .form-control input,select{width: 70%;float: right;height:40px}
@@ -175,6 +175,25 @@
                 <label class="float-left form-left"><span>*</span>手机号码</label>
                 <input type="text" class="float-right form-right phone" name="phone" placeholder="请输入您的手机号码">
             </div>
+
+            <php>
+                $area = sp_get_area();
+            </php>
+            <div class="form-control-lb clearfix">
+                <label class="float-left form-left"><span>*</span>家庭住址</label>
+                <select name="area_id" class="area_id middel-input identity">
+                    <option value="">请选择地区</option>
+                    <foreach name="area" key="k" item="area_one">
+                        <option value="{$k}">{$area_one}</option>
+                    </foreach>
+                </select>
+            </div>
+            <div class="form-control-lb clearfix">
+                <label class="float-left form-left"><span></span></label>
+                <input type="text" class="float-right form-right address" placeholder="请输入家庭地址">
+            </div>
+
+
             <?php
                 if ($is_code == 1) {
             ?>
@@ -198,10 +217,6 @@
             <?php
                     }
                 ?>
-            <div class="form-control-lb clearfix">
-                <label class="float-left form-left"><span>*</span>家庭住址</label>
-                <input type="text" class="float-right form-right address" placeholder="请输入家庭地址">
-            </div>
         </form>
         <div class="btn">提交</div>
     </div>
@@ -254,8 +269,18 @@
                 <label for=""></label>
                 <input name="counseling_other" class="counseling_other"  type="text" placeholder="请输入您要辅导的其它科目">
             </div>
+
             <div class="form-control clearfix">
                 <label for=""><span>*</span>家庭住址</label>
+                <select name="area_id" id="area_id" class="middel-input identity">
+                    <option value="">请选择地区</option>
+                    <foreach name="area" key="k" item="area_one">
+                        <option value="{$k}">{$area_one}</option>
+                    </foreach>
+                </select>
+            </div>
+            <div class="form-control clearfix">
+                <label for=""><span></span></label>
                 <input id="address" name="address"  type="text" placeholder="请输入您的家庭住址">
             </div>
             <?php
@@ -368,6 +393,13 @@
             return false;
         }
 
+        var area_id =   $('#area_id').val();
+
+        if (!area_id) {
+            $('.notince').html('请选择地址');
+            return false;
+        }
+
         var address =   $('#address').val();
 
         if (!address) {
@@ -397,6 +429,7 @@
             "phone": phone,//手机号
             "counseling_id": counseling,//科目1
             "counseling_other": $('.counseling_other').val(),//4
+            "area_id": area_id,
             "address": address,//住址
             <?php
             if ($is_code == 1) {
@@ -457,6 +490,7 @@
             "remarks": $('.others').val(),//其它要求
             "phone": $('.phone').val(),//手机号
             "address": $('.address').val(),//住址
+            'area_id':  $('.area_id').val(),
             "is_phone": 1,
         <?php
         if ($is_code == 1) {
@@ -479,8 +513,7 @@
                 type: "post",
                 data:formData,
                 success: function(data) {
-                    $('.alert-content').html(data.info);
-                    $('.alert-mask').show();
+                    $('.note').show().find('.alert-content').html(data.info);
                     if (data.status ==  1) {
                         setTimeout("location.reload()",1000);
                     } else {

@@ -10,7 +10,7 @@
 <body>
 <tc_include file="Public:nav" />
 <section class="student-container container clearfix">
-    <div class="student-left">
+    <div class="student-left" style="padding-bottom:10px">
         <ul class="stu-title">
             <a href="{:U('Demand/demand_list',array('status'=>4,'id'=>6))}"><li class="{$status == 4? 'active' : ''}">预约成功</li></a>
             <a href="{:U('Demand/demand_list',array('status'=>2,'id'=>6))}"><li class="{$status == 2? 'active' : ''}">报名中</li></a>
@@ -19,7 +19,7 @@
             <foreach name="demand_data" item="vo">
                 <div class="part-box">
                     <div class="part-info-title">
-                        <span>{$vo.id}</span>
+                        <span>{:get_demand_show_id($vo['id'])}</span>
                         <span>{$vo.name}</span>
                         <span><i class="sex {$vo['sex'] == 1 ? 'woman' : 'man'}">{$vo['sex'] == 1 ? '女' : '男'}</i></span>
                         <span>{$grade[$vo['grade_id']]}</span>
@@ -89,48 +89,7 @@
                 </div>
             </foreach>
         </div>
-        <!--<div class="app-box-tab registration-container">-->
-            <!--<div class="part-box">-->
-                <!--<div class="part-info-title">-->
-                    <!--<span>TD003123</span>-->
-                    <!--<span>李学员</span>-->
-                    <!--<span><i class="sex woman">女</i></span>-->
-                    <!--<span>小学五年级</span>-->
-                <!--</div>-->
-                <!--<div class="part-info-content clearfix">-->
-                    <!--<div class="part-info-left float-left">-->
-                        <!--<p>教员性别：女</p>-->
-                        <!--<p>求教科目：小学语文、小学数学、小学英语</p>-->
-                        <!--<p>授课地址：上海市期莞尔莞尔</p>-->
-                        <!--<p>授课时间：周一晚上、周三晚上、周五晚上、周六上午</p>-->
-                    <!--</div>-->
-                    <!--<div class="part-info-right float-right">-->
-                        <!--<div class="look">查看详情</div>-->
-                    <!--</div>-->
-                <!--</div>-->
-
-            <!--</div>-->
-            <!--<div class="part-box">-->
-                <!--<div class="part-info-title">-->
-                    <!--<span>TD003123</span>-->
-                    <!--<span>李学员</span>-->
-                    <!--<span><i class="sex man">男</i></span>-->
-                    <!--<span>小学五年级</span>-->
-                <!--</div>-->
-                <!--<div class="part-info-content clearfix">-->
-                    <!--<div class="part-info-left float-left">-->
-                        <!--<p>教员性别：女</p>-->
-                        <!--<p>求教科目：小学语文、小学数学、小学英语</p>-->
-                        <!--<p>授课地址：上海市期莞尔莞尔</p>-->
-                        <!--<p>授课时间：周一晚上、周三晚上、周五晚上、周六上午</p>-->
-                    <!--</div>-->
-                    <!--<div class="part-info-right float-right">-->
-                        <!--<div class="look">查看详情</div>-->
-                    <!--</div>-->
-                <!--</div>-->
-
-            <!--</div>-->
-        <!--</div>-->
+        <div class="pagination" style="padding-top:10px">{$page}</div>
     </div>
     <div class="student-right">
         <h2 class="stu-right-title">

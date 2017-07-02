@@ -58,13 +58,13 @@ class TeacherAdminController extends AdminbaseController {
             }
         }
 
-        $count=$this->teacher_model->count();
+        $count=$this->teacher_model->where($where)->count();
 
         $page = $this->page($count, 20);
         $teacher_data = $this->teacher_model
             ->where($where)
             ->limit($page->firstRow , $page->listRows)
-            ->order("last_time DESC")
+            ->order("id DESC")
             ->select();
 
 //        echo '<pre>';
@@ -344,6 +344,63 @@ class TeacherAdminController extends AdminbaseController {
             return $this->error("请稍后重试！");;
         }
     }
+
+    // 更改审核状态
+    public function is_status()
+    {
+        $id =   (int)I('get.id');
+        $is_status  =   (int)I('get.is_status');
+        if (!$id || !$is_status) {
+            $this->error();
+        }
+        $where['id']        =   $id;
+        $where['is_status'] =   $is_status;
+
+        $res = $this->teacher_model->save($where);
+
+        if ($res) {
+            $this->success();
+        } else {
+            $this->error();
+        }
+    }
+
+    public function repass()
+    {
+        $id     =   I('get.id');
+        $this->assign('id', $id);
+        $this->display();
+    }
+
+    public function password_post()
+    {
+        if (IS_POST) {
+            if(empty($_POST['password'])){
+                $this->error("新密码不能为空！");
+            }
+            $uid=(int)$_POST['id'];
+            if (!$uid) {
+                $this->error("缺少id！");
+            }
+
+            $password=I('post.password');
+
+            if($password==I('post.repassword')){
+                $data['password']=md5('ak47'.$password);
+                $data['id']=$uid;
+                $r=$this->teacher_model->save($data);
+                if ($r!==false) {
+                    $this->success("修改成功！");
+                } else {
+                    $this->error("修改失败！");
+                }
+            }else{
+                $this->error("密码输入不一致！");
+            }
+        }
+    }
+
+
 
     // 更新首页家长需求的json      首页家长需求显示
     public function add_json()

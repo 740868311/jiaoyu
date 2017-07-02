@@ -111,6 +111,12 @@ class PtotorderController extends HomebaseController {
             echo json_encode($array);die;
         }
 
+        if (!$post['area_id']) {
+            $array = array('info'=>'请添加地址','status'=>0);
+            echo json_encode($array);die;
+        }
+        $data['area_id']    =   $post['area_id'];
+
         if (!$post['address']) {
             $array = array('info'=>'请添加地址','status'=>0);
             echo json_encode($array);die;

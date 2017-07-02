@@ -36,10 +36,10 @@
             <span><i class="icon iconfont icon-star"></i>明星教员</span>
         </if>
 		<ul class="left-tab">
-			<li class="active">修改简历</li>
-			<li>订阅信息</li>
-			<li>预约家长</li>
-			<li>修改密码</li>
+            <li class="active">修改简历</li>
+            <li><a href="{:U("User/index/book")}" style="color:black">订阅信息</a></li>
+            <li><a href="{:U("User/index/index")}" style="color:black">预约家长</li></a></li>
+            <li><a href="{:U("User/index/pass_index")}" style="color:black">修改密码</a></li>
 		</ul>
 	</div>
 	<div class="subs-right float-right">
@@ -334,11 +334,11 @@
 	$(function(){
 		//左右两侧的tab切换
 		//Tab('.left-tab li','.right-container');
-		$('.left-tab li').on('click', function(){
-			$(this).addClass('active').siblings().removeClass('active');
-			$('.right-container').hide();
-			$('.right-container'+':nth-child('+($(this).index()+1)+')').show();
-		});
+//		$('.left-tab li').on('click', function(){
+//			$(this).addClass('active').siblings().removeClass('active');
+//			$('.right-container').hide();
+//			$('.right-container'+':nth-child('+($(this).index()+1)+')').show();
+//		});
 
 		//修改简历
 		$('.change-resume-box .resume-tab li').on('click', function(){

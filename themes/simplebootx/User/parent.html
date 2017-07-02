@@ -1,0 +1,381 @@
+<tc_include file="Public:head" />
+<script>
+    //全局变量
+    var GV = {
+        ROOT: "__ROOT__/",
+        WEB_ROOT: "__WEB_ROOT__/",
+        JS_ROOT: "public/js/",
+        APP:'{$Think.MODULE_NAME}'/*当前应用名*/
+    };
+</script>
+<link href="__PUBLIC__/js/artDialog/skins/default.css" rel="stylesheet" />
+<link rel="stylesheet" href="__TMPL__Public/assets/css/base.css">
+<link rel="stylesheet" href="__TMPL__Public/assets/css/iconfont/iconfont.css">
+<link rel="stylesheet" href="__TMPL__Public/assets/css/subscribe.css">
+<script type="text/html" id="photos-item-wrapper">
+    <li id="savedimage{id}">
+        <input id="photo-{id}" class="photos_url" type="hidden" name="photos_url[]" value="{filepath}">
+        <input id="photo-{id}-name" class="photos_alt" type="text" name="photos_alt[]" value="{name}" style="width: 160px;height:36px" title="图片名称">
+        <img id="photo-{id}-preview" src="{url}" style="height:36px;width: 36px;" onclick="parent.image_preview_dialog(this.src);">
+        <a href="javascript:upload_one_image('图片上传','#photo-{id}');">替换</a>
+        <a href="javascript:(function(){$('#savedimage{id}').remove();})();">移除</a>
+    </li>
+</script>
+</head>
+<body>
+<tc_include file="Public:nav" />
+<section class="container subs-container clearfix">
+    <div class="subs-left float-left">
+        <div class="person-img">
+            <img src="{:sp_get_image_preview_url($smeta['thumb'])}" width="140" height="140" style="border-radius: 50%;"/>
+        </div>
+        <h2>{$teacher.name}</h2>
+        <if condition="($teacher['status'] eq 1)">
+            <span><i class="icon iconfont"></i>普通教员</span>
+            <else />
+            <span><i class="icon iconfont icon-star"></i>明星教员</span>
+        </if>
+        <ul class="left-tab">
+            <li><a href="{:U("User/index/index")}" style="color:black">修改简历</a></li>
+            <li><a href="{:U("User/index/book")}" style="color:black">订阅信息</a></li>
+            <li class="active"><a href="{:U("User/index/parent")}" style="color:black">预约家长</li></a></li>
+            <li><a href="{:U("User/index/pass_index")}" style="color:black">修改密码</a></li>
+        </ul>
+    </div>
+    <div class="subs-right float-right" style="display:block">
+        <php>
+            $grade_model = M('grade');
+            $data	= 	$grade_model->select();
+            foreach($data as $data_one) {
+            $swap[$data_one['id']]	= $data_one['grade_name'];
+            }
+            $grade_array = $swap;
+        </php>
+        <!--预约家长-->
+        <div class="right-container app-parent" style="display:block">
+            <div class="title-box clearfix">
+                <p class="title"><span class="vertical"></span>预约家长</p>
+            </div>
+
+            <div class="app-parent-content">
+                <php>
+                    $counseling = sp_get_counselings();
+                </php>
+                <foreach name="demand" item="demand_one">
+                    <div class="part-box">
+                        <div class="part-info-title">
+                            <span>{$demand_one.id}</span>
+                            <span>{$demand_one.name}</span>
+                            <span><i class="sex {$demand_one['sex'] == 1 ? 'woman' : 'man'}">{$demand_one['sex'] == 1 ? '女' : '男'}</i></span>
+                            <span>{$grade_array[$demand_one['grade_id']]}</span>
+                        </div>
+                        <div class="part-info-content clearfix">
+                            <div class="part-info-left float-left">
+                                <p>求教科目：
+                                    <php>
+                                        $counseling_data = explode(',', $demand_one['counseling_ids']);
+                                        $swap = array();
+                                        foreach($counseling_data as $counseling_one) {
+                                        $swap[] = $counseling[$counseling_one];
+                                        }
+                                        $counseling_data = implode(',', $swap);
+                                    </php>
+                                    {$counseling_data}
+                                </p>
+                                <p>授课时间：
+                                    <php>
+                                        $tutor_s    =   $demand_one['tutor_time_s'];
+                                        $tutor_s    =   explode(',', $tutor_s);
+                                        foreach($tutor_s as $tutor_s_one) {
+                                        $week_str   .=  $week[$tutor_s_one].'上午'.',';
+                                        }
+                                        $tutor_x    =   $demand_one['tutor_time_x'];
+                                        $tutor_x    =   explode(',', $tutor_x);
+                                        foreach($tutor_x as $tutor_x_one) {
+                                        $week_str   .=  $week[$tutor_x_one].'下午'.',';
+                                        }
+                                        $tutor_w   =   $demand_one['tutor_time_w'];
+                                        $tutor_w    =   explode(',', $tutor_w);
+                                        foreach($tutor_w as $tutor_w_one) {
+                                        $week_str   .=  $week[$tutor_x_one].'晚上'.',';
+                                        }
+
+                                        $tutor_z    =   $demand_one['tutor_time_z'];
+                                        $tutor_z    =   explode(',', $tutor_z);
+                                        foreach($tutor_z as $tutor_z_one) {
+                                        $week_str   .=  $z[$tutor_z_one].',';
+                                        }
+                                        $week_str = trim($week_str,',');
+                                        echo $week_str;
+                                        $week_str = '';
+                                    </php>
+                                </p>
+                            </div>
+                            <div class="part-info-right float-right success">
+                                <p>
+                                    {$status[$ttop_status[$demand_one['id']]]}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </foreach>
+            </div>
+        </div>
+        <!--预约家长end-->
+    </div>
+</section>
+<tc_include file="Public:footer"/>
+<tc_include file="Public:scripts"/>
+<script src="__PUBLIC__/js/wind.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+<script src="__TMPL__Public/assets/js/jquery.validate-1.13.1.js"></script>
+<script>
+    $(function(){
+        //左右两侧的tab切换
+        //Tab('.left-tab li','.right-container');
+//        $('.left-tab li').on('click', function(){
+//            $(this).addClass('active').siblings().removeClass('active');
+//            $('.right-container').hide();
+//            $('.right-container'+':nth-child('+($(this).index()+1)+')').show();
+//        });
+
+        //修改简历
+        $('.change-resume-box .resume-tab li').on('click', function(){
+            $(this).addClass('active').siblings().removeClass('active');
+            $('.my-resume-content').hide();
+            if($(this).index() == 0){
+                $('.person-info').show();
+            }else{
+                $('.change-photo').show();
+            }
+        });
+        //订阅信息
+        $('.subs-info-box .tab li').on('click', function(){
+            $(this).addClass('active').siblings().removeClass('active');
+            $('.subs-info').hide();
+            if($(this).index() == 0){
+                $('.my-subs').show();
+            }else{
+                $('.subs-center').show();
+            }
+        });
+
+        // 取消订阅
+        $('.un_s').on('click', function(){
+            var tag_id  =   $(this).attr('data');
+            $.ajax({
+                url: '{:U("User/index/edit_subscription")}',
+                dataType: "json",
+                type: "post",
+                data:{'tag_id':tag_id,'action':'un'},
+                success: function(data) {
+                    if (data.status == 0) {
+
+                        alert(data.info);
+                    } else if(data.status == 1) {
+                        window.location.reload();
+                    }
+                }
+            });
+        })
+
+        // 订阅
+        $('.on_s').on('click', function(){
+            var tag_id  =   $(this).attr('data');
+            $.ajax({
+                url: '{:U("User/index/edit_subscription")}',
+                dataType: "json",
+                type: "post",
+                data:{'tag_id':tag_id,'action':'on'},
+                success: function(data) {
+                    if (data.status == 0) {
+
+                        alert(data.info);
+                    } else if(data.status == 1) {
+                        window.location.reload();
+                    }
+                }
+            });
+        })
+    });
+
+
+    $.validator.setDefaults({
+        debug: true
+    });
+    $('.teacher-validate').validate({
+        rules: {
+            username: {
+                required: true
+            },
+            identity: {
+                required: true
+            },
+            "counseling_id": {
+                required: true
+            },
+            myself: {
+                required: true
+            },
+            teaching: {
+                required: true
+            },
+            phone: {
+                required: true
+            },
+        },
+        messages: {
+            username: {
+                required: "请输入您的真实姓名"
+            },
+            identity: {
+                required: "请选择一个身份"
+            },
+            school: {
+                required: "请输入所在院校"
+            },
+            specialty: {
+                required: "请输入所学专业"
+            },
+            company: {
+                required: "请输入您的在职院校"
+            },
+            "counseling_id": {
+                required: "请选择一个辅导科目"
+            },
+            myself: {
+                required: "请填写自我介绍"
+            },
+            teaching: {
+                required: "请填写教学经历"
+            },
+            phone: {
+                required: "请填写手机号"
+            },
+        },
+        submitHandler: function(form){
+            console.log($(form).serialize());
+        }
+    });
+    $.validator.setDefaults({
+        debug: true
+    });
+    $('#pas').validate({
+        rules: {
+            old: {
+                required: true
+            },
+            password: {
+                required: true
+            },
+            repassword: {
+                required: true
+            },
+        },
+        messages: {
+            old: {
+                required: "请填写旧密码"
+            },
+            password: {
+                required: "请填写新密码"
+            },
+            repassword: {
+                required: "请填写重复密码"
+            },
+        },
+        submitHandler: function(form){
+            console.log($(form).serialize());
+        }
+    });
+    //提交
+    $('.pas_btn').on('click', function(){
+
+        var formData = {
+            "old": $('.old').val(),//教学经历
+            "password": $('.password').val(),
+            "repassword": $('.repassword').val(),
+        }
+
+//        console.log(formData);return false;
+
+        if($('#pas').valid()){
+            //调用AJAX提交表单
+            $.ajax({
+                url: '{:U("User/index/repass")}',
+                dataType: "json",
+                type: "post",
+                data:formData,
+                success: function(data) {
+                    if (data.status == 0) {
+                        alert(data.info);
+                    } else if(data.status == 1) {
+                        window.location.reload();
+                    }
+                }
+            });
+        }
+    });
+
+
+    //提交
+    $('.btn_teacher').on('click', function(){
+        var counseling = [];
+        $('.counseling_id').each(function(){
+            if ($(this).val()) {
+                counseling.push($(this).val());
+            }
+        });
+
+        var photos_alt  =   [];
+        $('.photos_alt').each(function(){
+            if ($(this).val()) {
+                photos_alt.push($(this).val());
+            }
+        });
+
+
+        var photos_url  =   [];
+        $('.photos_url').each(function(){
+            if ($(this).val()) {
+                photos_url.push($(this).val());
+            }
+        });
+
+        var formData = {
+            "name": $('.username').val(),//名称
+            "sex": $('.icon-choose').parents('.my-radio').attr('oid'),//性别
+            "identity": $('.identity').val(),//身份
+            "grade": $('.grade').val(),//所在年级
+            "thumb": $('#thumb').val(),//照片
+            "counseling_id": counseling,//科目1
+            "counseling_other": $('.subject-four').val(),//4
+            "stage": $('.stage').val(),//*教学阶段
+            "introduction": $('.myself').val(),//自我介绍
+            "teaching_experience": $('.teaching').val(),//教学经历
+            "photos_alt": photos_alt,
+            "photos_url": photos_url,
+        }
+
+//        console.log(formData);return false;
+
+        if($('.teacher-validate').valid()){
+            //调用AJAX提交表单
+            $.ajax({
+                url: '{:U("User/index/edit_post")}',
+                dataType: "json",
+                type: "post",
+                data:formData,
+                success: function(data) {
+                    if (data.status == 0) {
+                        alert(data.info);
+                    } else if(data.status == 1) {
+                        window.location.reload();
+                    }
+                }
+            });
+        }
+    });
+</script>
+{:hook('footer_end')}
+</body>
+</html>

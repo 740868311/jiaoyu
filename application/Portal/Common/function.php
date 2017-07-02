@@ -261,6 +261,16 @@ function sp_get_grade_name()
 	return $swap;
 }
 
+// 得到所有的年级 add by lisheng 2017/06/03
+function sp_get_area()
+{
+	$grade_model = M('area');
+	$data	= 	$grade_model->select();
+	foreach($data as $data_one) {
+		$swap[$data_one['id']]	= $data_one['area_name'];
+	}
+	return $swap;
+}
 
 // 得到所有的辅导课程 add by lisheng 2017/06/03
 function sp_get_counseling()

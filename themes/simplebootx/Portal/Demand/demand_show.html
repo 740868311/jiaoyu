@@ -25,7 +25,7 @@
         <div class="faculty-left-top">
             <div class="student-name">{$demand.name}</div>
             <div class="part-info-title">
-                <span>{$demand.id}</span>
+                <span>{:get_demand_show_id($demand['id'])}</span>
                 <span><i class="sex {$demand['sex'] == 1 ? 'woman' : 'man'}">{$demand['sex'] == 1 ? '女' : '男'}</i></span>
                 <php>
                     $grade = sp_get_grade_name();

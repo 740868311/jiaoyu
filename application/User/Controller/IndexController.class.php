@@ -11,10 +11,7 @@ class IndexController extends HomebaseController {
 		if (!sp_is_user_login()) {
 			redirect(__ROOT__."/");
 		}
-	}
-    
-    // 前台用户首页 (公开)
-	public function index() {
+
 		$user = session("user");
 
 		$where	=	array(
@@ -32,7 +29,12 @@ class IndexController extends HomebaseController {
 
 		$this->assign("smeta",json_decode($teacher['smeta'],true));
 		$this->assign("teacher",$teacher);
+	}
+    
+    // 前台用户首页 (公开)
+	public function index() {
 
+		$user = session("user");
 
 		// 订阅标签部分
 

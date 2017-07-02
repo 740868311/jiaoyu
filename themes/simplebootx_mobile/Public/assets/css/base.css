@@ -110,7 +110,7 @@ body {
 select,input{
     font-family: 'microsoft yahei';
 }
-/*¶¥²¿*/
+/*ï¿½ï¿½ï¿½ï¿½*/
 header{
     position: fixed;
     width: 100%;
@@ -225,7 +225,7 @@ header{
     font-size: 16px;
     color: #de3b3b;
 }
-/*²¼¾Ö*/
+/*ï¿½ï¿½ï¿½ï¿½*/
 .dis-flex{
     display: box;			  /* OLD - Android 4.4- */
     display: -webkit-box;	  /* OLD - iOS 6-, Safari 3.1-6 */
@@ -242,7 +242,7 @@ header{
     -ms-flex: 1;			  /* IE 10 */
     flex: 1;
 }
-/*±êÌâ*/
+/*ï¿½ï¿½ï¿½ï¿½*/
 .title-box{
     margin-bottom: 10px;
 }
@@ -573,4 +573,25 @@ footer div{
 .form-control-lb .icon-ring{
     color: #48ADF5;
     margin-right: 4px;
+}
+/*ï¿½ï¿½Ò³*/
+.pagination{
+    background-color: #fff;
+    text-align: center;
+    padding:20px;
+}
+.pagination li{
+    display: inline-block;
+}
+.pagination a{
+    display: inline-block;
+    padding: 2px 4px;
+    border-box: 1px solid #ccc;
+    border-radius: 2px;
+}
+.pagination .current{
+    display: inline-block;
+    padding: 2px 4px;
+    color: #fff;
+    background-color: #48ADF5;
 }

@@ -1151,6 +1151,19 @@ function get_teacher_id($id)
 	return (int)substr($id,1);
 }
 
+// 得到要现实的老师编号 add by lisheng 2017/06/07
+function get_demand_show_id($id)
+{
+	$id = 10000+$id;
+	return 'S'.(substr($id,1,4));
+}
+
+// 反解析得到正的老师编号 add by lisheng 2017/06/07
+function get_demand_id($id)
+{
+	return (int)substr($id,1);
+}
+
 function sp_content_page($content,$pagetpl='{first}{prev}{liststart}{list}{listend}{next}{last}'){
 	$contents=explode('_ueditor_page_break_tag_',$content);
 	$totalsize=count($contents);

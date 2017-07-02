@@ -13,9 +13,6 @@
 
 <div class="teacher-container">
     <ul class="tab-title">
-        <li class="tab-item {$status == 0 ? 'active' : ''}"> <a href="{:U('Teacher/teacher_list',array('status'=>0,'id'=>4))}">全部教员</a></li>
-        <li class="tab-item {$status == 1 ? 'active' : ''}"><a href="{:U('Teacher/teacher_list',array('status'=>1,'id'=>4))}">普通教员</a></li>
-        <li class="tab-item {$status == 2 ? 'active' : ''}"><a href="{:U('Teacher/teacher_list',array('status'=>2,'id'=>4))}">明星教员</a></li>
         <li class="tab-item choose choose-open">筛选</li>
     </ul>
     <div class="choose-box clearfix">
@@ -76,7 +73,11 @@
         </div>
     </a>
 </foreach>
-
+<!--分页-->
+<div class="pagination">
+    {$page}
+</div>
+<!--分页-->
 <tc_include file="Public:footer"/>
 <script src="__TMPL__Public/assets/js/zepto.min.js"></script>
 <script src="__TMPL__Public/assets/js/sm.min.js"></script>
