@@ -86,7 +86,7 @@ class IndexController extends HomebaseController {
 		$obj_data	=	array();
 		$k 	=	0;
 		foreach($term_id as $term_id_one) {
-			$data = D("Portal/TermRelationships")->where(array('term_id'=>$term_id_one))->limit('0,10')->select();
+			$data = D("Portal/TermRelationships")->where(array('term_id'=>$term_id_one))->select();
 
 			$obj_id =   array();
 			foreach($data as $data_one) {
@@ -101,7 +101,7 @@ class IndexController extends HomebaseController {
 			}
 
 			$obj_array  =   array();
-			$obj_data_array			=	D("Portal/Posts")->where(array('id'=>array('in', $obj_id)))->select();
+			$obj_data_array			=	D("Portal/Posts")->where(array('id'=>array('in', $obj_id),'post_status'=>array('NEQ',3)))->order('post_modified desc')->limit('0,10')->select();
 
 			foreach($obj_data_array as $key=>$obj_data_array_one) {
 				$obj_array[$key]['title']	=	$obj_data_array_one['post_title'];
@@ -133,6 +133,12 @@ class IndexController extends HomebaseController {
 
         // 得到辅导课程
         $counseling = sp_get_counseling();
+		$status = array(
+			1=>'未审核',
+			2=>'预约中',
+			3=>'预约中',
+			4=>'成功',
+		);
 
         foreach($demand_data as $k=>$demand_one) {
             $counseling_data = explode(',', $demand_one['counseling_ids']);
@@ -144,7 +150,7 @@ class IndexController extends HomebaseController {
             $demand_data[$k]['counseling']  =   $counseling_data;
             $demand_data[$k]['grade_name']  =   $grade[$demand_one['grade_id']];
             $demand_data[$k]['sex']         =   $sex[$demand_one['sex']];
-            $demand_data[$k]['status']      =   $this->status[$demand_one['status']];
+            $demand_data[$k]['status']      =   $status[$demand_one['status']];
             $demand_data[$k]['url']         =   U('Demand/demand_show', array('id'=>6, 'demand_id'=>$demand_one['id']));
         }
 

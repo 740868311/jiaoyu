@@ -41,6 +41,7 @@
 		<volist name="lists['posts']" id="vo">
 			<div class="new-list">
 				<a href="{:leuu('article/index',array('id'=>7,'article_id'=>$vo['object_id'],'cid'=>$vo['term_id']))}" class="clearfix">
+				<!--<a href="/news_{$vo['term_id']}/{$vo['object_id']}.html" class="clearfix">-->
 					<span class="new-content">{$vo.post_title}</span>
 					<span class="time">{$vo.post_modified}</span>
 				</a>
