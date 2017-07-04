@@ -8,6 +8,11 @@
 	.person-photo img{
 		border-radius: 50%;
 	}
+	.swiper-wrapper .swiper-slide{
+		width: 100%;
+		height: 500px;
+		background-size: cover;
+	}
 
 </style>
 </head>
@@ -17,7 +22,7 @@
     <div class="swiper-container">
         <div class="swiper-wrapper">
 			<foreach name="index_array['slide'][2]" item="vo">
-				<div class="swiper-slide"><a href="{$vo.slide_url}"><img src="{$vo.slide_pic}" alt=""></a></div>
+				<div class="swiper-slide" style="background: url('{$vo.slide_pic}') no-repeat center center;"></div>
 			</foreach>
 
             <!--<div class="swiper-slide"><img src="__TMPL__Public/assets/images/banner2.jpg" alt=""></div>-->
