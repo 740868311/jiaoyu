@@ -138,7 +138,6 @@ class TeacherController extends HomebaseController {
         $data['university'] =   $post['university'] ? htmlspecialchars($post['university']) : '';
         $data['profession'] =   $post['profession'] ? htmlspecialchars($post['profession']) : '';
         $data['grade']      =   $post['grade'] ? htmlspecialchars($post['grade']) : '';
-        $data['stage']      =   (int)($post['stage']);
 
         $counseling_ids = ',';
         foreach($post['counseling_id'] as $counseling_one) {

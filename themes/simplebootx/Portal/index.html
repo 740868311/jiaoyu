@@ -228,7 +228,7 @@
                         '<ul>';
                 var inHtml = '';
                 for(var j=0;j<notices[i].content.length;j++){
-                    inHtml +='<a href="'+notices[i].content[j].url+'"><li><span></span>'+notices[i].content[j].title+'</li></a>'
+                    inHtml +='<a title="'+notices[i].content[j].title+'" href="'+notices[i].content[j].url+'"><li><span></span>'+notices[i].content[j].title+'</li></a>'
                 }
                 html = html+inHtml+
                         '</ul>'+
@@ -247,7 +247,7 @@
 
         //
         var mySwiper = new Swiper ('.swiper-container', {
-            autoplay: 3000,
+            autoplay: 5000,
             direction: 'horizontal',
             loop: true,
 

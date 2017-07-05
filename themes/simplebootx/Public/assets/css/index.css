@@ -268,6 +268,9 @@ body{
 .notice-container ul li{
     line-height: 20px;
     margin: 14px 0;
+    height: 20px;
+    text-overflow: clip;
+    overflow: hidden;
 }
 .notice-container ul li span{
     width: 3px;

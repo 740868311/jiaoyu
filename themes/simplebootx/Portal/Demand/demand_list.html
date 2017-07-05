@@ -12,7 +12,7 @@
 <section class="student-container container clearfix">
     <div class="student-left" style="padding-bottom:10px">
         <ul class="stu-title">
-            <a href="{:U('Demand/demand_list',array('status'=>4,'id'=>6))}"><li class="{$status == 4? 'active' : ''}">预约成功</li></a>
+            <a href="{:U('Demand/demand_list',array('status'=>4,'id'=>6))}"><li class="{$status == 4? 'active' : ''}">成功家教</li></a>
             <a href="{:U('Demand/demand_list',array('status'=>2,'id'=>6))}"><li class="{$status == 2? 'active' : ''}">报名中</li></a>
         </ul>
         <div class="app-box-tab app-success-container">
@@ -68,23 +68,9 @@
                                 </php>
                             </p>
                         </div>
-                        <if condition="$status == 2">
-                            <div class="part-info-right float-right">
-                                <a href="{:U('Demand/demand_show', array('id'=>6, 'demand_id'=>$vo['id']))}"><div class="look">查看详情</div></a>
-                            </div>
-                        <else />
-                            <div class="part-info-right float-right teacher-box">
-                                <div>
-                                    <php>
-                                        $smeta = json_decode($vo['teacher']['smeta'], true);
-                                    </php>
-
-                                    <img src="{:sp_get_image_preview_url($smeta['thumb'])}" id="thumb-preview" width="135" style="cursor: hand"/>
-                                </div>
-                                <p>{$vo['teacher']['name']}已任教</p>
-                            </div>
-                        </if>
-
+                        <div class="part-info-right float-right">
+                            <a target="_blank" href="{:U('Demand/demand_show', array('id'=>6, 'demand_id'=>$vo['id']))}"><div class="look">查看详情</div></a>
+                        </div>
                     </div>
                 </div>
             </foreach>

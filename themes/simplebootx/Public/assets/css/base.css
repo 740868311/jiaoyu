@@ -140,6 +140,7 @@ nav li{
     line-height: 40px;
     width: 58px;
     cursor: pointer;
+    font-size: 15px;
 }
 nav li a{
     color: #fff;

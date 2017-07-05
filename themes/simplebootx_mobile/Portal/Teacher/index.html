@@ -109,15 +109,6 @@
             <label class="float-left form-left"><span>*</span>当前年级</label>
             <input type="text" class="form-right float-right grade" placeholder="输入您的当前年级"/>
         </div>
-        <div class="form-control-lb clearfix work-form">
-            <label class="float-left form-left"><span>*</span>教学阶段</label>
-            <select class="stage form-right float-right" name="stage">
-                <option value="">--请选择教学阶段--</option>
-                <option value="1">高中老师</option>
-                <option value="2">初中老师</option>
-                <option value="3">小学老师</option>
-            </select>
-        </div>
         <div class="form-control-lb clearfix">
             <label class="float-left"><span>*</span>获奖经历</label>
             <div style="padding: 0 84px;">
@@ -313,7 +304,6 @@
             "thumb": $('#thumb').val(),//照片
             "counseling_id": counseling,//科目1
             "counseling_other": $('.subject-four').val(),//4
-            "stage": $('.stage').val(),//*教学阶段
             "introduction": $('.myself').val(),//自我介绍
             "teaching_experience":$('.teaching').val(),//教学经历
             "phone": $('.phone').val(),//手机号

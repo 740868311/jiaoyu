@@ -95,6 +95,15 @@
         </php>
                 {$counseling_data}
     </span></p>
+    <php>
+        $identity  = array(
+        1   =>  '大学生',
+        2   =>  '研究生',
+        3   =>  '在职老师',
+        4   =>  '专职老师',
+        );
+    </php>
+    <p>老师身份：<span>{$identity[$data['identity']]}</span></p>
     <p>所在院校：<span>{$data['university']}</span></p>
     <p>所学专业：<span>{$data['profession']}</span></p>
     <p>当前年级：<span>{$data['grade']}</span></p>

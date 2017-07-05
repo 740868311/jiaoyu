@@ -22,10 +22,12 @@
                             <php>
                                 $counseling = sp_get_counseling();
                             </php>
-                            <a href="{:U('Teacher/teacher_list',array('counseling_id'=>0,'id'=>4))}" class="{$counseling_id == 0 ? 'on' : ''}">不限</a>
+                            <a style="float:left" href="{:U('Teacher/teacher_list',array('counseling_id'=>0,'id'=>4))}" class="{$counseling_id == 0 ? 'on' : ''}">不限</a>
+                            <div style="display:inline-block;width: 590px;">
                             <foreach name="counseling" key="k" item="vo">
                                 <a href="{:U('Teacher/teacher_list',array('counseling_id'=>$k,'id'=>4))}" class="{$counseling_id == $k ? 'on' : ''}">{$vo}</a>
                             </foreach>
+                            </div>
                         </dd>
                     </dl>
                     <dl class="listIndex clearfix" attr="教员性别">
@@ -80,7 +82,7 @@
                             <p class="part-info-text">所在学校：{$vo.university}</p>
                         </div>
                         <div class="faculty-box-right">
-                            <a href="{:U('Teacher/resume', array('id'=>4, 'teacher_id'=>$vo['id']))}"><div class="look">查看简历</div></a>
+                            <a target="_blank" href="{:U('Teacher/resume', array('id'=>4, 'teacher_id'=>$vo['id']))}"><div class="look">查看简历</div></a>
                         </div>
                     </div>
                 </foreach>

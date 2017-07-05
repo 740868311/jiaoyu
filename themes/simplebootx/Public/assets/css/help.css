@@ -24,8 +24,14 @@ body,html{
     font-size: 14px;
     color: #666;
     line-height: 26px;
-    list-style: disc;
+    list-style: none;
     cursor: pointer;
+    border: 1px solid #767b7e;
+    text-align: center;
+    height: 35px;
+    line-height: 35px;
+    margin: 10px 0;
+    font-weight: bold;
 }
 .help-left-container{
     background-color: #fff;

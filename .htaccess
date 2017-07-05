@@ -2,11 +2,6 @@
 RewriteEngine on
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
-<<<<<<< HEAD
-
-=======
-#RewriteRule ^news_(.*)/(.*).html$ article/index/id/7/cid/$1/article_id/$2.html$1 [QSA,PT,L]
->>>>>>> 29711f3579df60ecc345fe5c56bf60d4c428fc9b
 RewriteRule ^(.*)$ index.php?$1 [QSA,PT,L]
 
 </IfModule>

@@ -33,8 +33,6 @@
                     $counseling_data = implode(',', $swap);
                 </php>
                 {$counseling_data}
-
-                <span style="float: right;padding-right: 100px;color:red">客服电话：{$cphone}</span>
             </p>
             <div class="dis-flex right-bottom-title">
                 <div class="flex-item">
@@ -49,6 +47,19 @@
                     <h2>{$data['grade']}</h2>
                     <p>年级</p>
                 </div>
+
+                <php>
+                    $identity  = array(
+                        1   =>  '大学生',
+                        2   =>  '研究生',
+                        3   =>  '在职老师',
+                        4   =>  '专职老师',
+                    );
+                </php>
+                <div class="flex-item">
+                    <h2>{$identity[$data['identity']]}</h2>
+                    <p>身份</p>
+                </div>
             </div>
         </div>
     </div>
@@ -56,10 +67,7 @@
         <div class="left-bo-content float-left">
             <div class="menu clearfix">
                 <ul class="tab">
-                    <li class="active">自我介绍</li>
-                    <li>教学经历</li>
-                    <li>获奖经历</li>
-                    <li>老师报价</li>
+                    <li>客服电话：<span style="color:red">{$cphone}</span></li>
                 </ul>
                 <div class="yue-teacher s-btn" style="cursor: pointer;">预约老师</div>
             </div>
