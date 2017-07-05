@@ -9,7 +9,7 @@
 						if (sp_is_user_login()) {
 							$session_user=session('user');
 					</php>
-						<a href="{:U('User/index/index')}" class="te-login">{$session_user['name']}</a>
+						<a href="{:U('User/index/index')}" class="te-login" style="width:80px">{$session_user['name']} 个人中心</a>
 						<a href="{:U('User/index/logout')}" class="te-login">退出登录</a>
 					<php>
 						} else {

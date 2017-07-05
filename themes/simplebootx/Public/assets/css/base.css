@@ -109,7 +109,7 @@ body {
 select,input{
     font-family: 'microsoft yahei';
 }
-/*¶¥²¿*/
+/*ï¿½ï¿½ï¿½ï¿½*/
 header{
     position: fixed;
     width: 100%;
@@ -166,7 +166,7 @@ nav li:hover,nav li.active{
     position: absolute;
     top: 0;
     bottom: 0;
-    width: 110px;
+    width: 180px;
     height: 14px;
     right: 190px;
     margin: auto;
@@ -201,14 +201,14 @@ nav li:hover,nav li.active{
     font-size: 16px;
     color: #de3b3b;
 }
-/*²¼¾Ö*/
+/*ï¿½ï¿½ï¿½ï¿½*/
 .dis-flex{
     display: flex;
 }
 .flex-item{
     flex: 1;
 }
-/*±êÌâ*/
+/*ï¿½ï¿½ï¿½ï¿½*/
 .title-box{
     margin-bottom: 20px;
 }
@@ -587,7 +587,7 @@ label.error{
     font-size: 16px;
     padding: 20px;
 }
-/*·ÖÀàÉ¸Ñ¡*/
+/*ï¿½ï¿½ï¿½ï¿½É¸Ñ¡*/
 
 .selectNumberScreen{ width:100%; margin:20px auto 0;}
 .screenBox dl {/*border-bottom: #e6e6e6 1px dashed;*/ width: 768px;}

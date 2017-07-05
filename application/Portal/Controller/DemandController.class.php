@@ -277,7 +277,13 @@ class DemandController extends HomebaseController {
 			$array = array('info'=>'请选择年级','status'=>0);
 			echo json_encode($array);die;
 		}
-		$data['sex']    =   (int)$post['sex'];
+
+		$sex 			=	(int)$post['sex'];
+		if (!$sex) {
+			$array = array('info'=>'请选择性别','status'=>0);
+			echo json_encode($array);die;
+		}
+		$data['sex']    =   $sex;
 		$counseling_ids = ',';
 
 		foreach($post['counseling_id'] as $counseling_one) {
@@ -305,6 +311,11 @@ class DemandController extends HomebaseController {
 			echo json_encode($array);die;
 		}
 
+		$teacher_sex			=	(int)$post['teacher_sex'];
+		if (!$teacher_sex) {
+			$array = array('info'=>'请选择老师性别','status'=>0);
+			echo json_encode($array);die;
+		}
 		$data['teacher_sex']    =   (int)$post['teacher_sex'];
 
 		$teacher_identity       =   (int)$post['identity'];

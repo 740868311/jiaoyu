@@ -23,6 +23,7 @@
                     <div class="form-control clearfix">
                         <label><span>*</span>您的称呼</label>
                         <select name="sex" class="small-sel small-sel-two sex-sel">
+                            <option value="">--性别--</option>
                             <option value="1">女士</option>
                             <option value="2">男士</option>
                         </select>
@@ -108,7 +109,7 @@
                             </div>
                             <div class="row">
                                 <div class="col">上午</div>
-                                <div class="my-checkbox col"><i class="icon iconfont icon-check-squre" oid="S-1"></i></div>
+                                <div class="my-checkbox col"><i class="icon iconfont icon-squre" oid="S-1"></i></div>
                                 <div class="my-checkbox col"><i class="icon iconfont icon-squre" oid="S-2"></i></div>
                                 <div class="my-checkbox col"><i class="icon iconfont icon-squre" oid="S-3"></i></div>
                                 <div class="my-checkbox col"><i class="icon iconfont icon-squre" oid="S-4"></i></div>
@@ -147,6 +148,7 @@
                     <div class="form-control clearfix">
                         <label for="">老师要求</label>
                         <select name="teacher_sex" class="small-sel small-sel-two teacher-sex">
+                            <option value="">--性别--</option>
                             <option value="1">女性</option>
                             <option value="2">男性</option>
                         </select>
@@ -201,7 +203,7 @@
                     <div class="form-control clearfix">
                         <label><span>*</span>验证码</label>
                         <input type="text" class="middel-input img-code" name="verify">
-                        <span class="span-code">
+                        <span class="span-code yzm_code">
                             <!--<img src="/index.php?g=api&m=checkcode&a=index&length=4&font_size=20&width=109&height=40&use_noise=1&use_curve=0" onclick="this.src='/index.php?g=api&m=checkcode&a=index&length=3&font_size=18&width=109&height=40&use_noise=1&use_curve=0&time='+Math.random();" />-->
                             {:sp_verifycode_img('length=3&font_size=20&width=109&height=40&use_noise=1&use_curve=0','style="cursor: pointer;" title="点击获取"')}
                         </span>
@@ -277,7 +279,7 @@
                     <div class="form-control clearfix">
                         <label><span>*</span>验证码</label>
                         <input type="text" class="ksverify" style='width:50%' style="width: 51%;" name="verify">
-                        <span class="span-code">{:sp_verifycode_img('length=3&font_size=20&width=109&height=40&use_noise=1&use_curve=0','style="cursor: pointer;" title="点击获取"')}</span>
+                        <span class="span-code ks_code">{:sp_verifycode_img('length=3&font_size=20&width=109&height=40&use_noise=1&use_curve=0','style="cursor: pointer;" title="点击获取"')}</span>
                     </div>
                     <?php
                         } else {
@@ -315,6 +317,10 @@
 <script src="__TMPL__Public/assets/js/jquery.validate-1.13.1.js"></script>
 <script>
     $(document).ready(function(){
+
+        //  更新验证码
+        $('.yzm_code').find('img').click();
+
         $('.sms').click(function(){
             var phone = $('.phone').val();
             if (!isPhoneNo(phone)) {
@@ -572,6 +578,7 @@
     });
 
     $('.s-btn').on('click', function(){
+        $('.ks_code').find('img').click();
         $('.login-container').show();
     })
     //关闭

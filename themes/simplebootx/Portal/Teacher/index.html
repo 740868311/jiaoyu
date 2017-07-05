@@ -211,6 +211,7 @@
 <script src="__TMPL__Public/assets/js/jquery.validate-1.13.1.js"></script>
 <script>
     $(function(){
+        $('.span-code').find('img').click();
         $('#sms').click(function(){
             var phone = $('.phone').val();
             if (!isPhoneNo(phone)) {

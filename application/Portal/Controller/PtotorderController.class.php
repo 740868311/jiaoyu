@@ -49,6 +49,22 @@ class PtotorderController extends HomebaseController {
 
             $res = $this->ptotorder_model->add($data);
             if ($res) {
+
+                $where = array('option_name'=>'email_warn');
+                $option = M('Options')->where($where)->find();
+                if($option){
+                    $options = json_decode($option['option_value'], true);
+                    // 如果是1则想指定邮箱发送提示邮件
+                    if ($options['value'] == 1) {
+                        $grade = sp_get_grade_name();
+                        $area = sp_get_area();
+
+                        $message = '有新的需求<br>姓名：'.$data['name']."<br>电话：".$data['phone'].'<br>地址：'.$area[$data['area_id']].' '.$data['address'];
+//                        sp_send_email($options['options']['to'], $options['options']['title'], $options['options']['template']);
+                        sp_send_email($options['options']['to'], $options['options']['title'], $message);
+                    }
+                }
+
                 $array  =   array('info'=>'添加成功', 'status'=>1);
                 echo json_encode($array);die;
             } else {
