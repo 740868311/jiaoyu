@@ -263,7 +263,7 @@ class DemandController extends HomebaseController {
 		}
 
 		$code = rand(1000,9999);
-		$message = '【叮咚云】您的验证码是：'.$code;
+		$message = '【家教之家】您的验证码是'.$code;
 		return sp_send_sms('yzm', $phone, $message, $code);
     }
 

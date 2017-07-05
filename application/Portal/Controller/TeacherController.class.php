@@ -443,6 +443,11 @@ class TeacherController extends HomebaseController {
         $this->display();
     }
 
+    public function getpwd()
+    {
+        $this->display();
+    }
+
     public function add_json()
     {
         $where['status']    =   2;

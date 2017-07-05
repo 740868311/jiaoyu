@@ -45,14 +45,17 @@
         width: 60%;
         height: 40px;
     }
-    .code{
+    .code {
         float: right;
         width: 30%;
         height: 40px;
         display: block;
         text-align: center;
-        line-height:  40px;
+        line-height: 40px;
+        background-color: #61ACED;
+        color: #fff;
         border-radius: 3px;
+        cursor: pointer;
     }
     .forgot{
         text-align: right;
@@ -92,16 +95,16 @@
                 <input class="password" type="password" name="password" placeholder="密码">
             </p>
             <p class="clearfix">
-                <input type="text" name="verify" class="code-text" placeholder="短信验证码">
-                <span class="code">{:sp_verifycode_img('length=4&font_size=20&width=150&height=40&use_noise=1&use_curve=0','style="cursor: pointer;" title="点击获取"')}</span>
+                <input type="text" class="code-text" placeholder="短信验证码">
+                <span class="code" id="sms">接收短信验证码</span>
             </p>
 
         </form>
         <div class="t-login" id="but">登录</div>
         <!--<p>-->
-            <!--<label for="" class="remember"><input type="checkbox" style="width: 14px;height: 14px;">下次自动登录</label>-->
-            <a href="{:U('Teacher/getpwd')}" class="forgot">忘记密码</a>
-            <a href="" class="d-link">注册成为老师</a>
+        <!--<label for="" class="remember"><input type="checkbox" style="width: 14px;height: 14px;">下次自动登录</label>-->
+        <a class="forgot">忘记密码</a>
+        <a href="" class="d-link">注册成为老师</a>
         <!--</p>-->
     </div>
 </section>
@@ -112,6 +115,32 @@
 
 <script>
 
+    $('#sms').click(function(){
+        var phone = $('.phone').val();
+        if (!isPhoneNo(phone)) {
+            alert('请输入正确的手机号');
+        } else {
+            $.ajax({
+                url: '{:U("Demand/get_sms")}',
+                dataType: "json",
+                type: "post",
+                data:{phone:phone},
+                success: function(msg) {
+                    if (msg.code == 1) {
+                        $('#sms').html('发送成功');
+                    } else {
+                        alert(msg.info);
+                    }
+                }
+            });
+        }
+    })
+
+    // 验证手机号
+    function isPhoneNo(phone) {
+        var pattern = /^1[34578]\d{9}$/;
+        return pattern.test(phone);
+    }
     $.validator.setDefaults({
         debug: true
     });
@@ -136,12 +165,6 @@
             console.log($(form).serialize());
         }
     });
-
-    // 验证手机号
-    function isPhoneNo(phone) {
-        var pattern = /^1[34578]\d{9}$/;
-        return pattern.test(phone);
-    }
 
     $('#but').on('click', function(){
         var formData = {
@@ -168,7 +191,7 @@
             });
         }
 
-        });
+    });
 </script>
 {:hook('footer_end')}
 </body>
