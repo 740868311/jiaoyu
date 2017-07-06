@@ -143,9 +143,18 @@
                             {$demand.ip}
                         </td>
                     </tr>
+                    <php>
+                        $area = sp_get_area();
+                    </php>
                     <tr>
                         <th>家庭住址</th>
                         <td>
+                            <select style="min-width: 50px;width:170px" name="area_id" class="area_id small-sel small-sel-two">
+                                <option value="">请选择地区</option>
+                                <foreach name="area" key="k" item="area_one">
+                                    <option {$demand['area_id'] == $k ? 'selected' : ''} value="{$k}">{$area_one}</option>
+                                </foreach>
+                            </select>
                             <input type="text" name="address" value="{$demand.address}"/>
                         </td>
                     </tr>

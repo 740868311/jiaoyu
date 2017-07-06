@@ -27,7 +27,17 @@
 <section class="container subs-container clearfix">
 	<div class="subs-left float-left">
 		<div class="person-img">
+            <php>
+                if (!$smeta['thumb']) {
+            </php>
+            <img src="__TMPL__Public/assets/images/default_tupian4.png" width="140" height="140" style="border-radius: 50%;"/>
+            <php>
+                } else {
+            </php>
             <img src="{:sp_get_image_preview_url($smeta['thumb'])}" width="140" height="140" style="border-radius: 50%;"/>
+            <php>
+                }
+            </php>
         </div>
 		<h2>{$teacher.name}</h2>
         <if condition="($teacher['status'] eq 1)">
@@ -36,6 +46,7 @@
             <span><i class="icon iconfont icon-star"></i>明星教员</span>
         </if>
 		<ul class="left-tab">
+            <li><a href="{:U("User/index/center")}">个人中心</a></li>
             <li class="active">修改简历</li>
             <li><a href="{:U("User/index/book")}" style="color:black">订阅信息</a></li>
             <li><a href="{:U("User/index/index")}" style="color:black">预约家长</li></a></li>

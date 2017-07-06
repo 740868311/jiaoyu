@@ -86,7 +86,7 @@
 
 <section class="t-login-container">
     <div class="t-login-box">
-        <div class="title">老师登录</div>
+        <div class="title">找回密码</div>
         <form class="teacher_login">
             <p>
                 <input class="phone" type="text" name="phone" placeholder="手机号">
@@ -96,15 +96,15 @@
             </p>
             <p class="clearfix">
                 <input type="text" class="code-text" placeholder="短信验证码">
-                <span class="code" id="sms">接收短信验证码</span>
+                <span class="code" id="sms">注册邮箱发送验证码</span>
             </p>
 
         </form>
-        <div class="t-login" id="but">登录</div>
+        <div class="t-login" id="but">找回密码</div>
         <!--<p>-->
         <!--<label for="" class="remember"><input type="checkbox" style="width: 14px;height: 14px;">下次自动登录</label>-->
-        <a class="forgot">忘记密码</a>
-        <a href="" class="d-link">注册成为老师</a>
+        <a href="{:U('Teacher/teacher_login')}" class="forgot">登录</a>
+        <a href="{:U('Teacher/index')}" class="d-link">注册成为老师</a>
         <!--</p>-->
     </div>
 </section>
@@ -121,7 +121,7 @@
             alert('请输入正确的手机号');
         } else {
             $.ajax({
-                url: '{:U("Demand/get_sms")}',
+                url: '{:U("Teacher/get_email")}',
                 dataType: "json",
                 type: "post",
                 data:{phone:phone},
@@ -177,7 +177,7 @@
         if($('.teacher_login').valid()) {
             //调用AJAX提交表单
             $.ajax({
-                url: '{:U("Teacher/teacher_dologin")}',
+                url: '{:U("Teacher/save_getpwd")}',
                 dataType: "json",
                 type: "post",
                 data: formData,
@@ -185,7 +185,8 @@
                     if (data.status == 0) {
                         alert(data.info);
                     } else if (data.status == 1) {
-                        window.location.href="/";
+                        alert(data.info);
+                        window.location.href="{:U('Teacher/teacher_login')}";
                     }
                 }
             });

@@ -10,6 +10,9 @@
 <body>
 <tc_include file="Public:nav" />
 <section class="student-container container clearfix">
+    <php>
+        $area = sp_get_area();
+    </php>
     <div class="student-left" style="padding-bottom:10px">
         <ul class="stu-title">
             <a href="{:U('Demand/demand_list',array('status'=>4,'id'=>6))}"><li class="{$status == 4? 'active' : ''}">成功家教</li></a>
@@ -38,7 +41,7 @@
                                 </php>
                                 {$counseling_data}
                             </p>
-                            <p>授课地址：{$vo.address}</p>
+                            <p>授课地址：{$area[$vo['area_id']]} {$vo.address}</p>
                             <p>授课时间：
                                 <php>
                                     $tutor_s    =   $vo['tutor_time_s'];

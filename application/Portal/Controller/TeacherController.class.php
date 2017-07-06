@@ -167,6 +167,9 @@ class TeacherController extends HomebaseController {
             }
         }
 
+        if (!$post['thumb']) {
+            $post['thumb']  =   'portal/default_tupian4.png';
+        }
         $post['smeta']['thumb'] = sp_asset_relative_url($post['thumb']);
 
         $data['smeta']          =   json_encode($post['smeta']);
@@ -358,7 +361,7 @@ class TeacherController extends HomebaseController {
 
         $count=$this->teacher_model->where($where)->count();
 
-        $page = $this->page($count, 1);
+        $page = $this->page($count, 10);
         $teacher_data = $this->teacher_model
             ->where($where)
             ->limit($page->firstRow , $page->listRows)
@@ -445,6 +448,102 @@ class TeacherController extends HomebaseController {
     public function getpwd()
     {
         $this->display();
+    }
+
+    public function save_getpwd()
+    {
+        $data = I('post.');
+
+        $phone              =   $data['phone'];
+        $phone_auth         =   '/^(0|86|17951)?(13[0-9]|15[012356789]|18[0-9]|14[57])[0-9]{8}$/';
+        if ($phone) {
+            if (!preg_match($phone_auth, $phone)) {
+                $array = array('info' => '手机格式有误', 'status' => 0);
+                echo json_encode($array);
+                die;
+            }
+        } else {
+            $array = array('info' => '手机号不能为空', 'status' => 0);
+            echo json_encode($array);
+            die;
+        }
+
+        if ($phone != $_SESSION['email']['phone']) {
+            $array = array('info' => '和刚才发送验证码的手机号不一致，请重新输入', 'status' => 0);
+            echo json_encode($array);
+            die;
+        }
+
+        $password   =   $data['password'];
+        if (!$password) {
+            $array = array('info' => '密码不能为空', 'status' => 0);
+            echo json_encode($array);
+            die;
+        }
+
+        $code   =   (int)$data['verify'];
+        if (!$code) {
+            $array = array('info' => '验证码不能为空', 'status' => 0);
+            echo json_encode($array);
+            die;
+        }
+        if ($code != $_SESSION['email']['code']) {
+            $array = array('info' => '验证码输入错误，请重试输入', 'status' => 0);
+            echo json_encode($array);
+            die;
+        }
+
+        $where['phone']     =   $phone;
+        $pas_data['password']  =   md5('ak47'.$password);
+
+        $res = $this->teacher_model->where($where)->save($pas_data);
+
+        if ($res) {
+            $array = array('info' => '设置成功，请重新登录', 'status' => 1);
+            echo json_encode($array);
+            die;
+        } else {
+            $array = array('info' => '保存失败，请重试', 'status' => 0);
+            echo json_encode($array);
+            die;
+        }
+    }
+
+    public function get_email()
+    {
+        $data = I('post.');
+
+        $phone_auth       =   '/^(0|86|17951)?(13[0-9]|15[012356789]|18[0-9]|14[57])[0-9]{8}$/';
+        $phone      =   $data['phone'];
+        if ($phone) {
+            if (!preg_match($phone_auth, $phone)) {
+                $array = array('info' => '手机格式有误', 'status' => 0);
+                echo json_encode($array);
+                die;
+            }
+        } else {
+            $array = array('info' => '手机号不能为空', 'status' => 0);
+            echo json_encode($array);
+        }
+
+        $where['phone'] =   $phone;
+
+        $teacher_data = $this->teacher_model->where($where)->find();
+        if (!$teacher_data) {
+            $array = array('info' => '未发现该手机号', 'status' => 0);
+            echo json_encode($array);die;
+        }
+        $email = $teacher_data['email'];
+
+        $code       =   rand(1000,9999);
+        $message    =   '验证是：'.$code;
+
+        $_SESSION['email']['code']	=	$code;
+        $_SESSION['email']['phone']	=	$phone;
+
+        sp_send_email($email, '忘记密码验证码', $message);
+        $array = array('info' => '发送成功,请登录邮箱查看', 'status' => 1);
+        echo json_encode($array);die;
     }
 
     public function add_json()

@@ -168,6 +168,7 @@ class DemandAdminController extends AdminbaseController {
             echo json_encode($array);die;
         }
 
+        $data['area_id']        =   (int)$post['area_id'];
         $data['remarks']        =   htmlspecialchars($post['remarks']);
         $data['address']        =   htmlspecialchars($post['address']);
         $data['note']           =   htmlspecialchars($post['note']);

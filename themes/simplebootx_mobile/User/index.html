@@ -52,7 +52,19 @@
     个人中心
 </div>
 <div class="person-top">
-    <div class="person-phone"><img style="border-radius:50%;width: 100%;" src="{:sp_get_image_preview_url($smeta['thumb'])}"/></div>
+    <div class="person-phone" style="background:none">
+        <php>
+            if (!$smeta['thumb']) {
+        </php>
+        <img src="__TMPL__Public/assets/images/default_tupian4.png" width="140" height="140" style="border-radius:50%;width: 100%;"/>
+        <php>
+            } else {
+        </php>
+        <img src="{:sp_get_image_preview_url($smeta['thumb'])}" width="140" height="140" style="border-radius:50%;width: 100%;"/>
+        <php>
+            }
+        </php>
+    </div>
     <h2>{$teacher.name}</h2>
     <if condition="($teacher['status'] eq 1)">
         <span><i class="icon iconfont"></i>普通教员</span>

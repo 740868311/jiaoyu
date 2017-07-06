@@ -68,7 +68,10 @@
                     </php>
                         {$counseling_data}
                 </span></p>
-                <p class="text-item">授课地址：<span>{$demand.address}</span></p>
+                <php>
+                    $area = sp_get_area();
+                </php>
+                <p class="text-item">授课地址：<span>{$area[$demand['area_id']]} {$demand.address}</span></p>
                 <div class="form-control clearfix">
                     <label class="float-left" for="">家教时间</label>
                     <div class="float-left table">

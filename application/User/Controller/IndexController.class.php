@@ -325,7 +325,8 @@ class IndexController extends HomebaseController {
 				break;
 			}
 		}
-
+//		dump($user);die;
+//		dump(json_decode($teacher['smeta'],true));die;
 		$this->assign("smeta",json_decode($teacher['smeta'],true));
 		$this->assign("teacher",$teacher);
 		$this->display(":edit");
@@ -390,6 +391,7 @@ class IndexController extends HomebaseController {
 
 			$res = M("teacher")->where($where)->save($data);
 
+//			echo M("teacher")->getLastSql();die;
 			if ($res) {
 				$teacher     =   M("teacher")->where($where)->find();
 				session("user", $teacher);
@@ -416,6 +418,11 @@ class IndexController extends HomebaseController {
     		$this->ajaxReturn(array("status"=>0));
     	}
     }
+
+	public function center()
+	{
+		$this->display(":center");
+	}
 
     //退出
     public function logout(){
