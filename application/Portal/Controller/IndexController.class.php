@@ -162,6 +162,11 @@ class IndexController extends HomebaseController {
 		echo $json_array;die;
 	}
 
+	public function map()
+    {
+        $this->display(":map");
+    }
+
 }
 
 

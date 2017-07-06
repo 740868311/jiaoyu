@@ -1,0 +1,58 @@
+<tc_include file="Public:head" />
+<link rel="stylesheet" href="__TMPL__Public/assets/css/base.css">
+<link rel="stylesheet" href="__TMPL__Public/assets/css/iconfont/iconfont.css">
+<link rel="stylesheet" href="__TMPL__Public/assets/css/student.css">
+<style>
+    .on{background: #39c;color: #fff;}
+    .link {
+        line-height: 31px;
+        margin: 4px 0 9px 0;
+    }
+    .link a {
+        padding: 0 6px;
+        color:#000000;
+    }
+    .linkBox, .linkBox1, .linkBox2 {
+        padding: 11px 6px 15px 19px;
+    }
+    .linkBox .link a {
+        padding: 0 20px;
+    }
+
+    .link a:hover {
+        color: #4aadf2;
+    }
+
+    .link a, .link a:visited {
+        color: #000;
+    }
+    .colLM {
+        /*border: 1px solid #B1C8D7;*/
+        background:#fff;
+    }
+</style>
+</head>
+<body>
+<tc_include file="Public:nav" />
+<div class="container" style="padding-top: 130px;">
+    <div class="colLM">
+        <h1 style="padding: 25px 0 10px 25px;font-size: 20px;">网站地图</h1>
+        <div class="content clearfix linkBox">
+            <div class="link">
+                <h3><a href="http://news.163.com/">导航</a></h3>
+                <a href="http://news.163.com/latest/">首页</a>|
+                <a href="http://news.163.com/rank/">请家教</a>|
+                <a href="http://news.163.com/domestic/">当老师</a>|
+                <a href="http://news.163.com/world/">教员库</a>|
+                <a href="http://news.163.com/shehui/">明星教师</a>|
+                <a href="http://news.163.com/review/">学员库</a>|
+                <a href="http://focus.news.163.com/">帮助</a>
+            </div>
+        </div>
+    </div>
+</div>
+<tc_include file="Public:footer"/>
+<tc_include file="Public:scripts"/>
+{:hook('footer_end')}
+</body>
+</html>
