@@ -39,14 +39,17 @@
         <h1 style="padding: 25px 0 10px 25px;font-size: 20px;">网站地图</h1>
         <div class="content clearfix linkBox">
             <div class="link">
-                <h3><a href="http://news.163.com/">导航</a></h3>
-                <a href="http://news.163.com/latest/">首页</a>|
-                <a href="http://news.163.com/rank/">请家教</a>|
-                <a href="http://news.163.com/domestic/">当老师</a>|
-                <a href="http://news.163.com/world/">教员库</a>|
-                <a href="http://news.163.com/shehui/">明星教师</a>|
-                <a href="http://news.163.com/review/">学员库</a>|
-                <a href="http://focus.news.163.com/">帮助</a>
+                <h3><a href="javascript:void(0)">导航</a></h3>
+                <php>
+                    $menu = sp_get_menu();
+                    end($menu);
+
+                    $count  =   key($menu);
+                </php>
+                <foreach name="menu" key="k" item="menu_one">
+                    <a href="{$menu_one['href']}">{$menu_one['label']}</a>
+                    <php>echo $k != $count ? '|' : '';</php>
+                </foreach>
             </div>
         </div>
     </div>

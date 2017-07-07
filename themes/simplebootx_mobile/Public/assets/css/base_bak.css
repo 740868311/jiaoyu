@@ -110,7 +110,7 @@ body {
 select,input{
     font-family: 'microsoft yahei';
 }
-/*¶¥²¿*/
+/*ï¿½ï¿½ï¿½ï¿½*/
 header{
     position: fixed;
     width: 100%;
@@ -225,7 +225,7 @@ header{
     font-size: 16px;
     color: #de3b3b;
 }
-/*²¼¾Ö*/
+/*ï¿½ï¿½ï¿½ï¿½*/
 .dis-flex{
     display: box;			  /* OLD - Android 4.4- */
     display: -webkit-box;	  /* OLD - iOS 6-, Safari 3.1-6 */
@@ -242,7 +242,7 @@ header{
     -ms-flex: 1;			  /* IE 10 */
     flex: 1;
 }
-/*±êÌâ*/
+/*ï¿½ï¿½ï¿½ï¿½*/
 .title-box{
     margin-bottom: 10px;
 }
@@ -574,7 +574,7 @@ footer div{
     color: #48ADF5;
     margin-right: 4px;
 }
-/*·ÖÒ³*/
+/*ï¿½ï¿½Ò³*/
 .pagination{
     background-color: #fff;
     text-align: center;
@@ -594,33 +594,4 @@ footer div{
     padding: 2px 4px;
     color: #fff;
     background-color: #48ADF5;
-}
-/*µ×²¿°´Å¥*/
-.contact-btns{
-    display: flex;
-    width: 100%;
-    height: 45px;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-}
-.contact-btns li{
-    text-align: center;
-    flex: 1;
-    line-height: 45px;
-    font-size: 14px;
-    cursor: pointer;
-}
-.contact-btns li a{
-    display: inline-block;
-    width: 100%;
-    height: 100%;
-    color: #fff;
-    font-weight: 700;
-}
-.contact-btns .please-tutor{
-    background-color: #FF4242;
-}
-.contact-btns .contact-service{
-    background-color: #FFA030;
 }
