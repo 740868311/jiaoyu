@@ -265,7 +265,7 @@ function sp_get_grade_name()
 function sp_get_area()
 {
 	$grade_model = M('area');
-	$data	= 	$grade_model->select();
+	$data	= 	$grade_model->order('id')->select();
 	foreach($data as $data_one) {
 		$swap[$data_one['id']]	= $data_one['area_name'];
 	}

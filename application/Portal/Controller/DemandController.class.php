@@ -322,8 +322,8 @@ class DemandController extends HomebaseController {
 		if ($teacher_identity) {
 			$data['teacher_identity']   =   $teacher_identity;
 		} else {
-			$array = array('info'=>'请输入老师身份','status'=>0);
-			echo json_encode($array);die;
+//			$array = array('info'=>'请输入老师身份','status'=>0);
+//			echo json_encode($array);die;
 		}
 
 		$area_id				=	(int)$post['area_id'];

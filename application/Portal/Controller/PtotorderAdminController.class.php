@@ -30,8 +30,33 @@ class PtotorderAdminController extends AdminbaseController {
 	public function index(){
 		$count=$this->ptotorder_model->count();
 
+        // where条件拼接
+        $where  =   '';
+        // 家长姓名
+        if ($demand_name = $_REQUEST['demand_name']) {
+            $where['name']    =   array('like','%'.$demand_name.'%');
+        }
+
+        // 手机号
+        if ($phone = $_REQUEST['phone']) {
+            $where['phone'] =   array('like','%'.$phone.'%');
+        }
+
+        // 老师姓名
+        if ($teacher_name = $_REQUEST['teacher_name']) {
+            $teacher_names = M('teacher')->field('id')->where(array('name'=>array('like','%'.$teacher_name.'%')))->select();
+            foreach($teacher_names as $teacher_names_one) {
+                $ids[]    =     $teacher_names_one['id'];
+            }
+            $ids = implode(',', $ids);
+            if ($ids) {
+                $where['teacher_id']    =   array('in', $ids);
+            }
+        }
+
 		$page = $this->page($count, 20);
 		$ptotorder_data = $this->ptotorder_model
+            ->where($where)
 			->limit($page->firstRow , $page->listRows)
 			->order("add_time DESC")
 			->select();
@@ -60,6 +85,8 @@ class PtotorderAdminController extends AdminbaseController {
 		$this->assign('counseling', $counseling);
 		$this->assign("page", $page->show('Admin'));
 		$this->assign('ptotorder_data', $ptotorder_data);
+
+        $this->assign("formget",array_merge($_GET,$_POST));
 		$this->display();
 	}
 
@@ -82,6 +109,26 @@ class PtotorderAdminController extends AdminbaseController {
 					$this->error("删除失败！");
 				}
 			}
+		}
+	}
+
+	// 更改审核状态
+	public function is_status()
+	{
+		$id =   (int)I('get.id');
+		$is_status  =   (int)I('get.is_status');
+		if (!$id || !$is_status) {
+			$this->error();
+		}
+		$where['id']        =   $id;
+		$where['grade_id'] =   $is_status;
+
+		$res = $this->ptotorder_model->save($where);
+
+		if ($res) {
+			$this->success();
+		} else {
+			$this->error();
 		}
 	}
 }

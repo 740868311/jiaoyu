@@ -13,6 +13,23 @@
         姓名：
         <input name="name" type="text" value="{$formget.name|default=''}" style="width:80px">&nbsp; &nbsp;
 
+
+        老师身份：
+        <select name="identity" style="width: 120px;">
+            <option value='0'>全部</option>
+            <option {$formget['identity'] == 1? 'selected' : ''} value="1">大学生</option>
+            <option {$formget['identity'] == 2? 'selected' : ''} value="2">研究生</option>
+            <option {$formget['identity'] == 3? 'selected' : ''} value="3">在职教师</option>
+            <option {$formget['identity'] == 4? 'selected' : ''} value="4">专职老师</option>
+        </select> &nbsp;&nbsp;
+        <br>
+        老师状态：
+        <select name="status" style="width: 120px;">
+            <option value='0'>全部</option>
+            <option {$formget['status'] == 1? 'selected' : ''} value="1">普通老师</option>
+            <option {$formget['status'] == 2? 'selected' : ''} value="2">明星教员</option>
+        </select> &nbsp;&nbsp;
+
         订阅标签：
         <select name="tag_id" style="width: 120px;">
             <option value='0'>全部</option>

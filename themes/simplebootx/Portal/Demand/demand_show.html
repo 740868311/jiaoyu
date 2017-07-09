@@ -66,7 +66,7 @@
                         }
                         $counseling_data = implode(',', $swap);
                     </php>
-                        {$counseling_data}
+                        {$counseling_data},{$demand['counseling_other']}
                 </span></p>
                 <php>
                     $area = sp_get_area();
@@ -312,6 +312,7 @@
                 data: formData,
                 success: function (data) {
                     if (data.status == 0) {
+                        $('.verify_img').click();
                         alert(data.info);
                     } else if (data.status == 1) {
                         location.reload();

@@ -32,7 +32,7 @@
                     }
                     $counseling_data = implode(',', $swap);
                 </php>
-                {$counseling_data}
+                {$counseling_data},{$data['counseling_other']}
             </p>
             <div class="dis-flex right-bottom-title">
                 <div class="flex-item">
@@ -67,9 +67,9 @@
         <div class="left-bo-content float-left">
             <div class="menu clearfix">
                 <ul class="tab">
-                    <li>客服电话：<span style="color:red">{$cphone}</span></li>
+                    <li>客服电话：<span style="color:red;font-size:20px">{$cphone}</span></li>
                 </ul>
-                <div class="yue-teacher s-btn" style="cursor: pointer;">预约老师</div>
+                <div class="yue-teacher s-btn" style="cursor: pointer;">预约这位老师</div>
             </div>
             <div class="menu-content">
                 <div class="title-box clearfix">
@@ -302,6 +302,8 @@
 <script src="__TMPL__Public/assets/js/jquery.validate-1.13.1.js"></script>
 <script>
     $(document).ready(function() {
+
+        $('.code-img').find('img').click();
         $('.kssms_1').click(function () {
             var ksphone = $('#phone').val();
             if (!isPhoneNo(ksphone)) {
@@ -432,6 +434,7 @@
                 data:formData,
                 success: function(data) {
                     if (data.status == 0) {
+                        $('.code-img').find('img').click();
                         alert(data.info);
                     } else if(data.status == 1) {
                         alert(data.info);
@@ -523,6 +526,7 @@
                     data:formData,
                     success: function(data) {
                         if (data.status == 0) {
+                            $('.span-code').find('img').click();
                             alert(data.info);
                         } else if(data.status == 1) {
                             alert(data.info);
@@ -535,10 +539,12 @@
 
 
     $('.s-btn').on('click', function(){
+        $('.span-code').find('img').click();
         $('.login-container').show();
     })
     //关闭
     $('.close').on('click', function(){
+        $('.code-img').find('img').click();
         $('.login-container').hide();
     });
     })

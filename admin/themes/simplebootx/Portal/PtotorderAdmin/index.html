@@ -5,18 +5,16 @@
     <ul class="nav nav-tabs">
         <li class="active"><a href="javascript:;">家长预约老师订单管理</a></li>
     </ul>
-    <form class="well form-search" method="post" action="{:U('DemandAdmin/index')}">
-        分类：
-        <select name="term" style="width: 120px;">
-            <option value='0'>全部</option>{$taxonomys}
-        </select> &nbsp;&nbsp;
-        时间：
-        <input type="text" name="start_time" class="js-datetime" value="{$formget.start_time|default=''}" style="width: 120px;" autocomplete="off">-
-        <input type="text" class="js-datetime" name="end_time" value="{$formget.end_time|default=''}" style="width: 120px;" autocomplete="off"> &nbsp; &nbsp;
-        关键字：
-        <input type="text" name="keyword" style="width: 200px;" value="{$formget.keyword|default=''}" placeholder="请输入关键字...">
+    <form class="well form-search" method="post" action="{:U('PtotorderAdmin/index')}">
+        手机号：
+        <input name="phone" type="text" value="{$formget.phone|default=''}" style="width:150px">&nbsp; &nbsp;
+        学生姓名：
+        <input name="demand_name" type="text" value="{$formget.demand_name|default=''}" style="width:150px">&nbsp; &nbsp;
+        家长姓名：
+        <input name="teacher_name" type="text" value="{$formget.teacher_name|default=''}" style="width:150px">&nbsp; &nbsp;
+
         <input type="submit" class="btn btn-primary" value="搜索" />
-        <a class="btn btn-danger" href="{:U('DemandAdmin/index')}">清空</a>
+        <a class="btn btn-danger" href="{:U('PtotorderAdmin/index')}">清空</a>
     </form>
     <form class="js-ajax-form" action="" method="post">
         <div class="table-actions">
@@ -35,7 +33,7 @@
                 <th>ID</th>
                 <th>学员姓名</th>
                 <th>预约老师</th>
-                <th>年级</th>
+                <th>状态</th>
                 <th>辅导课程</th>
                 <th>手机号</th>
                 <th>地址</th>
@@ -48,9 +46,12 @@
                     <td><input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]" value="{$vo.id}" title="ID:{$vo.id}"></td>
                     <td><b>{$vo.id}</b></td>
                     <td>{$vo.name}</td>
-                    <td>{$teacher[$vo['teacher_id']]}</td>
+                    <td><a target="_blank" href="{:U('Teacher/resume', array('id'=>4, 'teacher_id'=>$vo['teacher_id']))}">{$teacher[$vo['teacher_id']]}</a></td>
                     <td>
-                        {$grade[$vo['grade_id']]}
+                        <select class="is_status" data='{$vo["id"]}' style="width:110px">
+                            <option {$vo['grade_id'] == 0 ? 'selected' : ''} value="0">未处理</option>
+                            <option {$vo['grade_id'] == 1 ? 'selected' : ''} value="1">已经处理</option>
+                        </select>
                     </td>
                     <td>
                         <php>
@@ -89,6 +90,20 @@
         refersh_window();
     }, 2000);
     $(function() {
+
+        $('.is_status').on('change', function(){
+            var is_status = $(this).val();
+            var id  =   $(this).attr('data');
+            $.ajax({
+                'url':"{:U('PtotorderAdmin/is_status')}",
+                'data':{id:id,is_status:is_status},
+                'type':'get',
+                'success':function(){
+
+                }
+            })
+        })
+
         setCookie("refersh_time", 0);
         Wind.use('ajaxForm', 'artDialog', 'iframeTools', function() {
             //批量复制

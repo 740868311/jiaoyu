@@ -450,6 +450,7 @@
                     data:formData,
                     success: function(data) {
                         if (data.status == 0) {
+                            $('.ks_code').find('img').click();
                             alert(data.info);
                         } else if(data.status == 1) {
                             alert(data.info);
@@ -468,9 +469,9 @@
                 'grade_id': {
                     required: true
                 },
-                identity: {
-                    required: true
-                },
+//                identity: {
+//                    required: true
+//                },
                 'counseling_id[]': {
                     required: true
                 },
@@ -494,9 +495,9 @@
                 'grade_id':{
                     required: '请选择年级'
                 },
-                identity: {
-                    required: "请选择一个老师身份"
-                },
+//                identity: {
+//                    required: "请选择一个老师身份"
+//                },
                 'counseling_id[]': {
                     required: "请至少选择一个科目"
                 },
@@ -565,6 +566,8 @@
                         $('.alert-mask').show();
                         if (data.status == 1) {
                             setTimeout("location.reload()",1000);
+                        } else {
+                            $('.yzm_code').find('img').click();
                         }
                     }
                 });
@@ -583,6 +586,7 @@
     })
     //关闭
     $('.close').on('click', function(){
+        $('.yzm_code').find('img').click();
         $('.login-container').hide();
     });
 

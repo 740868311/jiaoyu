@@ -37,7 +37,7 @@
                 <th>辅导课程</th>
                 <th>预付课酬</th>
                 <th>手机号</th>
-                <th style="width:130px">未处理教员预约数量</th>
+                <th style="width:130px">报名人数</th>
                 <th>状态</th>
                 <th>添加时间</th>
                 <th>操作</th>
@@ -91,8 +91,12 @@
                         <php>
                             if ($vo['status'] == 1) {
                                 echo "<span style='color:red;font-size: 15px;font-weight: bold;'>".$status[$vo['status']]."</span>";
-                            } else {
-                                echo $status[$vo['status']];
+                            } else if($vo['status'] == 2) {
+                                echo "<span style='color:blue;font-size: 15px;font-weight: bold;'>".$status[$vo['status']]."</span>";
+                            } else if($vo['status'] == 3) {
+                                echo "<span style='color:green;font-size: 15px;font-weight: bold;'>".$status[$vo['status']]."</span>";
+                            } else if($vo['status'] == 4) {
+                                echo "<span style='color:yellow;font-size: 15px;font-weight: bold;'>".$status[$vo['status']]."</span>";
                             }
                         </php>
                     </td>

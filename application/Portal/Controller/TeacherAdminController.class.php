@@ -43,6 +43,14 @@ class TeacherAdminController extends AdminbaseController {
             $where['name']  =   array('like', '%'.$name.'%');
         }
 
+        if ($status =   $_REQUEST['status']) {
+            $where['status']  =   $status;
+        }
+
+        if ($identity = $_REQUEST['identity']) {
+            $where['identity']  =   $identity;
+        }
+
         if ($tag_id = $_REQUEST['tag_id']) {
             $tag_where              =   array();
             $tag_where['tag_id']    =   $tag_id;

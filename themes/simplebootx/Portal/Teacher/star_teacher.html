@@ -22,10 +22,12 @@
                             <php>
                                 $counseling = sp_get_counseling();
                             </php>
-                            <a href="{:U('Teacher/star_teacher',array('counseling_id'=>0,'id'=>5))}" class="{$counseling_id == 0 ? 'on' : ''}">不限</a>
+                            <a style="float:left" href="{:U('Teacher/star_teacher',array('counseling_id'=>0,'id'=>5))}" class="{$counseling_id == 0 ? 'on' : ''}">不限</a>
+                            <div style="display:inline-block;width: 590px;">
                             <foreach name="counseling" key="k" item="vo">
                                 <a href="{:U('Teacher/star_teacher',array('counseling_id'=>$k,'id'=>5))}" class="{$counseling_id == $k ? 'on' : ''}">{$vo}</a>
                             </foreach>
+                            </div>
                         </dd>
                     </dl>
                     <dl class="listIndex clearfix" attr="教员性别">
@@ -52,7 +54,7 @@
                 <foreach name="teacher_list" key="k" item="vo">
                     <div class="faculty-box part-box">
                         <div class="faculty-box-left">
-                            <img src="{:sp_get_image_preview_url($vo['smeta']['thumb'])}" width="135" style="cursor: hand"/>
+                            <img src="{:sp_get_image_preview_url($vo['smeta']['thumb'])}" width="140" style="cursor: hand"/>
                         </div>
                         <div class="faculty-box-middle">
                             <div class="part-info-title">

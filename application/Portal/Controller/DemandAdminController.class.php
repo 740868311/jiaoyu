@@ -21,7 +21,7 @@ class DemandAdminController extends AdminbaseController {
         $this->status = array(
             1=>'未审核',
             2=>'预约中',
-            3=>'预约中',
+            3=>'等待处理',
             4=>'成功',
         );
 
