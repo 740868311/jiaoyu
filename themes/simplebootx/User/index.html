@@ -85,15 +85,6 @@
                                 </select>
                             </div>
                             <div class="form-control clearfix">
-                                <label><span>*</span>教学阶段</label>
-                                <select name="stage" class="stage">
-                                    <option value="0">--请选择教学阶段--</option>
-                                    <option value="1" {$teacher['stage'] == 1 ? 'selected' : ''}>高中老师</option>
-                                    <option value="2" {$teacher['stage'] == 2 ? 'selected' : ''}>初中老师</option>
-                                    <option value="3" {$teacher['stage'] == 3 ? 'selected' : ''}>小学老师</option>
-                                </select>
-                            </div>
-                            <div class="form-control clearfix">
                                 <label><span>*</span>年级</label>
                                 <input type="text" class="grade" value="{$teacher.grade}" name="grade">
                             </div>
@@ -561,7 +552,7 @@
             "thumb": $('#thumb').val(),//照片
             "counseling_id": counseling,//科目1
             "counseling_other": $('.subject-four').val(),//4
-            "stage": $('.stage').val(),//*教学阶段
+//            "stage": $('.stage').val(),//*教学阶段
             "introduction": $('.myself').val(),//自我介绍
             "teaching_experience": $('.teaching').val(),//教学经历
             "photos_alt": photos_alt,

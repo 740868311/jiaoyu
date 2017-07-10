@@ -135,7 +135,8 @@ body,html{
 }
 .menu-content .img{
     width: 390px;
-    height: 290px;
+    /*height: 290px;*/
+    height: auto;
     margin-right: 10px;
     margin-bottom: 10px;
     background-color: #fff;

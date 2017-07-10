@@ -39,7 +39,7 @@
                 <tr>
                     <td><input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]" value="{$vo.id}" title="ID:{$vo.id}"></td>
                     <td><b>{$vo.id}</b></td>
-                    <td>{$teacher[$vo['teacher_id']]}</td>
+                    <td><a target="_blank" href="{:U('Teacher/resume', array('id'=>4, 'teacher_id'=>$vo['teacher_id']))}">{$teacher[$vo['teacher_id']]}</a></td>
                     <td>{$vo.teacher_message}</td>
                     <td id="ttoporder_{$vo.id}" data="{$vo['status']}">{$status[$vo['status']]}</td>
                     <td>

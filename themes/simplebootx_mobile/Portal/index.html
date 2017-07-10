@@ -65,29 +65,7 @@
         </div>
     </div>
 </section>
-<section class="orders-container">
-    <div class="title-box clearfix">
-        <p class="title"><span class="vertical"></span>最新请家教订单</p>
-        <p class="more"><a href="{:U('Demand/demand_list', array('id'=>6))}">更多>></a></p>
-    </div>
-    <div class="orders-content">
-        <foreach name="index_array['demand']" item="vo">
-            <div class="order-box">
-                <div class="order-top">
-                    <span>{$vo.id}</span>
-                    <div class="trapezoidal">
-                        <div class="triangle"></div>
-                        <div class="square"></div>
-                    </div>
-                </div>
-                <p><i class="icon iconfont icon-sex"></i>{$vo.sex}</p>
-                <p><i class="icon iconfont icon-hat"></i>{$vo.grade_name}</p>
-                <p><i class="icon iconfont icon-books"></i>{$vo.counseling}</p>
-                <p><i class="icon iconfont icon-adress"></i>{$vo.address}</p>
-            </div>
-        </foreach>
-    </div>
-</section>
+
 <section class="advantages-container">
     <div class="ad-box">
         <i class="icon iconfont icon-hexagon">
@@ -133,19 +111,7 @@
         </foreach>
     </div>
 </section>
-<section class="notice-container">
-    <foreach name="index_array['notices']" item="vo">
-        <div class="title-box clearfix">
-            <p class="title"><span class="vertical"></span>{$vo.title}</p>
-            <p class="more"><a href="{$vo.url}">更多>></a></p>
-        </div>
-        <ul class="notice-box">
-            <foreach name="vo.content" item="vo_one">
-                <li><span></span><a href="{$vo_one.url}">{$vo_one.title}</a></li>
-            </foreach>
-        </ul>
-    </foreach>
-</section>
+
 <tc_include file="Public:footer"/>
 <script src="__TMPL__Public/assets/js/zepto_1.1.6.min.js"></script>
 <script src="__TMPL__Public/assets/js/swiper-3.4.2.jquery.min.js"></script>

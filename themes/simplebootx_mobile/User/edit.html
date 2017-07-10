@@ -62,15 +62,7 @@
                 <option {$teacher['identity'] == 4 ? 'selected' : ''} value="4">专职老师</option>
             </select>
         </div>
-        <div class="form-control-lb clearfix">
-            <label class="float-left form-left"><span>*</span>教学阶段</label>
-            <select name="stage" class="stage form-right float-right">
-                <option value="0">--请选择教学阶段--</option>
-                <option value="1" {$teacher['stage'] == 1 ? 'selected' : ''}>高中老师</option>
-                <option value="2" {$teacher['stage'] == 2 ? 'selected' : ''}>初中老师</option>
-                <option value="3" {$teacher['stage'] == 3 ? 'selected' : ''}>小学老师</option>
-            </select>
-        </div>
+
         <div class="form-control-lb clearfix">
             <label class="float-left form-left"><span>*</span>年级（大学生）</label>
             <input type="text" value="{$teacher.grade}"  class="grade float-right form-right username" placeholder="请输入您的年级">
@@ -215,7 +207,7 @@
             "grade": $('.grade').val(),//所在年级
             "counseling_id": counseling,//科目1
             "counseling_other": $('.subject-four').val(),//4
-            "stage": $('.stage').val(),//*教学阶段
+//            "stage": $('.stage').val(),//*教学阶段
             "introduction": $('.myself').val(),//自我介绍
             "teaching_experience": $('.teaching').val(),//教学经历
         }

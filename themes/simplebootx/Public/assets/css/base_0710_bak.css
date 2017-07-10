@@ -140,7 +140,6 @@ nav li{
     line-height: 40px;
     width: 58px;
     cursor: pointer;
-    font-size: 17px;
 }
 nav li a{
     color: #fff;
@@ -167,22 +166,20 @@ nav li:hover,nav li.active{
     position: absolute;
     top: 0;
     bottom: 0;
-    width: 410px;
+    width: 110px;
     height: 14px;
     right: 190px;
     margin: auto;
 }
 .header-info .info .te a{
     cursor: pointer;
-    float:right;
-    padding: 0 5px;
 }
 .header-info .info .te a:last-child{
     border-right: none;
 }
 .header-info .info .te-login{
     display: inline-block;
-    /*width: 50px;*/
+    width: 50px;
     border-right: 1px solid #666;
 }
 .header-info .info a{

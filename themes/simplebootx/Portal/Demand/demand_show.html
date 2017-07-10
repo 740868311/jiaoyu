@@ -138,6 +138,18 @@
                         <php>
                             } else {
                         </php>
+                            <foreach name="teacher_access" item="vo">
+                                <div class="table-tr">
+
+                                    <div class="table-col">{:get_teacher_show_id($vo['id'])}</div>
+                                    <div class="table-col">{$vo.name}</div>
+                                    <div class="table-col">{$vo['sex'] == 1 ? '女' : '男'}</div>
+                                    <div class="table-col">{$vo.university}</div>
+                                    <div class="table-col">{$vo.profession}</div>
+                                    <div class="table-col status">{$status[$ttoporder[$vo['id']]]}</div>
+                                    <div class="table-col"><a class="look" href="{:U('Teacher/resume', array('id'=>5, 'teacher_id'=>$vo['id']))}">点击查看</a></div>
+                                </div>
+                            </foreach>
                             <foreach name="teacher" item="vo">
                                 <div class="table-tr">
 

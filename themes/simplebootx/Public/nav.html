@@ -9,13 +9,13 @@
 						if (sp_is_user_login()) {
 							$session_user=session('user');
 					</php>
-						<a href="{:U('User/index/center')}" class="te-login" style="width:100px">{$session_user['name']} 个人中心</a>
-						<a href="{:U('User/index/logout')}" class="te-login">退出登录</a>
+						<a href="{:U('User/index/logout')}" class="te-login" style="border-right:none;">退出登录</a>
+						<a href="{:U('User/index/center')}" class="te-login" style="border-right: 1px solid #666;">{$session_user['name']} 个人中心</a>
 					<php>
 						} else {
 					</php>
-						<a href="{:U('Teacher/teacher_login')}" class="te-login">老师登录</a>
-						<a href="{:U('Teacher/index', array('id'=>3))}">老师注册</a>
+						<a href="{:U('Teacher/index', array('id'=>3))}" style="border-right:none;">老师注册</a>
+						<a href="{:U('Teacher/teacher_login')}" class="te-login" style="    border-right: 1px solid #666;">老师登录</a>
 					<php>
 						}
 					</php>

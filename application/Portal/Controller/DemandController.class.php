@@ -307,16 +307,18 @@ class DemandController extends HomebaseController {
 		if ($prepayments) {
 			$data['prepayments']    =   $prepayments;
 		} else {
-			$array = array('info'=>'请输入拟付课酬','status'=>0);
-			echo json_encode($array);die;
+//			$array = array('info'=>'请输入拟付课酬','status'=>0);
+//			echo json_encode($array);die;
 		}
 
 		$teacher_sex			=	(int)$post['teacher_sex'];
 		if (!$teacher_sex) {
-			$array = array('info'=>'请选择老师性别','status'=>0);
-			echo json_encode($array);die;
+//			$array = array('info'=>'请选择老师性别','status'=>0);
+//			echo json_encode($array);die;
+		} else {
+			$data['teacher_sex']    =   $teacher_sex;
 		}
-		$data['teacher_sex']    =   (int)$post['teacher_sex'];
+
 
 		$teacher_identity       =   (int)$post['identity'];
 		if ($teacher_identity) {
@@ -362,8 +364,8 @@ class DemandController extends HomebaseController {
 			if ($time) {
 
 			} else {
-				$array = array('info'=>'家教时间请至少选择一天','status'=>0);
-				echo json_encode($array);die;
+//				$array = array('info'=>'家教时间请至少选择一天','status'=>0);
+//				echo json_encode($array);die;
 			}
 		}
 
@@ -457,18 +459,37 @@ class DemandController extends HomebaseController {
 
 		// 得到预约的老师
 		$ttop_where	=	array('demand_id'	=>	$id);
-		$ttoporder = M('ttoporder')->where($ttop_where)->select();
+		$ttoporder = M('ttoporder')->where($ttop_where)->order('status desc')->select();
 
 		$teacher_ids = array();
 		$ttop_swap	=	array();
 		foreach($ttoporder as $ttoporder_one) {
 			$ttop_swap[$ttoporder_one['teacher_id']]	=	$ttoporder_one['status'];
-			$teacher_ids[] = $ttoporder_one['teacher_id'];
+
+			if($ttoporder_one['status']	==	3) {
+				$teacher_access_ids[] = $ttoporder_one['teacher_id'];
+			} else {
+				$teacher_shibai_ids[] = $ttoporder_one['teacher_id'];
+			}
+
+
 		}
-		$teacher_ids = implode(',', $teacher_ids);
+		$teacher_access_ids = implode(',', $teacher_access_ids);
+		$teacher_shibai_ids = implode(',', $teacher_shibai_ids);
 
-		$teacher_data = M('teacher')->where(array('id'=>array('in',$teacher_ids)))->select();
+		$teacher_data	=	array();
+		// 得到未成功的订单
+		if ($teacher_shibai_ids) {
+			$teacher_data = M('teacher')->where(array('id'=>array('in',$teacher_shibai_ids)))->select();
+		}
 
+		$teacher_access_data	=	array();
+		// 得到成功的订单
+		if ($teacher_access_ids) {
+			$teacher_access_data =  M('teacher')->where(array('id'=>array('in',$teacher_access_ids)))->select();
+		}
+
+//		echo M('teacher')->getLastSql();die;
 		$status = array(
 			1   =>  '报名中',
 			2   =>  '试讲中',
@@ -479,6 +500,7 @@ class DemandController extends HomebaseController {
 
 		$this->assign('status', $status);
 		$this->assign('teacher', $teacher_data);
+		$this->assign('teacher_access', $teacher_access_data);
 		$this->assign('ttoporder', $ttop_swap);
 		// 得到预约的老师 end
 
